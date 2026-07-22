@@ -1,0 +1,77 @@
+---
+
+description: Apply when implementing or modifying a Shopify theme element, including implementation from a task specification.
+alwaysApply: false
+------------------
+
+# Implementation
+
+Before making changes:
+
+1. Read `AGENTS.md`.
+2. Read the referenced task specification from `docs/tasks/`, when one is provided.
+3. Inspect the current implementation and relevant Eurus or BLG examples.
+4. Confirm whether the requested element is:
+
+   * a new BLG element;
+   * a modification of an existing BLG element;
+   * a BLG copy based on a native Shopify or Eurus element.
+
+## Native theme safety
+
+Never modify native Shopify or base Eurus theme files directly.
+
+When the requested implementation is based on a native section, block, snippet, or asset:
+
+1. identify the complete source element and its dependencies;
+2. create a separate BLG copy;
+3. reproduce the source behavior before extending it;
+4. rename the copied technical elements using the required `blg-` prefix;
+5. perform all further changes only in the BLG copy.
+
+Preserve all relevant source functionality, including:
+
+* schema settings;
+* supported blocks;
+* presets;
+* Liquid rendering behavior;
+* snippets and asset dependencies;
+* responsive behavior;
+* dark mode behavior;
+* RTL behavior;
+* JavaScript interactions.
+
+When modifying an existing BLG element, edit only that BLG element and its BLG supporting files.
+
+Do not modify a native file as a shortcut, even when the requested change appears small.
+
+## Implementation scope
+
+Follow the referenced task specification when present.
+
+Implement only the requested functionality. Do not introduce unrelated refactoring, cleanup, renaming, or architectural changes.
+
+Use existing Eurus and BLG patterns before creating a new implementation pattern.
+
+If the task specification conflicts with the current repository state:
+
+* do not silently invent a workaround;
+* explain the conflict;
+* use the current source code and the user's latest instruction as the source of truth.
+
+Create supporting snippets, blocks, scripts, styles, or translations only when they are required by the implementation.
+
+Follow all naming, structure, styling, validation, and Git restrictions defined in `AGENTS.md`.
+
+## Completion
+
+Before finishing, inspect the changed code and summarize:
+
+* files created or modified;
+* native Eurus or existing BLG elements used as references;
+* implemented behavior;
+* static checks performed;
+* deviations from the task specification;
+* assumptions or behavior that requires verification in Shopify.
+
+Do not update the task specification unless explicitly requested.

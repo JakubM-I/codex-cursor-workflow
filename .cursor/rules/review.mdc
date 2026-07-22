@@ -1,0 +1,72 @@
+---
+
+description: Apply when reviewing Shopify theme code or checking an implementation completed by another agent.
+alwaysApply: false
+------------------
+
+# Static Code Review
+
+Review the requested implementation without modifying files.
+
+Read:
+
+1. `AGENTS.md`;
+2. the referenced task specification, when present;
+3. the changed BLG files;
+4. relevant native Eurus or existing BLG source elements when comparison is necessary.
+
+## Review limits
+
+Perform static code inspection only.
+
+Do not:
+
+* execute terminal commands;
+* run scripts, tests, builds, linters, or formatters;
+* run `shopify theme check`;
+* run `shopify theme dev`;
+* start a store or theme preview;
+* connect or push to Shopify;
+* edit code while reviewing;
+* perform Git workflow actions.
+
+Do not claim that runtime behavior, rendering, responsive behavior, or Shopify integration was tested.
+
+## Review scope
+
+Check only what can be determined directly from the source code:
+
+* Liquid syntax and tag structure;
+* Shopify schema JSON syntax and structure;
+* JavaScript and CSS syntax;
+* section, block, snippet, translation, and asset references;
+* consistent BLG naming;
+* accidental modification of native Shopify or Eurus files;
+* compliance with the referenced task specification;
+* preservation of required source behavior;
+* obvious missing dependencies;
+* obvious selector collisions or mismatches;
+* obvious inconsistencies between schema settings and Liquid output.
+
+Do not suggest unrelated refactoring or stylistic improvements outside the requested task.
+
+## Review result
+
+List concrete findings first.
+
+For each finding include:
+
+* severity: `Blocker`, `Major`, `Minor`, or `Suggestion`;
+* affected file and relevant code area;
+* description of the issue;
+* required correction.
+
+Keep the review concise.
+
+When no issues are found, state:
+
+> No issues found within the limits of static code review.
+
+Then briefly state what could not be verified without a connected Shopify store or runtime preview.
+
+When requested, add the findings to the `Review Findings` section of the task specification. Otherwise return them only in the conversation.
