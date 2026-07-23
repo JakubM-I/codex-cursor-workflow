@@ -17,7 +17,7 @@ Use this mode when one agent is expected to complete the task independently.
 Typical process:
 
 1. Read `AGENTS.md`.
-2. Inspect the relevant project files and existing Eurus or BLG patterns.
+2. Inspect the relevant project files and existing patterns.
 3. Analyze the requested change.
 4. Implement the solution.
 5. Perform applicable local validation.
@@ -34,7 +34,7 @@ The analyzing agent should:
 
 1. Read `AGENTS.md`.
 2. Inspect the relevant code and documentation.
-3. Identify existing Eurus and BLG patterns.
+3. Identify existing project patterns.
 4. Determine the required files, dependencies, risks, and edge cases.
 5. Prepare a task specification in `docs/tasks/`.
 6. Avoid modifying application code unless explicitly requested.
@@ -69,19 +69,19 @@ The reviewer should compare the implementation against:
 * the original request;
 * the referenced task specification, when present;
 * `AGENTS.md`;
-* existing Eurus and BLG patterns.
+* existing project patterns.
 
 Review findings should focus on:
 
 * missing requirements;
 * functional errors;
-* dropped functionality from copied Eurus elements;
-* incorrect BLG naming;
-* native theme files modified accidentally;
-* invalid Liquid or schema JSON;
-* broken references;
-* CSS or JavaScript selector collisions;
-* incomplete responsive, dark mode, or RTL behavior.
+* behavioral regressions;
+* unsafe or undocumented assumptions;
+* unintended changes outside the requested scope;
+* broken references, imports, or integration points;
+* invalid syntax, schema, configuration, or data shape;
+* missing or insufficient validation;
+* incomplete handling of relevant edge cases.
 
 Do not modify reviewed code unless explicitly asked to apply fixes.
 
@@ -114,7 +114,7 @@ Suggested filename format:
 TASK-001-short-feature-name.md
 ```
 
-The purpose of a task specification is to provide a clear implementation handoff. It should remain concise and include only information useful for implementing and reviewing the requested Shopify theme element.
+The purpose of a task specification is to provide a clear implementation handoff. It should remain concise and include only information useful for implementing and reviewing the requested change.
 
 A task specification is not intended to document the entire project or reproduce permanent rules from `AGENTS.md`.
 
@@ -137,18 +137,18 @@ Suggested values:
 
 Briefly describe what should be created or changed and what the expected result is.
 
-Focus on the visible or functional outcome rather than general project background.
+Focus on the visible, functional, or developer-facing outcome rather than general project background.
 
 ### Target
 
-Identify the main Shopify theme element involved.
+Identify the main files, modules, components, services, tests, configuration, or documentation involved.
 
 This may include:
 
-* a new section, block, snippet, or asset to create;
-* an existing BLG element to modify;
-* the Eurus or BLG element that should be used as the implementation reference;
-* optional supporting files when JavaScript, snippets, blocks, or shared assets are required.
+* new files to create;
+* existing files to modify;
+* existing implementation patterns that should be used as references;
+* optional supporting files needed for tests, configuration, styles, scripts, documentation, or data.
 
 Do not list unrelated repository files.
 
@@ -159,15 +159,16 @@ Example:
 
 Create:
 
-- `sections/blg-media-gallery.liquid`
+- `src/features/example/example-view.tsx`
+- `src/features/example/example-view.test.tsx`
 
 Based on:
 
-- `sections/media-gallery.liquid`
+- `src/features/nearby-feature/nearby-view.tsx`
 
 Optional supporting files:
 
-- `assets/blg-media-gallery.js`
+- `src/features/example/example-types.ts`
 ```
 
 ### Implementation
@@ -176,21 +177,23 @@ Describe the required solution in enough detail for another agent to implement i
 
 Depending on the task, this section may describe:
 
-* expected section structure;
-* layout and responsive behavior;
-* Shopify schema settings;
-* supported blocks;
-* merchant-configurable options;
-* Liquid rendering logic;
-* CSS behavior;
-* JavaScript interactions;
-* elements that must be preserved from the source Eurus implementation;
-* required BLG naming changes;
-* dependencies on snippets, blocks, translations, or assets.
+* expected behavior;
+* user-facing or developer-facing flows;
+* data structures and interfaces;
+* configuration changes;
+* UI structure and responsive behavior;
+* API or service interactions;
+* state management;
+* error, empty, and loading states;
+* accessibility requirements;
+* styling requirements;
+* testing requirements;
+* dependencies on other files or modules;
+* behavior that must be preserved from existing implementation.
 
 This is the main part of the task specification.
 
-Prefer concrete implementation requirements over general suggestions. Do not prescribe unnecessary architecture when the task can be completed by following an existing Eurus or BLG pattern.
+Prefer concrete implementation requirements over general suggestions. Do not prescribe unnecessary architecture when the task can be completed by following an existing project pattern.
 
 ### Validation
 
@@ -198,16 +201,16 @@ List only checks that are relevant to the requested implementation.
 
 Typical checks may include:
 
-* Liquid syntax is valid;
-* schema JSON is valid;
-* section, block, snippet, and asset references are correct;
-* all new technical elements use the required BLG naming;
-* the original Eurus element remains unchanged;
-* required functionality from the copied source was not removed;
-* CSS and JavaScript selectors do not collide with native theme code;
-* responsive, dark mode, and RTL behavior are preserved when applicable.
+* syntax, type, schema, or configuration validation;
+* linting or formatting checks;
+* unit, integration, or focused regression tests;
+* manual checks for important user flows;
+* verification that references, imports, routes, or registrations are correct;
+* verification that existing behavior was not unintentionally removed;
+* review that changed files stay within the requested scope;
+* accessibility or responsive checks when relevant.
 
-Validation in this repository is local and code-focused. It does not include store preview, Shopify deployment, or full-theme testing.
+Validation in this repository is local and code-focused unless the user explicitly requests a different process.
 
 ### Implementation Notes
 
@@ -216,7 +219,7 @@ This section is completed by the implementing agent after the work is finished.
 It should include:
 
 * created or modified files;
-* source Eurus or BLG elements used;
+* existing patterns or reference files used;
 * completed local checks;
 * differences from the proposed implementation;
 * assumptions or limitations;
@@ -237,10 +240,10 @@ Findings should include:
 
 Suggested finding levels:
 
-* `Blocker` — the implementation is unsafe, invalid, or cannot be accepted;
-* `Major` — an important requirement or behavior is missing or incorrect;
-* `Minor` — a limited issue that should be corrected;
-* `Suggestion` — an optional improvement outside the acceptance requirement.
+* `Blocker` - the implementation is unsafe, invalid, or cannot be accepted;
+* `Major` - an important requirement or behavior is missing or incorrect;
+* `Minor` - a limited issue that should be corrected;
+* `Suggestion` - an optional improvement outside the acceptance requirement.
 
 When no problems are found, state that the implementation matches the task specification within the limits of local validation.
 
@@ -250,15 +253,15 @@ Additional sections should be added only when they help explain a specific task.
 
 ### Current Behavior
 
-Use this when modifying an existing BLG element and the current implementation needs to be explained before describing the change.
+Use this when modifying existing behavior and the current implementation needs to be explained before describing the change.
 
-It is usually unnecessary when creating a new section.
+It is usually unnecessary when creating something new.
 
 ### Scope and Out of Scope
 
-Use these sections when the task could easily expand into unrelated work or when specific parts of the source Eurus element should not be copied or changed.
+Use these sections when the task could easily expand into unrelated work or when specific parts of the existing implementation should not be copied or changed.
 
-They are not required for straightforward section creation.
+They are not required for straightforward changes.
 
 ### Open Questions or Assumptions
 
@@ -277,30 +280,29 @@ Ready for implementation
 
 ## Goal
 
-Describe the expected section or feature.
+Describe the expected change or feature.
 
 ## Target
 
 Create or modify:
 
-- `sections/blg-example.liquid`
+- `path/to/target-file.ext`
 
 Based on:
 
-- `sections/example.liquid`
+- `path/to/reference-file.ext`
 
 ## Implementation
 
-Describe the required structure, settings, blocks, behavior, styling, scripts, and elements that must be preserved from the source.
+Describe the required behavior, structure, interfaces, styling, tests, and existing behavior that must be preserved.
 
 ## Validation
 
-- [ ] Liquid syntax and schema JSON are valid.
-- [ ] All references are correct.
-- [ ] BLG naming is used consistently.
-- [ ] Native Eurus files remain unchanged.
-- [ ] Required source functionality is preserved.
-- [ ] Relevant CSS and JavaScript selectors were reviewed.
+- [ ] Relevant syntax, type, schema, or configuration checks pass.
+- [ ] All references, imports, routes, or registrations are correct.
+- [ ] Required behavior is covered by appropriate local checks.
+- [ ] Existing behavior was not unintentionally removed.
+- [ ] Changed files stay within the requested scope.
 
 ## Implementation Notes
 

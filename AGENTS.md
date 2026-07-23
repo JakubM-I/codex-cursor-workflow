@@ -2,49 +2,61 @@
 
 ## Project Scope
 
-This Shopify theme is based on Eurus. The main work is preparing new custom page sections plus supporting elements: blocks, snippets, JavaScript, CSS, schema settings, and translations. Existing BLG examples include `sections/blg-media-with-text.liquid`, `sections/blg-faq-with-text-panel.liquid`, `sections/blg-media-with-text-group.liquid`, and `blocks/blg-media-with-text-item.liquid`. Do not treat this as a Shopify app or connected store project.
+This repository defines and refines an AI-assisted development workflow for cooperation between Codex and Cursor.
+
+The intended split of responsibilities is:
+
+- Codex analyzes tasks, prepares implementation specifications, reviews completed code, and identifies required corrections.
+- Cursor implements tasks based on the prepared specification.
+
+These responsibilities describe the preferred collaboration model for this repository. The active working mode is still determined by the user's current instruction.
+
+Keep the instructions general. Do not make repository rules depend on a specific framework, CMS, platform, hosting provider, or product unless the user explicitly asks for that in a future task.
 
 ## Project Structure & Module Organization
 
-Create custom sections in `sections/`. Put reusable Liquid fragments in `snippets/`, blocks in `blocks/`, and JavaScript or SVG files in `assets/`. Keep section or block-specific CSS primarily inside the Liquid file with `{%- style -%}` / `{% style %}` or `{% stylesheet %}` when that matches the existing pattern. Use CSS assets only for shared or clearly separate styles. Global settings are in `config/`; translations live in `locales/`.
+Workflow documentation lives in `docs/workflows/`.
 
-Keep related files named consistently. If a section needs styles or scripts, reuse the feature name:
+Task handoff specifications should be created in `docs/tasks/` when needed. Use concise, descriptive filenames, for example:
 
-- `sections/blg-media-with-text-group.liquid`
-- `assets/blg-media-with-text-group.js`
-
-## Native Shopify Theme Safety
-
-The most important rule: do not edit native Shopify or base Eurus theme elements directly. Work only on copies that can be freely changed.
-
-When copying an existing section, block, snippet, or asset, first reproduce it 1:1 with all functions, settings, blocks, presets, responsive behavior, dark/RTL handling, and dependencies. Rename the copy with the BLG prefix, then modify or extend that BLG copy. Leave original files intact.
-
-## Naming Conventions
-
-Every new file, section, block, snippet, asset, schema group, or related technical element must start with the `blg-` prefix. Use kebab-case filenames, for example `blg-media-with-text-group.liquid`.
-
-Visible names in the Shopify panel should start with `BLG`, then use a normal human-readable name. Do not mechanically duplicate the filename. For example:
-
-```json
-"name": "BLG Media with text group"
+```text
+TASK-001-short-feature-name.md
 ```
 
-Follow project conventions: two-space indentation, Liquid whitespace control, inline section styles scoped by `section.id` or `block.id`, descriptive schema IDs, and deferred scripts when loaded from Liquid.
+Keep workflow documents focused on reusable collaboration rules. Avoid mixing project-specific implementation details into general process documentation.
+
+## Documentation Conventions
+
+Write instructions so they can apply to different technology stacks.
+
+Prefer:
+
+- source files, modules, components, services, tests, configuration, and documentation;
+- existing project patterns;
+- local validation appropriate to the repository;
+- clear acceptance criteria and review findings.
+
+Avoid:
+
+- framework-specific terminology unless the current task requires it;
+- assumptions about folder structure, build tools, deployment targets, or admin panels;
+- references to a previous client, platform, theme, CMS, or naming prefix;
+- prescribing architecture before the existing code has been inspected.
 
 ## Local Validation
 
-This project is not directly connected to Shopify. Do not run a store preview, test the whole theme, push to Shopify, or rely on `shopify theme dev`.
+Validation is local and code-focused unless the user asks for a different workflow.
 
-Testing is local and code-focused:
+Use checks that match the project being worked on, such as:
 
-- inspect Liquid syntax and schema JSON validity;
-- verify asset, snippet, and section references;
-- compare copied BLG elements against the source to ensure no functions were dropped unintentionally;
-- check that copied elements use BLG names consistently;
-- review CSS/JS selectors for collisions with native theme code;
-- confirm no native theme files were edited accidentally.
+- syntax or type checks;
+- linting or formatting checks;
+- unit, integration, or focused regression tests;
+- configuration validation;
+- reference and import checks;
+- review of changed files for unintended scope expansion.
 
-Use `rg`, `sed`, JSON validation tools, or `shopify theme check` only when useful locally.
+Do not assume that a preview server, external deployment, or full end-to-end test is available. When something cannot be verified locally, record that limitation in the implementation notes or review.
 
 ## Git Workflow
 
@@ -54,9 +66,13 @@ It is acceptable to inspect git state or history, for example `git status --shor
 
 ## Agent-Specific Instructions
 
-When adding or modifying BLG elements, keep changes scoped and aligned with the existing theme style. Prefer copying and adapting Eurus patterns over inventing new architecture. Before finishing, summarize changed BLG files and local checks.
+When preparing a task specification, inspect the relevant repository files first and write implementation guidance that another coding agent can follow without relying on the original conversation.
 
-When Shopify documentation or specification details are needed, use the Context7 MCP source for Shopify docs before making assumptions.
+When implementing from a specification, verify that the specification still matches the current repository state before changing code.
+
+When reviewing, prioritize bugs, missing requirements, behavioral regressions, unsafe assumptions, and missing validation. Do not modify reviewed code unless explicitly asked to apply fixes.
+
+Before finishing, summarize changed files and local checks.
 
 ## AI Working Modes
 
