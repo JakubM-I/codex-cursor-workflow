@@ -20,6 +20,15 @@ This division is intentional, but not absolute. A user may ask any agent to perf
 
 Each stage should have a clear purpose, input, output, and exit condition. Over time, a dedicated skill can be created for each stage. A stage skill may call or rely on more specialized skills, but it should still produce the expected stage artifact.
 
+Recommended material layers:
+
+* `.agents/` - shared instructions, checklists, and skills useful to more than one agent.
+* `.codex/` - Codex-specific stage skills, analysis prompts, review prompts, and supporting materials.
+* `.cursor/` - Cursor-specific implementation rules, coding prompts, and editor-native rule files.
+* `docs/` - human-readable workflow documentation, task specifications, and process records.
+
+Use the narrowest layer that fits. For example, a general review checklist belongs in `.agents/`, but a Codex skill that orchestrates the review stage belongs in `.codex/`.
+
 Suggested stage skills:
 
 * `task-intake` - clarify the request and collect missing context.

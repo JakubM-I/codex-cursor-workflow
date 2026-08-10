@@ -6,7 +6,9 @@ This repository is a workspace for designing a reusable AI-assisted development 
 
 The goal is to prepare instructions, task templates, review guidelines, skills, and supporting workflow documents that can later be copied or adapted into other software projects.
 
-This repository's `AGENTS.md` is local to this repository. In future target projects, `AGENTS.md` should describe that specific project, its technology stack, repository structure, validation commands, and local constraints.
+This repository's `AGENTS.md` is only for working on this workflow-system repository. It is not the operational `AGENTS.md` that should be copied into future software projects.
+
+In future projects, `AGENTS.md` should be written separately for that specific project, technology stack, repository structure, validation commands, and local constraints.
 
 Keep workflow materials general unless the user explicitly asks to create a project-specific or stack-specific variant.
 
@@ -14,13 +16,21 @@ Keep workflow materials general unless the user explicitly asks to create a proj
 
 Workflow documentation lives in `docs/workflows/`.
 
-Task handoff specifications for work on this repository should be created in `docs/tasks/` when needed. Use concise, descriptive filenames, for example:
+Shared agent materials live in `.agents/`.
+
+Codex-specific materials live in `.codex/`.
+
+Cursor-specific materials live in `.cursor/`.
+
+Temporary task notes for work on this repository may be created in `docs/tasks/` when useful. Use concise, descriptive filenames, for example:
 
 ```text
 TASK-001-short-feature-name.md
 ```
 
 Keep workflow documents focused on reusable collaboration rules. Avoid adding extra process structure before it is actually useful.
+
+Use the hidden agent directories only for agent/tool materials that are part of the designed system. Keep human-readable workflow documentation in `docs/`.
 
 ## Documentation Conventions
 
@@ -29,6 +39,7 @@ Write instructions so they can apply to different technology stacks.
 Prefer:
 
 - clear separation between this local `AGENTS.md` and reusable workflow materials;
+- clear separation between shared, Codex-specific, and Cursor-specific materials;
 - source files, modules, components, services, tests, configuration, and documentation as generic concepts;
 - clear acceptance criteria and review findings.
 
@@ -61,22 +72,25 @@ Agents must not create commits, pull requests, pushes, branches, rebases, or oth
 
 It is acceptable to inspect git state or history, for example `git status --short`, but do not stage or modify history.
 
-## Agent-Specific Instructions
+## Working On This Repository
 
-When preparing a task specification for this repository, inspect the relevant instruction files first and write guidance that another coding agent can follow without relying on the original conversation.
+This repository is for creating and refining the workflow system itself.
 
-When implementing from a specification, verify that the specification still matches the current repository state before changing files.
+When editing materials here:
 
-When reviewing, prioritize missing requirements, contradictions, unclear handoff steps, unsafe assumptions, stack-specific leakage, and missing validation guidance. Do not modify reviewed files unless explicitly asked to apply fixes.
+- keep changes focused on the instruction system being discussed;
+- avoid turning local repository rules into reusable workflow rules;
+- avoid turning reusable workflow rules into local repository rules;
+- prefer simple files and directories until a stronger structure is needed;
+- preserve the distinction between shared, Codex-specific, and Cursor-specific materials;
+- check for contradictions, unclear handoff steps, unsafe assumptions, stack-specific leakage, and missing validation guidance.
 
 Before finishing, summarize changed files and local checks.
 
-## AI Working Modes
+## Designed Workflow Materials
 
-This repository supports different AI-assisted working modes, including standalone documentation changes, analysis and specification, implementation from an existing task specification, and review.
-
-The active working mode is determined by the user's current instruction. Do not assign a permanent role to Codex, Cursor, or another coding agent.
-
-Detailed workflows, task handoff conventions, and task specification structure are described in:
+The reusable workflow being designed in this repository is described in:
 
 * `docs/workflows/ai-development.md`
+
+That document is part of the portable system. This `AGENTS.md` is not.
