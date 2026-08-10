@@ -1,108 +1,136 @@
-# AI Development Workflows
+# AI Development Workflow
 
-This document describes optional workflows for working with coding agents in this repository.
+This document describes a reusable workflow for cooperation between Codex, Cursor, and the user.
 
-Permanent repository rules are defined in `AGENTS.md` and take precedence over this workflow document.
+It is intended to be portable. The whole `docs` directory may be copied into another repository and adapted there. In every repository, the local `AGENTS.md`, current source code, and the user's latest instruction remain the source of truth.
 
-## Selecting a Working Mode
+## Core Idea
 
-The working mode is determined by the user's current instruction.
+The workflow is organized as a sequence of stages, not as a permanent role assignment.
 
-Agents must not assume a permanent role based on the tool being used. Codex, Cursor, or another coding agent may analyze, implement, or review changes when explicitly instructed.
+The preferred collaboration model is:
 
-## Mode 1: Standalone Implementation
+* Codex performs analysis, planning, task specification, verification, review, and correction guidance.
+* Cursor performs implementation based on the prepared task specification.
+* The user decides priorities, accepts scope, resolves product questions, and chooses when to move between stages.
 
-Use this mode when one agent is expected to complete the task independently.
+This division is intentional, but not absolute. A user may ask any agent to perform a different stage when needed.
 
-Typical process:
+## Workflow Architecture
 
-1. Read `AGENTS.md`.
-2. Inspect the relevant project files and existing patterns.
-3. Analyze the requested change.
-4. Implement the solution.
-5. Perform applicable local validation.
-6. Review the resulting changes.
-7. Summarize modified files, completed checks, limitations, and assumptions.
+Each stage should have a clear purpose, input, output, and exit condition. Over time, a dedicated skill can be created for each stage. A stage skill may call or rely on more specialized skills, but it should still produce the expected stage artifact.
 
-A separate task specification is optional for small or clearly scoped tasks.
+Suggested stage skills:
 
-## Mode 2: Analysis and Task Specification
+* `task-intake` - clarify the request and collect missing context.
+* `codebase-analysis` - inspect relevant files and existing patterns.
+* `implementation-plan` - define approach, scope, risks, and validation strategy.
+* `task-specification` - create the handoff document for Cursor.
+* `implementation-support` - help Cursor interpret the specification when needed.
+* `verification` - inspect completed changes and run or define local checks.
+* `code-review` - produce actionable findings.
+* `fix-guidance` - translate review findings into correction instructions.
+* `completion-summary` - summarize outcome, checks, limitations, and next steps.
 
-Use this mode when one agent prepares implementation guidance for another agent.
+Skill names are descriptive placeholders. A project may rename them or split them differently as the system evolves.
 
-The analyzing agent should:
+## Stage 1: Intake
 
-1. Read `AGENTS.md`.
-2. Inspect the relevant code and documentation.
-3. Identify existing project patterns.
-4. Determine the required files, dependencies, risks, and edge cases.
-5. Prepare a task specification in `docs/tasks/`.
-6. Avoid modifying application code unless explicitly requested.
+Purpose:
 
-The specification should describe what needs to be implemented without duplicating permanent project rules from `AGENTS.md`.
+Understand what the user wants and decide whether enough information exists to continue.
 
-## Mode 3: Implementation from a Task Specification
+Input:
 
-Use this mode when an agent receives a task prepared earlier.
+* user's request;
+* current repository instructions;
+* relevant existing task specification, when present.
 
-The implementing agent should:
+Process:
 
-1. Read `AGENTS.md`.
-2. Read the complete referenced task specification.
-3. Inspect the current repository state.
-4. Verify that the proposed solution still matches the actual code.
-5. Implement only the defined scope.
-6. Avoid unrelated refactoring.
-7. Perform applicable local validation.
-8. Report any deviations from the specification.
+1. Read the user's latest instruction carefully.
+2. Identify the requested outcome, not only the requested action.
+3. Check whether the request is for analysis, specification, implementation, review, fixes, or workflow design.
+4. Ask only for information that is necessary and cannot be safely inferred from the repository.
 
-A task specification does not override repository safety rules or the actual state of the codebase.
+Output:
 
-When the specification conflicts with the repository, the agent should report the conflict rather than silently introducing an unrelated workaround.
+* concise understanding of the requested outcome;
+* list of known constraints;
+* open questions or assumptions, only when needed.
 
-## Mode 4: Review
+Exit condition:
 
-Use this mode when an agent reviews work completed by another agent or by the user.
+The next stage is clear, or the user has answered a blocking question.
 
-The reviewer should compare the implementation against:
+## Stage 2: Codebase Analysis
 
-* the original request;
-* the referenced task specification, when present;
-* `AGENTS.md`;
-* existing project patterns.
+Purpose:
 
-Review findings should focus on:
+Inspect the repository before prescribing changes.
 
-* missing requirements;
-* functional errors;
-* behavioral regressions;
-* unsafe or undocumented assumptions;
-* unintended changes outside the requested scope;
-* broken references, imports, or integration points;
-* invalid syntax, schema, configuration, or data shape;
-* missing or insufficient validation;
-* incomplete handling of relevant edge cases.
+Input:
 
-Do not modify reviewed code unless explicitly asked to apply fixes.
+* accepted request or task goal;
+* local `AGENTS.md`;
+* relevant source files, tests, configuration, documentation, and prior task specifications.
 
-## Collaborative Workflow
+Process:
 
-A typical Codex and Cursor workflow may look like this:
+1. Read local project instructions first.
+2. Inspect files related to the requested behavior.
+3. Identify existing patterns, naming conventions, ownership boundaries, and validation commands.
+4. Note dependencies, integration points, and likely risks.
+5. Avoid making implementation changes during analysis unless the user explicitly asks for them.
 
-1. Codex analyzes the task.
-2. Codex creates a specification in `docs/tasks/`.
-3. The user reviews or accepts the specification.
-4. Cursor implements the specification.
-5. Codex reviews the implementation.
-6. Cursor applies accepted fixes.
+Output:
 
-This is an optional workflow, not a permanent assignment of responsibilities.
+* relevant files and patterns;
+* constraints that implementation must respect;
+* risks, unknowns, and validation options.
 
-Codex may also complete a task independently when instructed to do so.
+Exit condition:
 
-## Task Handoff
+There is enough repository context to create a plan or task specification.
 
-Task specifications used for collaboration between agents are stored in:
+## Stage 3: Planning
+
+Purpose:
+
+Choose a scoped approach before writing a task specification.
+
+Input:
+
+* intake summary;
+* codebase analysis;
+* project constraints.
+
+Process:
+
+1. Define the smallest useful scope that satisfies the request.
+2. Decide which files should be created or modified.
+3. Identify behavior that must be preserved.
+4. Identify validation that should be performed locally.
+5. Separate required work from optional improvements.
+
+Output:
+
+* implementation approach;
+* scope and out-of-scope notes;
+* validation strategy;
+* assumptions or decisions that should be visible to the implementing agent.
+
+Exit condition:
+
+The approach is specific enough to hand off.
+
+## Stage 4: Task Specification
+
+Purpose:
+
+Create a handoff document that Cursor can implement without relying on the original conversation.
+
+Location:
 
 ```text
 docs/tasks/
@@ -114,162 +142,15 @@ Suggested filename format:
 TASK-001-short-feature-name.md
 ```
 
-The purpose of a task specification is to provide a clear implementation handoff. It should remain concise and include only information useful for implementing and reviewing the requested change.
+Process:
 
-A task specification is not intended to document the entire project or reproduce permanent rules from `AGENTS.md`.
+1. Write the specification from the current repository state, not from memory.
+2. Include only information useful for implementation and review.
+3. Do not duplicate permanent project rules from `AGENTS.md`.
+4. Prefer concrete requirements over broad advice.
+5. Make validation expectations explicit.
 
-## Recommended Task Structure
-
-### Status
-
-Indicate the current stage of the task.
-
-Suggested values:
-
-* `Draft`
-* `Ready for implementation`
-* `Implementation in progress`
-* `Ready for review`
-* `Changes requested`
-* `Completed`
-
-### Goal
-
-Briefly describe what should be created or changed and what the expected result is.
-
-Focus on the visible, functional, or developer-facing outcome rather than general project background.
-
-### Target
-
-Identify the main files, modules, components, services, tests, configuration, or documentation involved.
-
-This may include:
-
-* new files to create;
-* existing files to modify;
-* existing implementation patterns that should be used as references;
-* optional supporting files needed for tests, configuration, styles, scripts, documentation, or data.
-
-Do not list unrelated repository files.
-
-Example:
-
-```md
-## Target
-
-Create:
-
-- `src/features/example/example-view.tsx`
-- `src/features/example/example-view.test.tsx`
-
-Based on:
-
-- `src/features/nearby-feature/nearby-view.tsx`
-
-Optional supporting files:
-
-- `src/features/example/example-types.ts`
-```
-
-### Implementation
-
-Describe the required solution in enough detail for another agent to implement it without relying on the original conversation.
-
-Depending on the task, this section may describe:
-
-* expected behavior;
-* user-facing or developer-facing flows;
-* data structures and interfaces;
-* configuration changes;
-* UI structure and responsive behavior;
-* API or service interactions;
-* state management;
-* error, empty, and loading states;
-* accessibility requirements;
-* styling requirements;
-* testing requirements;
-* dependencies on other files or modules;
-* behavior that must be preserved from existing implementation.
-
-This is the main part of the task specification.
-
-Prefer concrete implementation requirements over general suggestions. Do not prescribe unnecessary architecture when the task can be completed by following an existing project pattern.
-
-### Validation
-
-List only checks that are relevant to the requested implementation.
-
-Typical checks may include:
-
-* syntax, type, schema, or configuration validation;
-* linting or formatting checks;
-* unit, integration, or focused regression tests;
-* manual checks for important user flows;
-* verification that references, imports, routes, or registrations are correct;
-* verification that existing behavior was not unintentionally removed;
-* review that changed files stay within the requested scope;
-* accessibility or responsive checks when relevant.
-
-Validation in this repository is local and code-focused unless the user explicitly requests a different process.
-
-### Implementation Notes
-
-This section is completed by the implementing agent after the work is finished.
-
-It should include:
-
-* created or modified files;
-* existing patterns or reference files used;
-* completed local checks;
-* differences from the proposed implementation;
-* assumptions or limitations;
-* behavior that could not be verified locally.
-
-Keep this section factual and concise.
-
-### Review Findings
-
-This section is completed during review.
-
-Findings should include:
-
-* the affected file or part of the implementation;
-* a clear description of the problem;
-* why the problem matters;
-* the required or suggested correction.
-
-Suggested finding levels:
-
-* `Blocker` - the implementation is unsafe, invalid, or cannot be accepted;
-* `Major` - an important requirement or behavior is missing or incorrect;
-* `Minor` - a limited issue that should be corrected;
-* `Suggestion` - an optional improvement outside the acceptance requirement.
-
-When no problems are found, state that the implementation matches the task specification within the limits of local validation.
-
-## Optional Sections
-
-Additional sections should be added only when they help explain a specific task.
-
-### Current Behavior
-
-Use this when modifying existing behavior and the current implementation needs to be explained before describing the change.
-
-It is usually unnecessary when creating something new.
-
-### Scope and Out of Scope
-
-Use these sections when the task could easily expand into unrelated work or when specific parts of the existing implementation should not be copied or changed.
-
-They are not required for straightforward changes.
-
-### Open Questions or Assumptions
-
-Use this when the task specification cannot determine an important behavior from the repository or provided requirements.
-
-Do not add this section for minor implementation details that can be resolved by following existing project patterns.
-
-## Minimal Task Template
+Recommended task structure:
 
 ```md
 # TASK-001: Short feature name
@@ -280,27 +161,29 @@ Ready for implementation
 
 ## Goal
 
-Describe the expected change or feature.
+Describe the expected result.
 
-## Target
+## Context
 
-Create or modify:
+Summarize the relevant current behavior, files, patterns, and constraints.
 
-- `path/to/target-file.ext`
+## Scope
 
-Based on:
+List what must be created or changed.
 
-- `path/to/reference-file.ext`
+## Out of Scope
 
-## Implementation
+List nearby work that should not be done.
 
-Describe the required behavior, structure, interfaces, styling, tests, and existing behavior that must be preserved.
+## Implementation Requirements
+
+Describe the required behavior, structure, interfaces, styling, data handling, tests, and existing behavior that must be preserved.
 
 ## Validation
 
 - [ ] Relevant syntax, type, schema, or configuration checks pass.
-- [ ] All references, imports, routes, or registrations are correct.
-- [ ] Required behavior is covered by appropriate local checks.
+- [ ] Relevant tests or focused manual checks are completed.
+- [ ] References, imports, routes, registrations, or generated artifacts are correct.
 - [ ] Existing behavior was not unintentionally removed.
 - [ ] Changed files stay within the requested scope.
 
@@ -313,6 +196,180 @@ Completed by the implementing agent.
 Completed by the reviewing agent.
 ```
 
-The repository, `AGENTS.md`, current source files, and the user's latest instruction remain the source of truth.
+Output:
 
-A task specification is a handoff document. It does not replace inspecting the actual source before implementation.
+* task specification in `docs/tasks/`;
+* optional short summary for the user.
+
+Exit condition:
+
+The task is ready for Cursor or another implementing agent.
+
+## Stage 5: Implementation
+
+Purpose:
+
+Implement the accepted task specification.
+
+Primary owner:
+
+Cursor, unless the user explicitly assigns implementation to another agent.
+
+Input:
+
+* local `AGENTS.md`;
+* referenced task specification;
+* current repository state.
+
+Process:
+
+1. Read `AGENTS.md`.
+2. Read the complete task specification.
+3. Inspect the current files before editing.
+4. Confirm that the specification still matches the repository.
+5. Implement only the defined scope.
+6. Avoid unrelated refactoring, renaming, cleanup, or architecture changes.
+7. Run or document relevant validation.
+8. Fill in `Implementation Notes` in the task specification when requested by the workflow or user.
+
+Output:
+
+* changed source files;
+* completed implementation notes or summary;
+* validation results and limitations.
+
+Exit condition:
+
+The implementation is ready for verification or review.
+
+## Stage 6: Verification
+
+Purpose:
+
+Check whether the implementation appears complete before formal review.
+
+Input:
+
+* task specification;
+* implementation diff;
+* validation output;
+* local project instructions.
+
+Process:
+
+1. Compare changed files against the task scope.
+2. Check whether required validation was performed.
+3. Identify missing evidence, skipped checks, or obvious deviations.
+4. Decide whether the work can proceed to review or should return to implementation.
+
+Output:
+
+* verification summary;
+* missing checks or deviations, if any.
+
+Exit condition:
+
+The implementation is ready for review, or concrete follow-up work is identified.
+
+## Stage 7: Review
+
+Purpose:
+
+Find actionable issues in the completed implementation.
+
+Primary owner:
+
+Codex, unless the user explicitly assigns review to another agent.
+
+Review against:
+
+* original user request;
+* task specification;
+* local `AGENTS.md`;
+* current repository state;
+* existing project patterns.
+
+Focus on:
+
+* missing requirements;
+* functional errors;
+* behavioral regressions;
+* unsafe or undocumented assumptions;
+* unintended changes outside scope;
+* broken references, imports, routes, registrations, or integration points;
+* invalid syntax, schema, configuration, or data shape;
+* missing or insufficient validation;
+* incomplete handling of relevant edge cases.
+
+Output format:
+
+List findings first. For each finding include:
+
+* severity: `Blocker`, `Major`, `Minor`, or `Suggestion`;
+* affected file or code area;
+* description of the issue;
+* why it matters;
+* required or suggested correction.
+
+When no issues are found, state that clearly and mention remaining test gaps or limits of local validation.
+
+Exit condition:
+
+The task is accepted, or findings are ready for correction.
+
+## Stage 8: Fix Loop
+
+Purpose:
+
+Turn review findings into focused implementation corrections.
+
+Process:
+
+1. Cursor applies accepted fixes.
+2. Fixes stay limited to review findings and required follow-up.
+3. Validation is repeated for the changed area.
+4. Codex reviews again when needed.
+
+Exit condition:
+
+No blocking or major findings remain, or the user decides to stop.
+
+## Stage 9: Completion
+
+Purpose:
+
+Close the task with a clear record of what changed and what was verified.
+
+Completion summary should include:
+
+* created or modified files;
+* implemented behavior;
+* completed validation;
+* known limitations or checks that could not be run;
+* unresolved questions, if any.
+
+The summary should be concise and factual.
+
+## Status Values
+
+Task specifications may use these status values:
+
+* `Draft`
+* `Ready for implementation`
+* `Implementation in progress`
+* `Ready for verification`
+* `Ready for review`
+* `Changes requested`
+* `Completed`
+
+## Source of Truth
+
+Use this priority order when instructions conflict:
+
+1. User's latest instruction.
+2. Local `AGENTS.md`.
+3. Current repository state.
+4. Referenced task specification.
+5. Reusable workflow documents.
+
+A task specification is a handoff artifact. It does not replace inspecting the actual source before implementation.
