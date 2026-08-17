@@ -43,6 +43,14 @@ Suggested stage skills:
 
 Skill names are descriptive placeholders. A project may rename them or split them differently as the system evolves.
 
+A working inventory of tools, skills, prompts, and supporting materials assigned to workflow stages may be tracked in:
+
+```text
+docs/workflows/stage-resources.md
+```
+
+That inventory is a planning aid. It can be changed, simplified, or removed as the workflow matures.
+
 ## Stage 1: Intake
 
 Purpose:
