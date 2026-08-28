@@ -1,47 +1,45 @@
 # AI Development Workflow
 
-This document describes a reusable workflow for cooperation between Codex, Cursor, and the user.
+This document describes the first part of a reusable workflow for building a new software project with Codex, Cursor, and the user.
 
-It is intended to be portable. The whole `docs` directory may be copied into another repository and adapted there. In every repository, the local `AGENTS.md`, current source code, and the user's latest instruction remain the source of truth.
+Current scope: project creation from zero, from initialization to an implementation plan. Existing-project onboarding, task-level implementation specs, Cursor execution, verification, review, and fix loops will be designed later.
+
+The workflow is intended to be portable. The whole workflow system may be copied into another repository and adapted there. In every repository, the user's latest instruction and current project state remain the source of truth.
 
 ## Core Idea
 
-The workflow is organized as a sequence of stages, not as a permanent role assignment.
+The workflow is organized as project stages. Each stage should eventually have a dedicated skill or entry point.
 
 The preferred collaboration model is:
 
-* Codex performs analysis, planning, task specification, verification, review, and correction guidance.
-* Cursor performs implementation based on the prepared task specification.
-* The user decides priorities, accepts scope, resolves product questions, and chooses when to move between stages.
+* Codex guides project discovery, product definition, design direction, technical architecture, and implementation planning.
+* Cursor implements concrete tasks later, after the project plan has been converted into task-level specifications.
+* The user provides goals, decisions, priorities, feedback, accounts, assets, and final approval.
 
-This division is intentional, but not absolute. A user may ask any agent to perform a different stage when needed.
+This document stops at the project implementation plan. It does not yet define the detailed Cursor task workflow.
 
-## Workflow Architecture
+## Operating Principles
 
-Each stage should have a clear purpose, input, output, and exit condition. Over time, a dedicated skill can be created for each stage. A stage skill may call or rely on more specialized skills, but it should still produce the expected stage artifact.
+Use the smallest amount of process that creates clarity.
+
+Do not force every agent to read every project document. Each stage or skill should decide which context is needed for its purpose.
+
+Keep `AGENTS.md` minimal in target projects. Treat it as an entry point or context index, not as the main workflow engine.
+
+Use structured artifacts when they will be reused by later stages. If a file needs to be discovered, filtered, resumed, validated, or routed by agents, give it appropriate frontmatter or metadata.
+
+Use deterministic scripts, hooks, or validations when a gate should not depend only on model memory.
+
+## Material Layers
 
 Recommended material layers:
 
-* `.agents/` - shared instructions, checklists, and skills useful to more than one agent.
-* `.codex/` - Codex-specific stage skills, analysis prompts, review prompts, and supporting materials.
-* `.cursor/` - Cursor-specific implementation rules, coding prompts, and editor-native rule files.
-* `docs/` - human-readable workflow documentation, task specifications, and process records.
+* `.agents/` - shared instructions, checklists, skills, scripts, and reusable conventions.
+* `.codex/` - Codex-specific stage skills, analysis prompts, subagent definitions, orchestration, review prompts, and supporting materials.
+* `.cursor/` - Cursor-specific implementation rules, coding prompts, editor-native rules, and implementation support.
+* `docs/` - human-readable workflow documentation, project artifacts, plans, and task records.
 
-Use the narrowest layer that fits. For example, a general review checklist belongs in `.agents/`, but a Codex skill that orchestrates the review stage belongs in `.codex/`.
-
-Suggested stage skills:
-
-* `task-intake` - clarify the request and collect missing context.
-* `codebase-analysis` - inspect relevant files and existing patterns.
-* `implementation-plan` - define approach, scope, risks, and validation strategy.
-* `task-specification` - create the handoff document for Cursor.
-* `implementation-support` - help Cursor interpret the specification when needed.
-* `verification` - inspect completed changes and run or define local checks.
-* `code-review` - produce actionable findings.
-* `fix-guidance` - translate review findings into correction instructions.
-* `completion-summary` - summarize outcome, checks, limitations, and next steps.
-
-Skill names are descriptive placeholders. A project may rename them or split them differently as the system evolves.
+Use the narrowest layer that fits. Shared materials belong in `.agents/`. Codex orchestration belongs in `.codex/`. Cursor implementation guidance belongs in `.cursor/`.
 
 A working inventory of tools, skills, prompts, and supporting materials assigned to workflow stages may be tracked in:
 
@@ -51,342 +49,223 @@ docs/workflows/stage-resources.md
 
 That inventory is a planning aid. It can be changed, simplified, or removed as the workflow matures.
 
-## Stage 1: Intake
+## Project Workflow Stages
+
+### Stage 1: Init
 
 Purpose:
 
-Understand what the user wants and decide whether enough information exists to continue.
+Initialize a new project workspace for the Codex-Cursor workflow.
 
-Input:
+Possible responsibilities:
 
-* user's request;
-* current repository instructions;
-* relevant existing task specification, when present.
+* create or update a minimal `AGENTS.md` entry point;
+* create the base workflow/project documentation folders when needed;
+* initialize git when the user wants it;
+* prepare optional scripts, hooks, or repo metadata;
+* optionally create or connect a remote repository when the user explicitly asks for it.
 
-Process:
-
-1. Read the user's latest instruction carefully.
-2. Identify the requested outcome, not only the requested action.
-3. Check whether the request is for analysis, specification, implementation, review, fixes, or workflow design.
-4. Ask only for information that is necessary and cannot be safely inferred from the repository.
+The first version of this stage should stay conservative. It should not gather the whole project brief or decide the technical architecture.
 
 Output:
 
-* concise understanding of the requested outcome;
-* list of known constraints;
-* open questions or assumptions, only when needed.
+* initialized project workspace;
+* minimal project entry point or context index;
+* clear note of what was created and what remains unset.
 
 Exit condition:
 
-The next stage is clear, or the user has answered a blocking question.
+The project workspace is ready for project discovery.
 
-## Stage 2: Codebase Analysis
+### Stage 2: Brief
 
 Purpose:
 
-Inspect the repository before prescribing changes.
+Collect and pressure-test the core project idea before product or technical decisions are locked.
 
-Input:
+The brief should answer:
 
-* accepted request or task goal;
-* local `AGENTS.md`;
-* relevant source files, tests, configuration, documentation, and prior task specifications.
+* what is being built;
+* who it is for;
+* what problem it solves;
+* what the most important outcomes are;
+* what is explicitly out of scope;
+* what assumptions need validation;
+* what inputs, assets, accounts, or external references may be needed.
 
-Process:
-
-1. Read local project instructions first.
-2. Inspect files related to the requested behavior.
-3. Identify existing patterns, naming conventions, ownership boundaries, and validation commands.
-4. Note dependencies, integration points, and likely risks.
-5. Avoid making implementation changes during analysis unless the user explicitly asks for them.
+This stage may use conversational pressure testing, inspiration research, or "grill me" style questioning. It should ask for one decision at a time when the user is needed.
 
 Output:
 
-* relevant files and patterns;
-* constraints that implementation must respect;
-* risks, unknowns, and validation options.
+* project brief;
+* goals and non-goals;
+* initial feature/function list;
+* open questions and assumptions.
 
 Exit condition:
 
-There is enough repository context to create a plan or task specification.
+There is enough product context to describe the desired functionality.
 
-## Stage 3: Planning
+### Stage 3: Functional Specification
 
 Purpose:
 
-Choose a scoped approach before writing a task specification.
+Turn the brief into a structured description of what the project should do.
 
-Input:
+The functional specification should focus on product behavior, not implementation details.
 
-* intake summary;
-* codebase analysis;
-* project constraints.
+It may include:
 
-Process:
-
-1. Define the smallest useful scope that satisfies the request.
-2. Decide which files should be created or modified.
-3. Identify behavior that must be preserved.
-4. Identify validation that should be performed locally.
-5. Separate required work from optional improvements.
+* core features;
+* user roles or user types;
+* main user flows;
+* screens or interaction areas;
+* important states and edge cases;
+* data the product must create, display, import, export, or preserve;
+* acceptance criteria at the product level.
 
 Output:
 
-* implementation approach;
-* scope and out-of-scope notes;
-* validation strategy;
-* assumptions or decisions that should be visible to the implementing agent.
+* functional specification;
+* resolved and unresolved product decisions;
+* list of functionality that later stages must account for.
 
 Exit condition:
 
-The approach is specific enough to hand off.
+The product behavior is clear enough for design and technical architecture work.
 
-## Stage 4: Task Specification
+### Stage 4: Designer
 
 Purpose:
 
-Create a handoff document that Cursor can implement without relying on the original conversation.
+Define the visual and UX direction for the product.
 
-Location:
+This stage may use design tools, UI inspiration sources, visual references, mockup tools, or design-specific skills. Examples include MagicPath, Mobbin, generated visual references, or project-specific design systems when available.
 
-```text
-docs/tasks/
-```
+The design stage should focus on:
 
-Suggested filename format:
+* visual direction;
+* UX structure;
+* screen inventory;
+* layout patterns;
+* component needs;
+* interaction patterns;
+* accessibility and responsive expectations;
+* design constraints that affect implementation.
 
-```text
-TASK-001-short-feature-name.md
-```
+Output:
 
-Process:
+* design direction or design brief;
+* screen or view list;
+* component and interaction notes;
+* references or generated design assets, when used;
+* design constraints for architecture and planning.
 
-1. Write the specification from the current repository state, not from memory.
-2. Include only information useful for implementation and review.
-3. Do not duplicate permanent project rules from `AGENTS.md`.
-4. Prefer concrete requirements over broad advice.
-5. Make validation expectations explicit.
+Exit condition:
 
-Recommended task structure:
+The technical architecture can account for the intended product experience.
+
+### Stage 5: Architect
+
+Purpose:
+
+Define the technical shape of the project based on the brief, functional specification, and design direction.
+
+The architect stage should decide or document:
+
+* stack and major technical choices;
+* application structure;
+* data model direction;
+* integrations and external services;
+* authentication or permissions, when relevant;
+* validation and test strategy;
+* build, deployment, or hosting assumptions;
+* risks, constraints, and tradeoffs.
+
+Stack should not be chosen too early unless the user has already fixed it. Design and functional requirements may affect technical decisions.
+
+Output:
+
+* technical architecture specification;
+* stack decision or stack constraints;
+* testing and validation approach;
+* known technical risks and assumptions.
+
+Exit condition:
+
+There is enough product, design, and technical context to plan implementation phases.
+
+### Stage 6: Implementation Plan
+
+Purpose:
+
+Break the project into ordered implementation stages that can later be converted into concrete Cursor tasks.
+
+The implementation plan should stay at the project-stage level. It should not become a full list of low-level coding tasks unless that detail is needed to understand sequencing.
+
+Each implementation stage should include:
+
+* stage name;
+* goal;
+* scope;
+* expected result;
+* dependencies or prerequisites;
+* validation or acceptance notes, when useful.
+
+Example stage format:
 
 ```md
-# TASK-001: Short feature name
+## Etap 10 - Eksport I Import Postepow
 
-## Status
+Cel:
 
-Ready for implementation
+Zabezpieczyc dane przed utrata.
 
-## Goal
+Zakres:
 
-Describe the expected result.
+- eksport postepow do pliku JSON;
+- import wczesniej wyeksportowanego pliku;
+- potwierdzenie przed nadpisaniem obecnych postepow;
+- komunikat przy niezgodnym pliku.
 
-## Context
+Rezultat:
 
-Summarize the relevant current behavior, files, patterns, and constraints.
-
-## Scope
-
-List what must be created or changed.
-
-## Out of Scope
-
-List nearby work that should not be done.
-
-## Implementation Requirements
-
-Describe the required behavior, structure, interfaces, styling, data handling, tests, and existing behavior that must be preserved.
-
-## Validation
-
-- [ ] Relevant syntax, type, schema, or configuration checks pass.
-- [ ] Relevant tests or focused manual checks are completed.
-- [ ] References, imports, routes, registrations, or generated artifacts are correct.
-- [ ] Existing behavior was not unintentionally removed.
-- [ ] Changed files stay within the requested scope.
-
-## Implementation Notes
-
-Completed by the implementing agent.
-
-## Review Findings
-
-Completed by the reviewing agent.
+- rodzic moze zrobic kopie zapasowa;
+- import odtwarza lokalny zapis;
+- eksport nie zawiera bazy cwiczen.
 ```
 
 Output:
 
-* task specification in `docs/tasks/`;
-* optional short summary for the user.
+* ordered implementation plan;
+* project stages with goals, scope, and expected results;
+* dependencies and prerequisites;
+* enough context to start creating task-level implementation specifications.
 
 Exit condition:
 
-The task is ready for Cursor or another implementing agent.
+The project has a coherent implementation roadmap. The next workflow part can create detailed task specifications for Cursor.
 
-## Stage 5: Implementation
+## Future Workflow Parts
 
-Purpose:
+The following areas are intentionally outside the current scope and will be designed later:
 
-Implement the accepted task specification.
-
-Primary owner:
-
-Cursor, unless the user explicitly assigns implementation to another agent.
-
-Input:
-
-* local `AGENTS.md`;
-* referenced task specification;
-* current repository state.
-
-Process:
-
-1. Read `AGENTS.md`.
-2. Read the complete task specification.
-3. Inspect the current files before editing.
-4. Confirm that the specification still matches the repository.
-5. Implement only the defined scope.
-6. Avoid unrelated refactoring, renaming, cleanup, or architecture changes.
-7. Run or document relevant validation.
-8. Fill in `Implementation Notes` in the task specification when requested by the workflow or user.
-
-Output:
-
-* changed source files;
-* completed implementation notes or summary;
-* validation results and limitations.
-
-Exit condition:
-
-The implementation is ready for verification or review.
-
-## Stage 6: Verification
-
-Purpose:
-
-Check whether the implementation appears complete before formal review.
-
-Input:
-
-* task specification;
-* implementation diff;
-* validation output;
-* local project instructions.
-
-Process:
-
-1. Compare changed files against the task scope.
-2. Check whether required validation was performed.
-3. Identify missing evidence, skipped checks, or obvious deviations.
-4. Decide whether the work can proceed to review or should return to implementation.
-
-Output:
-
-* verification summary;
-* missing checks or deviations, if any.
-
-Exit condition:
-
-The implementation is ready for review, or concrete follow-up work is identified.
-
-## Stage 7: Review
-
-Purpose:
-
-Find actionable issues in the completed implementation.
-
-Primary owner:
-
-Codex, unless the user explicitly assigns review to another agent.
-
-Review against:
-
-* original user request;
-* task specification;
-* local `AGENTS.md`;
-* current repository state;
-* existing project patterns.
-
-Focus on:
-
-* missing requirements;
-* functional errors;
-* behavioral regressions;
-* unsafe or undocumented assumptions;
-* unintended changes outside scope;
-* broken references, imports, routes, registrations, or integration points;
-* invalid syntax, schema, configuration, or data shape;
-* missing or insufficient validation;
-* incomplete handling of relevant edge cases.
-
-Output format:
-
-List findings first. For each finding include:
-
-* severity: `Blocker`, `Major`, `Minor`, or `Suggestion`;
-* affected file or code area;
-* description of the issue;
-* why it matters;
-* required or suggested correction.
-
-When no issues are found, state that clearly and mention remaining test gaps or limits of local validation.
-
-Exit condition:
-
-The task is accepted, or findings are ready for correction.
-
-## Stage 8: Fix Loop
-
-Purpose:
-
-Turn review findings into focused implementation corrections.
-
-Process:
-
-1. Cursor applies accepted fixes.
-2. Fixes stay limited to review findings and required follow-up.
-3. Validation is repeated for the changed area.
-4. Codex reviews again when needed.
-
-Exit condition:
-
-No blocking or major findings remain, or the user decides to stop.
-
-## Stage 9: Completion
-
-Purpose:
-
-Close the task with a clear record of what changed and what was verified.
-
-Completion summary should include:
-
-* created or modified files;
-* implemented behavior;
-* completed validation;
-* known limitations or checks that could not be run;
-* unresolved questions, if any.
-
-The summary should be concise and factual.
-
-## Status Values
-
-Task specifications may use these status values:
-
-* `Draft`
-* `Ready for implementation`
-* `Implementation in progress`
-* `Ready for verification`
-* `Ready for review`
-* `Changes requested`
-* `Completed`
+* onboarding or analysis of an existing project;
+* conversion of an implementation-plan stage into one or more Cursor task specifications;
+* Cursor implementation workflow;
+* verification workflow;
+* code review workflow;
+* fix guidance and fix loops;
+* completion and knowledge capture.
 
 ## Source of Truth
 
 Use this priority order when instructions conflict:
 
 1. User's latest instruction.
-2. Local `AGENTS.md`.
-3. Current repository state.
-4. Referenced task specification.
+2. Current project state.
+3. Local project entry point and referenced project documents.
+4. Stage artifact currently being produced.
 5. Reusable workflow documents.
 
-A task specification is a handoff artifact. It does not replace inspecting the actual source before implementation.
+Workflow documents guide the process. They do not replace stage-specific skills, project-specific context, or user decisions.
