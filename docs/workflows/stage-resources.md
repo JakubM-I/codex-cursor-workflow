@@ -39,13 +39,13 @@ Codex, with user approval for repository or remote actions.
 
 Primary skill or prompt:
 
-Do ustalenia: `project-init`.
+`.codex/skills/project-init/SKILL.md`.
 
 Supporting resources:
 
-* Do ustalenia: minimal `AGENTS.md` entrypoint template;
+* minimal `AGENTS.md` entrypoint contract defined in `project-init`;
 * Do ustalenia: project folder bootstrap script;
-* Do ustalenia: git initialization script;
+* Do ustalenia: git initialization script for later automation;
 * Do ustalenia: GitHub repository creation script or checklist;
 * Do ustalenia: safety checklist for destructive or remote actions.
 
@@ -59,9 +59,8 @@ Output artifacts:
 
 * initialized project workspace;
 * minimal project entry point or context index;
-* base folders needed by the workflow;
-* optional git repository;
-* optional remote repository reference.
+* git repository with `main` as the primary branch;
+* base folders needed by the workflow, when introduced in later versions.
 
 Frontmatter or metadata needs:
 
@@ -72,7 +71,7 @@ Open decisions:
 
 * decide how small the first `AGENTS.md` should be;
 * decide which folders are created immediately and which are created on demand;
-* decide whether git/GitHub setup is part of the default path or an explicit option.
+* decide whether GitHub setup is part of the default path or an explicit option.
 
 ### Brief
 

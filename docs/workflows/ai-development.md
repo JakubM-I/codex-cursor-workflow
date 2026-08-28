@@ -60,17 +60,18 @@ Initialize a new project workspace for the Codex-Cursor workflow.
 Possible responsibilities:
 
 * create or update a minimal `AGENTS.md` entry point;
-* create the base workflow/project documentation folders when needed;
-* initialize git when the user wants it;
-* prepare optional scripts, hooks, or repo metadata;
-* optionally create or connect a remote repository when the user explicitly asks for it.
+* initialize git;
+* ensure the primary branch is named `main`;
+* create the base workflow/project documentation folders when needed in later versions;
+* prepare optional scripts, hooks, repo metadata, or remote repository setup in later versions.
 
-The first version of this stage should stay conservative. It should not gather the whole project brief or decide the technical architecture.
+The first version of this stage should stay conservative: create the minimal `AGENTS.md` entry point and initialize git with `main`. It should not gather the whole project brief, decide the technical architecture, create a remote repository, or plan implementation.
 
 Output:
 
 * initialized project workspace;
 * minimal project entry point or context index;
+* git repository with `main` as the primary branch;
 * clear note of what was created and what remains unset.
 
 Exit condition:
