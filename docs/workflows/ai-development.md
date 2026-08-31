@@ -28,6 +28,8 @@ Keep `AGENTS.md` minimal in target projects. Treat it as an entry point or conte
 
 Use structured artifacts when they will be reused by later stages. If a file needs to be discovered, filtered, resumed, validated, or routed by agents, give it appropriate frontmatter or metadata.
 
+Each project has a compact workflow index at `docs/project/status.md`. Init creates it. Stage-owner skills update their own row, the current stage, blockers, next action, and a short recent-update trail. Detailed history remains in stage artifacts and git; supporting skills do not update the index directly.
+
 Use deterministic scripts, hooks, or validations when a gate should not depend only on model memory.
 
 ## Material Layers
@@ -40,6 +42,8 @@ Recommended material layers:
 * `docs/` - human-readable workflow documentation, project artifacts, plans, and task records.
 
 Use the narrowest layer that fits. Shared materials belong in `.agents/`. Codex orchestration belongs in `.codex/`. Cursor implementation guidance belongs in `.cursor/`.
+
+System skills created for this workflow should use the `cc-` prefix and a short action-oriented name, for example `cc-init`.
 
 A working inventory of tools, skills, prompts, and supporting materials assigned to workflow stages may be tracked in:
 
@@ -62,15 +66,16 @@ Possible responsibilities:
 * create or update a minimal `AGENTS.md` entry point;
 * initialize git;
 * ensure the primary branch is named `main`;
-* create the base workflow/project documentation folders when needed in later versions;
+* create the minimal project-status index at `docs/project/status.md`;
 * prepare optional scripts, hooks, repo metadata, or remote repository setup in later versions.
 
-The first version of this stage should stay conservative: create the minimal `AGENTS.md` entry point and initialize git with `main`. It should not gather the whole project brief, decide the technical architecture, create a remote repository, or plan implementation.
+The first version of this stage should stay conservative: create the minimal `AGENTS.md` entry point, project-status index, and initialize git with `main`. It should not gather the whole project brief, decide the technical architecture, create a remote repository, or plan implementation.
 
 Output:
 
 * initialized project workspace;
 * minimal project entry point or context index;
+* project-status index with Brief as the next stage;
 * git repository with `main` as the primary branch;
 * clear note of what was created and what remains unset.
 
@@ -100,8 +105,9 @@ Output:
 
 * project brief;
 * goals and non-goals;
-* initial feature/function list;
 * open questions and assumptions.
+
+The Brief owns the project direction and its boundaries. It may capture capability hypotheses, but detailed features, user flows, states, and product acceptance criteria belong to Functional Specification.
 
 Exit condition:
 

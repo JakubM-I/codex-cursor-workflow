@@ -1,14 +1,14 @@
 ---
-name: project-init
+name: cc-init
 description: Initialize a new project workspace for the Codex-Cursor workflow. Use when the user says they are starting or initiating a new project and provides a short project description. Creates a minimal AGENTS.md and initializes git with main as the primary branch.
 argument-hint: "[short project description]"
 ---
 
-# Project Init
+# CC Init
 
 Initialize the target project workspace for the Codex-Cursor workflow.
 
-This skill is for the first project stage. It creates only the minimal local entry point and git baseline needed before project discovery. It does not gather the full brief, choose a stack, create a design, or plan implementation.
+This skill is for the first project stage. It creates the minimal local entry point, project-status index, and git baseline needed before project discovery. It does not gather the full brief, choose a stack, create a design, or plan implementation.
 
 ## Input
 
@@ -18,9 +18,10 @@ Use the user's message as the project description. If the description is missing
 
 1. Identify the target project root.
 2. Create or update `AGENTS.md` in the project root.
-3. Initialize git if the project is not already a git repository.
-4. Ensure the primary branch is named `main`.
-5. Report exactly what was created or changed.
+3. Create or preserve `docs/project/status.md`.
+4. Initialize git if the project is not already a git repository.
+5. Ensure the primary branch is named `main`.
+6. Report exactly what was created or changed.
 
 ## AGENTS.md Contract
 
@@ -50,6 +51,19 @@ If `AGENTS.md` already exists:
 - do not overwrite substantial existing content without asking;
 - if the file looks unrelated or already detailed, summarize the situation and ask whether to replace, merge, or leave it unchanged.
 
+## Project Status Contract
+
+Read `.agents/artifacts/project-status.md` before creating or updating `docs/project/status.md`.
+
+Create `docs/project/` and the initial status file after the minimal project entry point has been established. Set Init to `complete`, set the project to `active`, and set Brief as the current next stage.
+
+If `docs/project/status.md` already exists:
+
+- preserve it and inspect its current state;
+- do not recreate the stage register or overwrite its history;
+- update only the Init row when this invocation materially changes initialization state;
+- report any conflict between the existing status and the project state instead of silently correcting it.
+
 ## Git Contract
 
 If `.git/` does not exist:
@@ -78,6 +92,7 @@ Finish with a concise summary:
 
 - project root;
 - whether `AGENTS.md` was created, updated, or left unchanged;
+- whether `docs/project/status.md` was created, updated, or left unchanged;
 - whether git was initialized or already existed;
 - resulting current branch;
 - anything intentionally left for later stages.

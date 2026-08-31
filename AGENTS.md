@@ -36,6 +36,8 @@ Use the hidden agent directories only for agent/tool materials that are part of 
 
 Write instructions so they can apply to different technology stacks.
 
+System skills created for this workflow should use the `cc-` prefix and a short kebab-case name, for example `cc-init`.
+
 Prefer:
 
 - clear separation between this local `AGENTS.md` and reusable workflow materials;

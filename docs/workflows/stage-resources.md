@@ -39,11 +39,12 @@ Codex, with user approval for repository or remote actions.
 
 Primary skill or prompt:
 
-`.codex/skills/project-init/SKILL.md`.
+`.codex/skills/cc-init/SKILL.md`.
 
 Supporting resources:
 
-* minimal `AGENTS.md` entrypoint contract defined in `project-init`;
+* minimal `AGENTS.md` entrypoint contract defined in `cc-init`;
+* `.agents/artifacts/project-status.md` - shared project-status contract;
 * Do ustalenia: project folder bootstrap script;
 * Do ustalenia: git initialization script for later automation;
 * Do ustalenia: GitHub repository creation script or checklist;
@@ -60,11 +61,12 @@ Output artifacts:
 * initialized project workspace;
 * minimal project entry point or context index;
 * git repository with `main` as the primary branch;
-* base folders needed by the workflow, when introduced in later versions.
+* `docs/project/status.md` with Brief as the next stage.
 
 Frontmatter or metadata needs:
 
 * likely none for `AGENTS.md`;
+* required for `docs/project/status.md`: `artifact`, `version`, `project_status`, `current_stage`, `created`, `updated`, `related`;
 * bootstrap logs or init reports may need metadata later.
 
 Open decisions:
@@ -85,16 +87,15 @@ Codex, with user input.
 
 Primary skill or prompt:
 
-Do ustalenia: `project-brief`.
+`.codex/skills/cc-brief/SKILL.md`.
 
 Supporting resources:
 
-* Do ustalenia: project goals checklist;
-* Do ustalenia: audience and user needs checklist;
-* Do ustalenia: non-goals checklist;
-* Do ustalenia: assumptions checklist;
-* Do ustalenia: pressure-test or grill-me style skill;
-* Do ustalenia: inspiration/research support.
+* `cc-brief/references/project-brief.md` - artifact contract and readiness check;
+* `.codex/skills/cc-grill/SKILL.md` - pressure-test support for Standard and Deep discovery;
+* `.agents/artifacts/project-status.md` - shared project-status contract;
+* later, if justified: a focused requirements-critic subagent;
+* later, if justified and authorized: inspiration or market research support.
 
 Input artifacts:
 
@@ -104,19 +105,20 @@ Input artifacts:
 
 Output artifacts:
 
-* project brief;
-* goals and non-goals;
-* initial feature/function list;
+* `docs/project/brief.md`;
+* updated `docs/project/status.md`;
+* project direction, goals, and non-goals;
+* initial capability hypotheses;
 * assumptions and open questions.
 
 Frontmatter or metadata needs:
 
-* likely yes: `type`, `status`, `created`, `updated`, `source`, `stage`, `tags`.
+* required for `docs/project/brief.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`.
 
 Open decisions:
 
-* decide whether the brief is one file or several focused files;
-* decide how much questioning belongs here before moving to functional specification.
+* whether the brief needs a separate change log or revision history once projects become long-lived;
+* whether a requirements-critic subagent should be introduced for high-ambiguity projects.
 
 ### Functional Specification
 
