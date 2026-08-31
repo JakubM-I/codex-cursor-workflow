@@ -7,6 +7,7 @@ Current skills:
 - `cc-init/` - initializes a new project workspace with a minimal `AGENTS.md` and git on `main`.
 - `cc-brief/` - turns an early project idea into a durable, pressure-tested project brief.
 - `cc-grill/` - runs a structured pressure-test interview for a project idea or decision.
+- `cc-spec/` - turns a ready brief into product and functional specifications.
 
 Expected future use:
 

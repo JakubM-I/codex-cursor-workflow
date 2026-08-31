@@ -22,7 +22,7 @@ related: []
 Allowed `status` values:
 
 * `draft` - discovery is in progress or non-blocking questions remain;
-* `ready-for-functional-spec` - the core direction is sufficiently settled for the next stage;
+* `ready-for-functional-spec` - the core direction is sufficiently settled for product and functional specification;
 * `superseded` - another brief has replaced this one.
 
 `sources` lists user-provided documents, links, interviews, or other authoritative inputs that materially informed the brief. `related` is empty until another project artifact needs to be linked.
@@ -78,7 +78,7 @@ Allowed `status` values:
 
 - <Decision, why it blocks or affects the next stage, and the owner when known.>
 
-## Handoff To Functional Specification
+## Handoff To Product / Functional Specification
 
 <The product questions the next stage must turn into functional behavior, flows, and detailed capabilities.>
 ```
@@ -89,7 +89,7 @@ Omit empty optional sections only when the omission would not hide an unknown. F
 
 * Distinguish confirmed facts from assumptions. Use direct language such as `The user confirmed...` only when a source supports it.
 * Describe outcomes and user needs before solution ideas.
-* Keep capabilities at project-direction level. Detailed functions, user flows, roles, states, edge cases, and product acceptance criteria belong to Functional Specification.
+* Keep capabilities at project-direction level. Detailed functions, user flows, roles, states, edge cases, and product acceptance criteria belong to Product / Functional Specification.
 * Name explicit non-goals. They are scope protection, not a failure to plan.
 * Keep references traceable. Do not copy private credentials, personal data, or sensitive material into the brief.
 * Do not insert technical choices, frameworks, data schemas, screens, components, implementation tasks, or delivery dates unless they are a confirmed project constraint. Route their definition to later stages.

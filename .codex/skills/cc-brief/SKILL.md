@@ -1,6 +1,6 @@
 ---
 name: cc-brief
-description: Discover and pressure-test a new project's product direction through structured dialogue. Use after cc-init when the user provides a project idea, notes, or references and needs a durable project brief before functional specification, design, architecture, or implementation planning.
+description: Discover and pressure-test a new project's product direction through structured dialogue. Use after cc-init when the user provides a project idea, notes, or references and needs a durable project brief before product and functional specification, design, architecture, or implementation planning.
 argument-hint: "[project idea, notes, or reference paths]"
 ---
 
@@ -63,13 +63,13 @@ Read [the project brief contract](references/project-brief.md) before writing or
 
 ## Completion
 
-Write or update the brief when the dialogue has enough information for the next product-definition stage. A brief may remain `draft` when non-blocking assumptions or questions are still open. Do not claim it is ready for functional specification while a decision that changes the core user, problem, scope, or success outcome remains unresolved.
+Write or update the brief when the dialogue has enough information for the next product-definition stage. A brief may remain `draft` when non-blocking assumptions or questions are still open. Do not claim it is ready for product and functional specification while a decision that changes the core user, problem, scope, or success outcome remains unresolved.
 
-When the brief remains `draft`, keep Brief as `in-progress` or `blocked`, record only material blockers, and name the next discovery action. When it becomes `ready-for-functional-spec`, mark Brief as `complete`, set Functional Specification as the current stage, link the brief in the stage register, and append one concise update entry.
+When the brief remains `draft`, keep Brief as `in-progress` or `blocked`, record only material blockers, and name the next discovery action. When it becomes `ready-for-functional-spec`, mark Brief as `complete`, set Product / Functional Specification as the current stage, link the brief in the stage register, and append one concise update entry.
 
 Finish with a concise summary of:
 
 * the resulting brief path and status;
 * the central project direction and scope boundary;
 * any blocking decisions or assumptions to validate;
-* the suggested next stage: Functional Specification.
+* the suggested next stage: Product / Functional Specification.

@@ -107,21 +107,32 @@ Output:
 * goals and non-goals;
 * open questions and assumptions.
 
-The Brief owns the project direction and its boundaries. It may capture capability hypotheses, but detailed features, user flows, states, and product acceptance criteria belong to Functional Specification.
+The Brief owns the project direction and its boundaries. It may capture capability hypotheses, but detailed features, user flows, states, and product acceptance criteria belong to Product / Functional Specification.
 
 Exit condition:
 
 There is enough product context to describe the desired functionality.
 
-### Stage 3: Functional Specification
+### Stage 3: Product / Functional Specification
 
 Purpose:
 
-Turn the brief into a structured description of what the project should do.
+Turn the brief into a structured product description and a behavior-level functional specification.
 
-The functional specification should focus on product behavior, not implementation details.
+This stage should focus on what should exist, how the product should behave, and how users move through the product. It should not choose a technical stack, define architecture, create detailed visual design, or plan implementation tasks.
 
-It may include:
+The product specification may include:
+
+* product summary and intended outcome;
+* users, roles, and contexts;
+* product principles and priorities;
+* first-version scope and explicit non-goals;
+* main product areas or surfaces;
+* product lifecycle or operating model;
+* product-level success criteria;
+* assumptions, risks, and open product decisions.
+
+The functional specification may include:
 
 * core features;
 * user roles or user types;
@@ -129,17 +140,23 @@ It may include:
 * screens or interaction areas;
 * important states and edge cases;
 * data the product must create, display, import, export, or preserve;
+* notifications, integrations, collaboration, or admin behavior when relevant;
 * acceptance criteria at the product level.
+
+The stage should be collaborative and proactive. Codex should not only generate documents from the brief: it should inspect relevant source material, propose product framing, ask focused questions, challenge unclear or risky choices, recommend options when useful, and record unresolved assumptions instead of silently inventing decisions.
+
+Before completion, the stage should run a requirements review. Codex first classifies complexity as `light`, `standard`, or `deep`, then uses an independent requirements critic at that depth. The default critic configuration is `gpt-5.6-luna` with `medium` reasoning effort, with escalation only when `deep` complexity or high consequence justifies it. The critic does not edit artifacts or decide product direction. Codex applies minor clarity fixes, asks the user to approve material product decisions, routes design, architecture, or implementation concerns to later stages, and records only a compact review trace in project status.
 
 Output:
 
+* product specification;
 * functional specification;
 * resolved and unresolved product decisions;
 * list of functionality that later stages must account for.
 
 Exit condition:
 
-The product behavior is clear enough for design and technical architecture work.
+The product shape and behavior are clear enough for design and technical architecture work.
 
 ### Stage 4: Designer
 

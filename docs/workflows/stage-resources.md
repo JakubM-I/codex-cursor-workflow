@@ -94,7 +94,7 @@ Supporting resources:
 * `cc-brief/references/project-brief.md` - artifact contract and readiness check;
 * `.codex/skills/cc-grill/SKILL.md` - pressure-test support for Standard and Deep discovery;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
-* later, if justified: a focused requirements-critic subagent;
+* later, if justified: focused use of `requirements-critic` for brief-level requirement risks;
 * later, if justified and authorized: inspiration or market research support.
 
 Input artifacts:
@@ -118,13 +118,13 @@ Frontmatter or metadata needs:
 Open decisions:
 
 * whether the brief needs a separate change log or revision history once projects become long-lived;
-* whether a requirements-critic subagent should be introduced for high-ambiguity projects.
+* whether Brief should ever use `requirements-critic`, or whether requirements criticism should remain owned by `cc-spec`.
 
-### Functional Specification
+### Product / Functional Specification
 
 Purpose:
 
-Define what the project should do before design and technical architecture.
+Define the product shape and product behavior before design and technical architecture.
 
 Intended owner:
 
@@ -132,15 +132,17 @@ Codex, with user approval.
 
 Primary skill or prompt:
 
-Do ustalenia: `functional-spec`.
+`.codex/skills/cc-spec/SKILL.md`.
 
 Supporting resources:
 
-* Do ustalenia: feature definition checklist;
-* Do ustalenia: user-flow checklist;
-* Do ustalenia: edge-case checklist;
-* Do ustalenia: acceptance criteria format;
-* Do ustalenia: subagent for requirements pressure testing.
+* `cc-spec/references/product-spec.md` - product specification contract and readiness check;
+* `cc-spec/references/functional-spec.md` - functional specification contract, acceptance criteria style, and readiness check;
+* `cc-spec/references/requirements-review.md` - complexity assessment, critic depth, and findings handling contract;
+* `.codex/agents/requirements-critic.md` - read-only independent requirements review subagent used by `cc-spec`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
+* `.agents/artifacts/project-status.md` - shared project-status contract;
+* `docs/sources/` working notes and direct source repositories, when relevant and available;
+* later, if justified: deterministic checks for required frontmatter and acceptance criteria IDs.
 
 Input artifacts:
 
@@ -150,20 +152,22 @@ Input artifacts:
 
 Output artifacts:
 
-* functional specification;
-* feature list;
-* user flows;
-* product-level acceptance criteria;
-* unresolved product questions.
+* `docs/project/product-spec.md`;
+* `docs/project/functional-spec.md`;
+* resolved and unresolved product decisions;
+* feature groups, user flows, product-level acceptance criteria, and unresolved functional questions inside the functional specification.
 
 Frontmatter or metadata needs:
 
-* yes: `type`, `status`, `created`, `updated`, `source`, `stage`, `related`, `tags`.
+* required for `docs/project/product-spec.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
+* required for `docs/project/functional-spec.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`.
 
 Open decisions:
 
-* decide whether this stage should produce one product spec or split specs by feature area;
-* decide how detailed screen/user-flow descriptions should be before Designer.
+* default to two artifacts: product specification and functional specification;
+* decide later whether large projects need additional feature-area specs;
+* decide how detailed screen/user-flow descriptions should be before Designer;
+* decide whether requirements review findings should later be saved as a separate artifact for high-risk projects or remain inside the stage handoff.
 
 ### Designer
 
