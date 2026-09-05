@@ -296,7 +296,7 @@ Open decisions:
 
 Purpose:
 
-Break the project into ordered implementation stages.
+Break the project into ordered implementation milestones.
 
 Intended owner:
 
@@ -304,38 +304,45 @@ Codex, with user approval.
 
 Primary skill or prompt:
 
-Do ustalenia: `implementation-plan`.
+`.codex/skills/cc-plan/SKILL.md`.
 
 Supporting resources:
 
-* Do ustalenia: milestone breakdown template;
-* Do ustalenia: dependency sequencing checklist;
-* Do ustalenia: stage format template;
-* Do ustalenia: risk and prerequisite checklist;
-* Do ustalenia: validation/acceptance checklist.
+* `cc-plan/references/implementation-plan.md` - artifact contract, milestone format, frontmatter, status values, traceability, and readiness check;
+* `cc-plan/references/planning-review.md` - complexity assessment, review areas, finding groups, and handling rules;
+* `.codex/agents/planning-critic.md` - read-only independent planning review subagent used by `cc-plan`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
+* source repositories, starter projects, templates, examples, existing systems, and prior delivery notes when available;
+* `.agents/scripts/validate-project-artifacts.py` - deterministic check for required frontmatter, allowed statuses, related links, and stable IDs.
 
 Input artifacts:
 
 * project brief;
+* product specification;
 * functional specification;
-* design direction;
+* approved design brief;
+* approved screen spec;
+* approved design system;
 * technical architecture specification.
 
 Output artifacts:
 
 * ordered implementation plan;
-* stages with goal, scope, result, dependencies, and acceptance notes;
-* enough context to create task-level specifications later.
+* milestones with goal, scope, result, dependencies, traceability, validation notes, and task-specification notes;
+* dependency map, validation gates, setup prerequisites, launch-readiness notes, risks, assumptions, and open planning decisions;
+* first Cursor task-specification candidate;
+* enough context to create task-level specifications later without re-reading the whole project history.
 
 Frontmatter or metadata needs:
 
-* yes: `type`, `status`, `created`, `updated`, `stage`, `source`, `related`, `tags`.
+* required for `docs/project/implementation-plan.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`, `plan_depth`, `tags`;
+* implementation plan artifact statuses include `draft`, `ready-for-task-specification`, `blocked`, and `superseded`;
+* milestones use stable `M-001`-style IDs.
 
 Open decisions:
 
-* decide final format for implementation stages;
-* decide whether stages should contain task candidates or only high-level scope;
-* decide where the implementation plan should live.
+* decide the later Cursor task packet contract and where it should live;
+* decide whether implementation-plan completion should always set the current project stage to `complete` for the greenfield planning scope, or to a future `task-specification` stage once that workflow part exists;
+* decide whether large projects need separate release-plan or rollout-plan artifacts, or whether those remain sections in the implementation plan.
 
 ## Later Workflow Areas
 

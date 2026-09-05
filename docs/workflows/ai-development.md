@@ -240,7 +240,19 @@ Purpose:
 
 Break the project into ordered implementation stages that can later be converted into concrete Cursor tasks.
 
-The implementation plan should stay at the project-stage level. It should not become a full list of low-level coding tasks unless that detail is needed to understand sequencing.
+The implementation plan should stay at the project-stage level. It should not become a full list of low-level coding tasks unless a candidate slice is needed to understand sequencing. Detailed Cursor task packets belong to a later workflow part.
+
+This stage answers:
+
+* in what order the system should be built;
+* which milestones depend on earlier milestones, tools, accounts, source repositories, data, auth, integrations, or deployment setup;
+* which product capabilities, flows, acceptance criteria, design constraints, and architecture decisions each milestone must account for;
+* where validation, review, and launch-readiness gates belong;
+* which milestone or slice should become the first Cursor-ready task specification.
+
+The stage should be collaborative and evidence-driven. Codex should inspect the project artifacts, technical architecture, and available source repositories or reference implementations before asking planning questions. Source repositories and prior delivery notes should be mined for practical sequencing patterns such as setup order, module boundaries, scaffolding, test layering, migrations, integration prerequisites, deployment gates, and milestone sizing. They are inspiration and evidence, not templates to copy blindly.
+
+Codex should recommend an order when the evidence is strong, explain tradeoffs in plain language, and ask the user to decide when sequencing affects launch strategy, delivery risk, cost, account ownership, external services, sensitive data, deployment, or what should become usable first. Non-blocking unknowns should be recorded as assumptions or open planning decisions instead of being silently invented.
 
 Each implementation stage should include:
 
@@ -249,37 +261,54 @@ Each implementation stage should include:
 * scope;
 * expected result;
 * dependencies or prerequisites;
-* validation or acceptance notes, when useful.
+* traceability to acceptance criteria, functional areas, design constraints, and architecture decisions, when useful;
+* validation or acceptance notes;
+* notes for later task specification.
 
 Example stage format:
 
 ```md
-## Etap 10 - Eksport I Import Postepow
+### M-010 - Eksport I Import Postepow
 
-Cel:
+Goal:
 
 Zabezpieczyc dane przed utrata.
 
-Zakres:
+Scope:
 
 - eksport postepow do pliku JSON;
 - import wczesniej wyeksportowanego pliku;
 - potwierdzenie przed nadpisaniem obecnych postepow;
 - komunikat przy niezgodnym pliku.
 
-Rezultat:
+Expected Result:
 
 - rodzic moze zrobic kopie zapasowa;
 - import odtwarza lokalny zapis;
 - eksport nie zawiera bazy cwiczen.
+
+Dependencies And Prerequisites:
+
+- lokalny model danych postepow jest juz ustalony;
+- aplikacja ma ekran ustawien lub inne miejsce na akcje eksportu/importu.
+
+Validation Notes:
+
+- eksportowany plik mozna zaimportowac ponownie;
+- import nie nadpisuje danych bez potwierdzenia;
+- bledny plik daje zrozumialy komunikat.
 ```
+
+Before completion, the stage should run a planning review. Codex first classifies planning complexity as `light`, `standard`, or `deep`, then uses an independent planning critic at that depth when available. The default critic configuration is `gpt-5.6-luna` with `medium` reasoning effort, with escalation only when `deep` complexity or high consequence justifies it. The critic does not edit artifacts or decide sequencing. Codex applies minor clarity fixes, asks the user to approve material planning changes, routes upstream gaps to the owning stage, and records only a compact review trace in project status.
 
 Output:
 
 * ordered implementation plan;
-* project stages with goals, scope, and expected results;
-* dependencies and prerequisites;
-* enough context to start creating task-level implementation specifications.
+* project milestones with goals, scope, expected results, dependencies, validation notes, and task-specification notes;
+* dependency map and prerequisite list;
+* validation and review gates;
+* first Cursor task-specification candidate;
+* enough context to start creating task-level implementation specifications without reloading the whole project history.
 
 Exit condition:
 

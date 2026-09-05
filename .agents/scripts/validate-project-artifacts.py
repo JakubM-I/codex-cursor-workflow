@@ -85,10 +85,34 @@ PROJECT_FILES = {
         "artifact": "technical-architecture",
         "statuses": {"status": {"draft", "ready-for-implementation-planning", "blocked", "superseded"}},
     },
+    "docs/project/implementation-plan.md": {
+        "required": False,
+        "fields": [
+            "artifact",
+            "version",
+            "status",
+            "stage",
+            "created",
+            "updated",
+            "sources",
+            "related",
+            "plan_depth",
+            "tags",
+        ],
+        "artifact": "implementation-plan",
+        "statuses": {
+            "status": {"draft", "ready-for-task-specification", "blocked", "superseded"},
+            "plan_depth": {"prototype", "standard", "high-assurance"},
+        },
+    },
 }
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-ID_RE = re.compile(r"\b(AC|F|Flow|S|ADR)-(\d{3})\b")
+ID_DEFINITION_PATTERNS = [
+    re.compile(r"^#{2,6}\s+((?:F|Flow|S|M)-\d{3})\s+-\s+"),
+    re.compile(r"^-\s+(AC-\d{3})\s+-\s+"),
+    re.compile(r"^\|\s+(ADR-\d{3})\s+\|"),
+]
 
 
 def parse_frontmatter(path: Path) -> tuple[dict[str, object], list[str]]:
@@ -106,6 +130,7 @@ def parse_frontmatter(path: Path) -> tuple[dict[str, object], list[str]]:
 
     data: dict[str, object] = {}
     current_list_key: str | None = None
+    current_nested_key: str | None = None
 
     for line in lines[1:end]:
         if not line.strip():
@@ -118,6 +143,13 @@ def parse_frontmatter(path: Path) -> tuple[dict[str, object], list[str]]:
                 value.append(list_match.group(1).strip().strip("\"'"))
             continue
 
+        if current_nested_key and re.match(r"^\s+([A-Za-z0-9_-]+):\s*(.*)$", line):
+            current_list_key = None
+            continue
+
+        if current_nested_key and re.match(r"^\s+-\s+(.*)$", line):
+            continue
+
         key_match = re.match(r"^([A-Za-z0-9_-]+):\s*(.*)$", line)
         if not key_match:
             errors.append(f"{path}: unsupported frontmatter line: {line}")
@@ -127,12 +159,14 @@ def parse_frontmatter(path: Path) -> tuple[dict[str, object], list[str]]:
         key, raw_value = key_match.groups()
         raw_value = raw_value.strip()
         current_list_key = None
+        current_nested_key = None
 
         if raw_value == "[]":
             data[key] = []
         elif raw_value == "":
             data[key] = []
             current_list_key = key
+            current_nested_key = key
         else:
             data[key] = raw_value.strip("\"'")
 
@@ -192,8 +226,11 @@ def validate_ids(root: Path) -> list[str]:
         if not path.exists():
             continue
         for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
-            for match in ID_RE.finditer(line):
-                stable_id = match.group(0)
+            for pattern in ID_DEFINITION_PATTERNS:
+                match = pattern.search(line)
+                if not match:
+                    continue
+                stable_id = match.group(1)
                 location = f"{rel_path}:{line_number}"
                 if stable_id in seen and seen[stable_id] != location:
                     errors.append(f"{location}: duplicate stable ID `{stable_id}` also appears at {seen[stable_id]}")
