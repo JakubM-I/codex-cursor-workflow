@@ -4,6 +4,8 @@ This document describes the first part of a reusable workflow for building a new
 
 Current scope: project creation from zero, from initialization to an implementation plan. Existing-project onboarding, task-level implementation specs, Cursor execution, verification, review, and fix loops will be designed later.
 
+This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
+
 The workflow is intended to be portable. The whole workflow system may be copied into another repository and adapted there. In every repository, the user's latest instruction and current project state remain the source of truth.
 
 ## Core Idea
@@ -41,19 +43,19 @@ Recommended material layers:
 * `.agents/` - shared instructions, checklists, skills, scripts, and reusable conventions.
 * `.codex/` - Codex-specific stage skills, analysis prompts, subagent definitions, orchestration, review prompts, and supporting materials.
 * `.cursor/` - Cursor-specific implementation rules, coding prompts, editor-native rules, and implementation support.
-* `docs/` - human-readable workflow documentation, project artifacts, plans, and task records.
+* `docs/` - in this workflow-system repository, human-readable workflow design documentation and local source notes; in target projects, generated project artifacts, plans, task records, reviews, and knowledge records.
 
 Use the narrowest layer that fits. Shared materials belong in `.agents/`. Codex orchestration belongs in `.codex/`. Cursor implementation guidance belongs in `.cursor/`.
 
 System skills created for this workflow should use the `cc-` prefix and a short action-oriented name, for example `cc-init`.
 
-A working inventory of tools, skills, prompts, and supporting materials assigned to workflow stages may be tracked in:
+A working inventory of tools, skills, prompts, and supporting materials assigned to workflow stages may be tracked in this repository in:
 
 ```text
 docs/workflows/stage-resources.md
 ```
 
-That inventory is a planning aid. It can be changed, simplified, or removed as the workflow matures.
+That inventory is a planning aid for designing the system. It can be changed, simplified, or removed as the workflow matures, and it is not a required production artifact for target projects.
 
 ## Project Workflow Stages
 
@@ -210,15 +212,22 @@ The architect stage should decide or document:
 * authentication or permissions, when relevant;
 * validation and test strategy;
 * build, deployment, or hosting assumptions;
+* developer tooling, skills, plugins, accounts, credentials, and setup prerequisites;
 * risks, constraints, and tradeoffs.
 
 Stack should not be chosen too early unless the user has already fixed it. Design and functional requirements may affect technical decisions.
+
+The stage should be collaborative and evidence-driven. In a target project, Codex should inspect the brief, product specification, functional specification, approved design artifacts, and available source repositories before asking the user for decisions. Source repositories, starter projects, existing systems, and templates should be mined for practical conventions such as stack, structure, tests, deployment, auth, data handling, and integration patterns, while avoiding project-specific assumptions that do not belong in the new project.
+
+Architect should explain uncertain or high-impact technical choices in plain language, recommend a direction when the evidence is strong, and ask the user to decide when a choice affects cost, ownership, privacy, security, deployment, maintainability, or external accounts. It should also identify missing implementation capabilities in relation to the chosen stack: required or useful skills, plugins, CLIs, SDKs, services, accounts, credentials, and repository access. When Codex can install or connect a useful missing tool, it should ask whether the user wants Codex to do that or whether the user will do it manually and confirm readiness.
 
 Output:
 
 * technical architecture specification;
 * stack decision or stack constraints;
 * testing and validation approach;
+* deployment and operations assumptions;
+* required and recommended tools, skills, plugins, accounts, credentials, and source repositories;
 * known technical risks and assumptions.
 
 Exit condition:

@@ -68,10 +68,27 @@ PROJECT_FILES = {
         "artifact": "design-system",
         "statuses": {"status": {"draft", "ready-for-user-review", "approved-for-architecture", "superseded"}},
     },
+    "docs/project/technical-architecture.md": {
+        "required": False,
+        "fields": [
+            "artifact",
+            "version",
+            "status",
+            "stage",
+            "created",
+            "updated",
+            "sources",
+            "related",
+            "stack",
+            "tags",
+        ],
+        "artifact": "technical-architecture",
+        "statuses": {"status": {"draft", "ready-for-implementation-planning", "blocked", "superseded"}},
+    },
 }
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-ID_RE = re.compile(r"\b(AC|F|Flow|S)-(\d{3})\b")
+ID_RE = re.compile(r"\b(AC|F|Flow|S|ADR)-(\d{3})\b")
 
 
 def parse_frontmatter(path: Path) -> tuple[dict[str, object], list[str]]:

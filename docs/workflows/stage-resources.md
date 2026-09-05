@@ -6,6 +6,8 @@ It is intentionally provisional. Its purpose is to help design the system while 
 
 Current scope: project creation from zero through the implementation plan.
 
+This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
+
 ## How To Use This File
 
 For each workflow stage, track:
@@ -23,7 +25,7 @@ Use this file to decide where a material belongs:
 * `.agents/` for shared materials used by more than one agent;
 * `.codex/` for Codex-specific stage skills, analysis prompts, subagents, review prompts, and orchestration;
 * `.cursor/` for Cursor-specific implementation rules, coding prompts, and editor-native rules;
-* `docs/` for human-readable workflow documents and project artifacts.
+* `docs/` for human-readable workflow design documents in this repository, and generated project artifacts or records inside target projects.
 
 ## Stage Resource Map
 
@@ -144,7 +146,7 @@ Supporting resources:
 * `cc-spec/references/requirements-review.md` - complexity assessment, critic depth, and findings handling contract;
 * `.codex/agents/requirements-critic.md` - read-only independent requirements review subagent used by `cc-spec`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
-* `docs/sources/` working notes and direct source repositories, when relevant and available;
+* source repositories, user-provided notes, or direct references when relevant and available;
 * `.agents/scripts/validate-project-artifacts.py` - deterministic check for required frontmatter, allowed statuses, related links, and stable IDs.
 
 Input artifacts:
@@ -243,23 +245,27 @@ Codex, with user approval for major tradeoffs.
 
 Primary skill or prompt:
 
-Do ustalenia: `project-architect`.
+`.codex/skills/cc-architect/SKILL.md`.
 
 Supporting resources:
 
-* Do ustalenia: stack selection checklist;
-* Do ustalenia: architecture decision format;
-* Do ustalenia: data model checklist;
-* Do ustalenia: testing strategy checklist;
-* Do ustalenia: deployment and hosting checklist;
-* Do ustalenia: security and privacy checklist;
-* Do ustalenia: architecture/security/performance subagents for larger projects.
+* `cc-architect/references/technical-architecture.md` - artifact contract, required architecture areas, frontmatter, status values, and readiness check;
+* `cc-architect/references/technical-readiness.md` - source repository inspection, missing tools, skills, plugins, accounts, credentials, and installation/connection boundaries;
+* `cc-architect/references/architecture-review.md` - complexity assessment, review areas, finding groups, and handling rules;
+* source repositories, starter projects, examples, templates, and existing systems when available;
+* available stack-specific skills or plugins, selected only when they materially help the project;
+* available deployment, repository, design, data, auth, AI, or integration plugins when the selected architecture justifies them;
+* `.codex/agents/architecture-critic.md` - read-only independent architecture review subagent used by `cc-architect`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
+* later, if justified: focused security, performance, or deployment reviewer subagents for larger projects.
 
 Input artifacts:
 
 * project brief;
+* product specification;
 * functional specification;
-* design direction;
+* approved design brief;
+* approved screen spec;
+* approved design system;
 * user constraints;
 * required integrations or services.
 
@@ -268,18 +274,23 @@ Output artifacts:
 * technical architecture specification;
 * stack decision or stack constraints;
 * data and integration plan;
+* authentication, authorization, and security plan when relevant;
 * validation and test strategy;
+* deployment and operations assumptions;
+* required and recommended skills, plugins, accounts, credentials, tools, and source repositories;
 * technical risks and assumptions.
 
 Frontmatter or metadata needs:
 
-* yes: `type`, `status`, `created`, `updated`, `stage`, `source`, `related`, `stack`, `tags`.
+* required for `docs/project/technical-architecture.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`, `stack`, `tags`;
+* architecture artifact statuses include `draft`, `ready-for-implementation-planning`, `blocked`, and `superseded`.
 
 Open decisions:
 
-* decide whether stack selection can ever happen before Designer;
-* decide which architecture decisions require explicit user approval;
-* decide whether test strategy belongs here or in Plan.
+* Designer remains the default predecessor because UX, screen, and design-system constraints affect stack and implementation choices; stack may be constrained earlier only when the user, organization, existing repository, or source system already fixed it;
+* major architecture decisions that affect cost, account ownership, data sensitivity, security posture, hosting, auth, integration providers, or maintainability require explicit user approval;
+* testing and validation strategy belongs in Architecture at strategy level, while exact sequencing and task-level commands belong in Implementation Plan and later Cursor task specs;
+* use a hybrid tool model: inspect available source repositories first, then ask whether Codex should install/connect useful missing skills or plugins when tool support exists, or whether the user will install/connect them manually and confirm readiness.
 
 ### Implementation Plan
 
