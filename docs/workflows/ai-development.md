@@ -32,6 +32,8 @@ Each project has a compact workflow index at `docs/project/status.md`. Init crea
 
 Use deterministic scripts, hooks, or validations when a gate should not depend only on model memory.
 
+A lightweight shared validator may check project artifact frontmatter, statuses, related links, and stable IDs. It is not a replacement for stage judgment or user approval; it catches structural drift before later agents consume the artifacts.
+
 ## Material Layers
 
 Recommended material layers:
@@ -166,6 +168,10 @@ Define the visual and UX direction for the product.
 
 This stage may use design tools, UI inspiration sources, visual references, mockup tools, or design-specific skills. Examples include MagicPath, Mobbin, generated visual references, or project-specific design systems when available.
 
+Designer is the first stage where account-backed design tools are normally expected. Baseline shared UI skills can be included during Init or repository bootstrap, while project-specific plugins and design accounts should be checked at the start of Designer. Codex should present the useful tool set, identify what is missing, and ask whether Codex should install/connect available plugins or whether the user will add tools manually and confirm readiness.
+
+Mobbin is the preferred source for real UI and UX references when available. MagicPath is treated as a collaborative visual workspace: when needed, the user may be asked to log in, open or create the project, review the proposed design, and either approve it or request changes. If a tool is unavailable, the stage continues with structured artifacts, screenshots, generated references, or other available sources instead of pretending a tool-specific output exists.
+
 The design stage should focus on:
 
 * visual direction;
@@ -179,15 +185,15 @@ The design stage should focus on:
 
 Output:
 
-* design direction or design brief;
-* screen or view list;
-* component and interaction notes;
+* design brief;
+* screen or view specification;
+* design-system direction, including component and interaction notes;
 * references or generated design assets, when used;
 * design constraints for architecture and planning.
 
 Exit condition:
 
-The technical architecture can account for the intended product experience.
+The user has approved the design direction after reviewing the design artifacts or visual workspace, and the technical architecture can account for the intended product experience.
 
 ### Stage 5: Architect
 
@@ -275,11 +281,11 @@ The project has a coherent implementation roadmap. The next workflow part can cr
 The following areas are intentionally outside the current scope and will be designed later:
 
 * onboarding or analysis of an existing project;
-* conversion of an implementation-plan stage into one or more Cursor task specifications;
-* Cursor implementation workflow;
-* verification workflow;
-* code review workflow;
-* fix guidance and fix loops;
+* conversion of an implementation-plan stage into one or more Cursor task specifications, including a task packet contract with required context, optional context, acceptance criteria, relevant design and architecture constraints, and explicit decision boundaries;
+* Cursor implementation workflow, including how Cursor should consume task packets without reloading the full project history;
+* verification workflow, including runtime proof mapped back to acceptance criteria and design constraints;
+* code review workflow, including independent review against the original Codex contract and not only diff quality;
+* fix guidance and fix loops, including bounded Codex-to-Cursor fix packets and criteria for routing back to specification, design, or architecture;
 * completion and knowledge capture.
 
 ## Source of Truth

@@ -45,6 +45,8 @@ Supporting resources:
 
 * minimal `AGENTS.md` entrypoint contract defined in `cc-init`;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
+* `.agents/skills/make-interfaces-feel-better/` - full baseline shared UI-polish skill that target projects may receive during workflow bootstrap;
+* `.agents/scripts/validate-project-artifacts.py` - lightweight local validator for project artifact frontmatter, statuses, related links, and stable IDs;
 * Do ustalenia: project folder bootstrap script;
 * Do ustalenia: git initialization script for later automation;
 * Do ustalenia: GitHub repository creation script or checklist;
@@ -73,6 +75,7 @@ Open decisions:
 
 * decide how small the first `AGENTS.md` should be;
 * decide which folders are created immediately and which are created on demand;
+* decide whether shared baseline skills such as `make-interfaces-feel-better` are copied during `cc-init` itself or by a separate bootstrap step that Init invokes;
 * decide whether GitHub setup is part of the default path or an explicit option.
 
 ### Brief
@@ -142,7 +145,7 @@ Supporting resources:
 * `.codex/agents/requirements-critic.md` - read-only independent requirements review subagent used by `cc-spec`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
 * `docs/sources/` working notes and direct source repositories, when relevant and available;
-* later, if justified: deterministic checks for required frontmatter and acceptance criteria IDs.
+* `.agents/scripts/validate-project-artifacts.py` - deterministic check for required frontmatter, allowed statuses, related links, and stable IDs.
 
 Input artifacts:
 
@@ -181,43 +184,52 @@ Codex, using design tools and user feedback.
 
 Primary skill or prompt:
 
-Do ustalenia: `project-designer`.
+`.codex/skills/cc-designer/SKILL.md`.
 
 Supporting resources:
 
-* Do ustalenia: MagicPath workflow;
-* Do ustalenia: Mobbin inspiration research;
-* Do ustalenia: visual direction checklist;
-* Do ustalenia: screen inventory template;
-* Do ustalenia: component inventory checklist;
-* Do ustalenia: accessibility and responsive checklist;
-* Do ustalenia: design subagents, if useful.
+* `cc-designer/references/tool-readiness.md` - tool setup, MagicPath workflow, Mobbin routing, and user approval/status handling;
+* `cc-designer/references/design-brief.md` - visual direction, UX principles, references, tooling, and handoff constraints;
+* `cc-designer/references/screen-spec.md` - screen/view inventory, navigation, states, responsive notes, and flow coverage;
+* `cc-designer/references/design-system.md` - token direction, component inventory, interaction patterns, accessibility rules, and UI polish expectations;
+* `.agents/skills/make-interfaces-feel-better/` - full shared UI-polish lens for typography, surfaces, motion, icons, hit areas, and review;
+* Mobbin plugin - preferred source for real UI screens, flows, and website section references when available;
+* MagicPath - collaborative visual workspace when the user wants or needs visual iteration there; requires user login/project setup outside Codex when no direct integration is available;
+* generated visual references or image tools, when useful for mood, art direction, bitmap mockups, or asset direction;
+* optional tools such as Figma, Adobe, or Canva only when the project and available plugins justify them;
+* `.codex/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
+* `.codex/agents/design-critic.md` - read-only UX/design reviewer subagent for standard and deep design reviews, defaulting to `gpt-5.6-luna` with `medium` reasoning effort.
 
 Input artifacts:
 
 * project brief;
+* product specification;
 * functional specification;
 * user inspiration or brand references;
 * technical constraints already known, if any.
 
 Output artifacts:
 
-* design direction or design brief;
-* screen/view list;
-* component and interaction notes;
+* `docs/project/design-brief.md`;
+* `docs/project/screen-spec.md`;
+* `docs/project/design-system.md`;
 * visual references or generated design artifacts, when used;
 * design constraints for architecture and planning.
 
 Frontmatter or metadata needs:
 
-* likely yes for design briefs and screen specs;
-* tool-specific outputs may have their own metadata formats.
+* required for `docs/project/design-brief.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
+* required for `docs/project/screen-spec.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
+* required for `docs/project/design-system.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
+* design artifact statuses include `draft`, `ready-for-user-review`, `approved-for-architecture`, and `superseded`;
+* tool-specific outputs may have their own metadata formats, but project artifacts should link them instead of duplicating tool internals.
 
 Open decisions:
 
-* decide whether Designer should run before Architect by default;
-* decide how MagicPath and inspiration tools should be invoked;
-* decide how design outputs are referenced by Architect and Plan.
+* Designer runs before Architect by default unless the user has already fixed technical constraints that must be known first;
+* use a hybrid installation model: baseline shared skills during Init/bootstrap, project-specific account-backed plugins at the start of Designer;
+* Designer can prepare artifacts for review, but it only marks the stage complete after explicit user approval of the design direction, preferably after reviewing MagicPath or another visual representation when that flow is used;
+* decide whether a lightweight single-artifact design mode is worth supporting for very small projects.
 
 ### Architect
 
@@ -319,9 +331,9 @@ Open decisions:
 These areas are intentionally not designed in detail yet:
 
 * existing project onboarding and current-state analysis;
-* conversion from implementation-plan stage to Cursor task specification;
-* Cursor implementation workflow;
-* verification workflow;
-* code review workflow;
-* fix guidance and fix loops;
+* conversion from an implementation-plan stage into a Cursor-ready task packet, including required context, optional context, acceptance criteria IDs, relevant design and architecture constraints, decisions Cursor may make locally, and decisions Cursor must route back to Codex;
+* Cursor implementation workflow, including how Cursor consumes task packets without needing the whole project history;
+* verification workflow, including runtime checks mapped back to acceptance criteria and design constraints;
+* code review workflow, including independent review against the original Codex contract rather than only general diff quality;
+* fix guidance and fix loops, including focused fix packets from Codex to Cursor, bounded retries, and criteria for returning to specification, design, or architecture;
 * completion and knowledge capture.

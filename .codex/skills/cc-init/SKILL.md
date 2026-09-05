@@ -10,6 +10,8 @@ Initialize the target project workspace for the Codex-Cursor workflow.
 
 This skill is for the first project stage. It creates the minimal local entry point, project-status index, and git baseline needed before project discovery. It does not gather the full brief, choose a stack, create a design, or plan implementation.
 
+Init may prepare baseline workflow materials that are intended to be available across later stages, such as shared skills already bundled with the workflow. It does not install or connect project-specific account-backed plugins. Tools such as Mobbin, MagicPath, Figma, Adobe, Canva, or other external design/research services are checked and requested by the stage that needs them, usually `cc-designer`.
+
 ## Input
 
 Use the user's message as the project description. If the description is missing or too vague to create a one-sentence project entry point, ask for a short description before making changes.
@@ -21,7 +23,8 @@ Use the user's message as the project description. If the description is missing
 3. Create or preserve `docs/project/status.md`.
 4. Initialize git if the project is not already a git repository.
 5. Ensure the primary branch is named `main`.
-6. Report exactly what was created or changed.
+6. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
+7. Report exactly what was created or changed.
 
 ## AGENTS.md Contract
 
@@ -44,6 +47,8 @@ Project details, requirements, architecture, design, plans, and task specificati
 ```
 
 Do not add stack, commands, git workflow, implementation rules, validation rules, feature lists, architecture, or full project documentation to `AGENTS.md` during init.
+
+Do not add tool-specific design instructions or plugin setup requirements to `AGENTS.md`. Later stage skills should decide which tools are needed.
 
 If `AGENTS.md` already exists:
 
@@ -86,6 +91,22 @@ If `.git/` already exists:
 
 Do not create commits, remotes, GitHub repositories, branches other than `main`, or pull requests in this version of the skill.
 
+## Baseline Shared Materials
+
+When the workflow bundle includes shared materials in `.agents/`, preserve or copy them as part of setting up the target project. This keeps later stages from depending on chat history for reusable guidance.
+
+The baseline set currently includes:
+
+```text
+.agents/artifacts/project-status.md
+.agents/scripts/validate-project-artifacts.py
+.agents/skills/make-interfaces-feel-better/
+```
+
+Do not overwrite substantial existing shared materials without asking. If a target project already has a different version of a shared skill, report the conflict and ask whether to preserve, merge, or replace it.
+
+Account-backed plugins and user-authenticated tools are not baseline materials. `cc-init` should not install or connect them by default.
+
 ## Output
 
 Finish with a concise summary:
@@ -93,6 +114,7 @@ Finish with a concise summary:
 - project root;
 - whether `AGENTS.md` was created, updated, or left unchanged;
 - whether `docs/project/status.md` was created, updated, or left unchanged;
+- whether baseline shared workflow materials were present, copied, or left unchanged;
 - whether git was initialized or already existed;
 - resulting current branch;
 - anything intentionally left for later stages.
