@@ -18,7 +18,7 @@ For every failed or unproven criterion, state:
 `cc-task-verify` records corrections for user approval in the task's Codex Delivery History and the delivery log:
 
 ```md
-### Verification Result — revision 1
+### Verification Result — M-001-TASK-001 / revision 1
 
 - Outcome: changes-required
 - Evidence: <command or inspection and result>

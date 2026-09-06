@@ -34,6 +34,7 @@ Do not claim task acceptance, broad test coverage, runtime validation, integrati
 
 When the code change is ready, return a concise implementation report containing:
 
+* the task reference from the task frontmatter, for example `M-001-TASK-001`;
 * files created, modified, or intentionally left unchanged;
 * behavior implemented and the task acceptance criteria it addresses;
 * the exact self-checks run and their result;

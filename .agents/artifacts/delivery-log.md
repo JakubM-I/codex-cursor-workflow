@@ -23,7 +23,7 @@ Allowed `status` values are `active`, `complete`, and `superseded`.
 ## Record Format
 
 ```md
-## DL-001 - TASK-001 / revision 1
+## DL-001 - M-001-TASK-001 / revision 1
 
 - Milestone: M-001
 - Outcome: accepted | changes-required | blocked
@@ -38,4 +38,4 @@ Allowed `status` values are `active`, `complete`, and `superseded`.
 
 Use `DL-001`-style IDs. Keep enough evidence to explain a later decision, not raw command transcripts. When an implementation insight changes a source artifact, name that artifact and state that the amendment came from delivery.
 
-When the final task of a milestone is accepted, append a short milestone completion note naming the milestone and its accepted task IDs. Do not add a new global test claim; the note records only that the planned task map is complete and no recorded implication blocks the next milestone.
+When the final task of a milestone is accepted, append a short milestone completion note naming the milestone and its accepted full task references. Do not add a new global test claim; the note records only that the planned task map is complete and no recorded implication blocks the next milestone.

@@ -13,6 +13,7 @@ version: 1
 status: draft
 stage: task-specification
 task_id: TASK-001
+task_ref: M-001-TASK-001
 revision: 1
 milestone: M-001
 created: YYYY-MM-DD
@@ -36,12 +37,12 @@ Allowed `status` values:
 * `blocked`;
 * `superseded`.
 
-`revision` starts at `1` and is incremented only by Codex before a new Cursor implementation attempt. `milestone` references one implementation-plan milestone. `sources` identifies the artifacts, repository facts, prior delivery records, and user decisions used to prepare this exact task.
+`task_ref` is the canonical human-visible reference used in task titles, Cursor handoffs, verification results, and delivery records. It must equal `<milestone>-<task_id>`, for example `M-001-TASK-001`. `revision` starts at `1` and is incremented only by Codex before a new Cursor implementation attempt. `milestone` references one implementation-plan milestone. `sources` identifies the artifacts, repository facts, prior delivery records, and user decisions used to prepare this exact task.
 
 ## Required Body
 
 ```md
-# TASK-001 - <Task Name>
+# M-001-TASK-001 - <Task Name>
 
 ## Objective
 
@@ -89,6 +90,7 @@ Out of scope:
 
 ## Cursor Handoff Format
 
+- Task reference: `M-001-TASK-001`.
 - Files changed.
 - Behavior implemented and criteria addressed.
 - Self-checks run and results.
@@ -113,12 +115,12 @@ When `cc-task-spec` starts a milestone, add this compact register below that mil
 Task Delivery Register:
 
 - Delivery status: not-started | in-progress | complete | blocked
-- TASK-001 — <short objective>; depends on: <task IDs or `None`>; status: ready-for-cursor
-- TASK-002 — <short objective>; depends on: TASK-001; status: planned
+- M-001-TASK-001 — <short objective>; depends on: <task references or `None`>; status: ready-for-cursor
+- M-001-TASK-002 — <short objective>; depends on: M-001-TASK-001; status: planned
 - Completion rule: every listed task is accepted and no delivery-log implication blocks the next milestone.
 ```
 
-The register may reserve task IDs and describe their small objectives, but it must not become a collection of detailed Cursor instructions. Create the full specification for only the current ready task. If delivery exposes a genuinely necessary additional task, add it to the register with the reason before preparing its detailed specification.
+The register may reserve full task references and describe their small objectives, but it must not become a collection of detailed Cursor instructions. Create the full specification for only the current ready task. If delivery exposes a genuinely necessary additional task, add it to the register with the reason before preparing its detailed specification.
 
 Completing a milestone does not require a separate end-to-end or global test merely because it is the last task. `cc-task-verify` marks it complete after every listed task is accepted and no open implication blocks the next milestone. Broader product or release testing belongs to a later, explicitly defined validation stage.
 

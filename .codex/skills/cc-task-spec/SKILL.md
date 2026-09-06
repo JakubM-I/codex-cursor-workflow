@@ -20,9 +20,9 @@ The implementation plan must be `ready-for-task-specification`. The selected mil
 
 ## Initialize Or Continue A Milestone
 
-When the user starts a milestone for the first time, create its **Task Delivery Register** in `docs/project/implementation-plan.md` according to [the task specification contract](references/task-specification.md). It contains the planned task IDs, short objectives, dependencies, delivery state, and the rule for completing the milestone.
+When the user starts a milestone for the first time, create its **Task Delivery Register** in `docs/project/implementation-plan.md` according to [the task specification contract](references/task-specification.md). It contains the planned full task references, short objectives, dependencies, delivery state, and the rule for completing the milestone.
 
-This is a lightweight map, not several Cursor prompts. Reserve stable task IDs in the map when useful, but write a complete `docs/tasks/M-<milestone>-<slug>/M-<milestone>-TASK-<number>-<slug>.md` only for the first ready task. Later task specifications are written after the preceding task is accepted and its relevant delivery implications have been applied.
+This is a lightweight map, not several Cursor prompts. Reserve stable task IDs in the map when useful, but make their visible reference `M-<milestone>-TASK-<number>`. Write a complete `docs/tasks/M-<milestone>-<slug>/M-<milestone>-TASK-<number>-<slug>.md` only for the first ready task. Later task specifications are written after the preceding task is accepted and its relevant delivery implications have been applied.
 
 When the user asks to continue a milestone, read its delivery register, task outcomes, and open implications. Create the next ready task specification or, after the user accepts a verified correction request, revise the identified task. Do not decide verification outcomes, mark a task accepted, or close a milestone; route those actions to `cc-task-verify`.
 

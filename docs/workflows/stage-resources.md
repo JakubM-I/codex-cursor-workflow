@@ -383,7 +383,7 @@ Process:
 
 ```mermaid
 flowchart TD
-  Start[Start milestone M-001] --> Spec[Codex: cc-task-spec\nTask map + current TASK-001]
+  Start[Start milestone M-001] --> Spec[Codex: cc-task-spec\nTask map + current M-001-TASK-001]
   Spec --> Implement[Cursor: implement current task]
   Implement --> Verify[Codex: cc-task-verify\nTests, review, evidence]
   Verify --> Decision{Verification result}
@@ -430,7 +430,7 @@ Output artifacts:
 
 Frontmatter or metadata needs:
 
-* task packets use `artifact`, `version`, `status`, `stage`, `task_id`, `revision`, `milestone`, `created`, `updated`, `sources`, `related`, `depends_on`, and `tags`;
+* task packets use `artifact`, `version`, `status`, `stage`, `task_id`, `task_ref`, `revision`, `milestone`, `created`, `updated`, `sources`, `related`, `depends_on`, and `tags`;
 * delivery log uses `artifact`, `version`, `status`, `created`, `updated`, and `related`.
 
 Open decisions:

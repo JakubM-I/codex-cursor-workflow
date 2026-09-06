@@ -1,7 +1,7 @@
 ---
 name: cc-task-verify
 description: Verify a Cursor-implemented task against its Task Spec, record the evidence, and accept it or issue a precise correction request. Use after Cursor reports implementation; do not create or revise Cursor instructions.
-argument-hint: "[task ID, task path, or Cursor implementation report]"
+argument-hint: "[full task reference, task path, or Cursor implementation report]"
 ---
 
 # CC Task Verify
@@ -34,6 +34,6 @@ If the evidence reveals a material change to product, design, architecture, secu
 
 After accepting a task, inspect its milestone Task Delivery Register. If another listed task remains, leave the milestone `in-progress` and name the next action: `cc-task-spec` for that task.
 
-If every listed task is accepted, mark the milestone `complete` and append its concise completion note to the delivery log. This is not a new end-to-end or global test: it only confirms completion of the task map and absence of an open implication blocking the next milestone.
+If every listed full task reference is accepted, mark the milestone `complete` and append its concise completion note to the delivery log. This is not a new end-to-end or global test: it only confirms completion of the task map and absence of an open implication blocking the next milestone.
 
 Run `.agents/scripts/validate-project-artifacts.py` when available before reporting the final outcome. Finish with the outcome, evidence, limitations, required user approval or next task, milestone state, and any downstream implications.

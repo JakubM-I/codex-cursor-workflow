@@ -37,7 +37,7 @@ Codex accepts a task only when the required verification evidence supports every
 
 For each accepted, blocked, or materially revised task, Codex appends a record to `docs/project/delivery-log.md` with:
 
-* task ID, revision, milestone, status, and date;
+* full task reference, revision, milestone, status, and date;
 * verification evidence and remaining limitations;
 * deviations and decisions actually made;
 * downstream implications marked `none`, `pending`, or `applied`; and

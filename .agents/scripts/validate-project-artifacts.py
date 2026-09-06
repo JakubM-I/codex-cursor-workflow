@@ -136,6 +136,7 @@ TASK_SPEC = {
         "status",
         "stage",
         "task_id",
+        "task_ref",
         "revision",
         "milestone",
         "created",
@@ -308,16 +309,22 @@ def validate_task_specs(root: Path) -> list[str]:
         rel_path = str(path.relative_to(root))
         errors.extend(validate_file(root, rel_path, TASK_SPEC))
         task_id = frontmatter.get("task_id")
+        task_ref = frontmatter.get("task_ref")
         milestone = frontmatter.get("milestone")
         revision = frontmatter.get("revision")
         if isinstance(task_id, str) and not re.fullmatch(r"TASK-\d{3}", task_id):
             errors.append(f"{rel_path}: `task_id` should use TASK-001 format")
         if isinstance(milestone, str) and not re.fullmatch(r"M-\d{3}", milestone):
             errors.append(f"{rel_path}: `milestone` should use M-001 format")
+        if isinstance(task_ref, str) and not re.fullmatch(r"M-\d{3}-TASK-\d{3}", task_ref):
+            errors.append(f"{rel_path}: `task_ref` should use M-001-TASK-001 format")
         if isinstance(revision, str) and not re.fullmatch(r"[1-9]\d*", revision):
             errors.append(f"{rel_path}: `revision` should be a positive integer")
         if isinstance(task_id, str) and isinstance(milestone, str):
             expected_file_prefix = f"{milestone}-{task_id}-"
+            expected_task_ref = f"{milestone}-{task_id}"
+            if task_ref != expected_task_ref:
+                errors.append(f"{rel_path}: `task_ref` should be `{expected_task_ref}`")
             if not path.name.startswith(expected_file_prefix):
                 errors.append(
                     f"{rel_path}: filename should start with `{expected_file_prefix}`"
