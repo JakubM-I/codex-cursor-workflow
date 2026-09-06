@@ -76,6 +76,8 @@ Define:
 * developer tooling, missing skills, missing plugins, and setup prerequisites;
 * risks, constraints, tradeoffs, assumptions, and decisions that need user approval.
 
+Use Mermaid diagrams in the architecture artifact when they make component boundaries, data ownership, integration flow, event flow, deployment shape, or trust boundaries easier for humans and later agents to verify. Keep them compact, text-based, and synchronized with written decisions. Do not add diagrams for obvious or purely linear architecture.
+
 ## Artifact Ownership
 
 This skill owns:
@@ -104,6 +106,7 @@ Review the architecture against:
 
 * alignment with the brief, product spec, functional spec, and approved design artifacts;
 * stack fit for the required behavior and design constraints;
+* whether any complex architecture relationship needs a concise Mermaid diagram to avoid ambiguity for implementation planning;
 * data safety, auth, permissions, and privacy expectations;
 * integration feasibility and external-service readiness;
 * testing, validation, deployment, and observability coverage;

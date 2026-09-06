@@ -30,6 +30,8 @@ Keep `AGENTS.md` minimal in target projects. Treat it as an entry point or conte
 
 Use structured artifacts when they will be reused by later stages. If a file needs to be discovered, filtered, resumed, validated, or routed by agents, give it appropriate frontmatter or metadata.
 
+Use lightweight text diagrams when they clarify relationships that are hard to read in prose. Prefer Mermaid blocks in Markdown because they are versionable, reviewable in diffs, and readable by agents. Do not require diagrams for obvious or linear material; add them when order, state, dependency, data flow, ownership, or system boundaries could otherwise be misunderstood.
+
 Each project has a compact workflow index at `docs/project/status.md`. Init creates it. Stage-owner skills update their own row, the current stage, blockers, next action, and a short recent-update trail. Detailed history remains in stage artifacts and git; supporting skills do not update the index directly.
 
 Use deterministic scripts, hooks, or validations when a gate should not depend only on model memory.
@@ -141,6 +143,7 @@ The functional specification may include:
 * core features;
 * user roles or user types;
 * main user flows;
+* optional Mermaid diagrams for non-trivial flows, state transitions, or dependencies;
 * screens or interaction areas;
 * important states and edge cases;
 * data the product must create, display, import, export, or preserve;
@@ -179,6 +182,7 @@ The design stage should focus on:
 * visual direction;
 * UX structure;
 * screen inventory;
+* optional Mermaid diagrams for screen maps, navigation, or cross-screen flows when they reduce ambiguity;
 * layout patterns;
 * component needs;
 * interaction patterns;
@@ -215,6 +219,8 @@ The architect stage should decide or document:
 * developer tooling, skills, plugins, accounts, credentials, and setup prerequisites;
 * risks, constraints, and tradeoffs.
 
+Architecture artifacts should use Mermaid diagrams when they clarify system components, data ownership, integration flow, event flow, deployment shape, or security boundaries. Diagrams should stay at architecture level and should not become exhaustive generated schemas or low-level code maps.
+
 Stack should not be chosen too early unless the user has already fixed it. Design and functional requirements may affect technical decisions.
 
 The stage should be collaborative and evidence-driven. In a target project, Codex should inspect the brief, product specification, functional specification, approved design artifacts, and available source repositories before asking the user for decisions. Source repositories, starter projects, existing systems, and templates should be mined for practical conventions such as stack, structure, tests, deployment, auth, data handling, and integration patterns, while avoiding project-specific assumptions that do not belong in the new project.
@@ -249,6 +255,8 @@ This stage answers:
 * which product capabilities, flows, acceptance criteria, design constraints, and architecture decisions each milestone must account for;
 * where validation, review, and launch-readiness gates belong;
 * which milestone or slice should become the first Cursor-ready task specification.
+
+Implementation plans should include a dependency map. For simple projects a short list is enough; for multi-stage or dependency-heavy plans, use a Mermaid flowchart to show milestone order, prerequisites, blockers, and validation gates.
 
 The stage should be collaborative and evidence-driven. Codex should inspect the project artifacts, technical architecture, and available source repositories or reference implementations before asking planning questions. Source repositories and prior delivery notes should be mined for practical sequencing patterns such as setup order, module boundaries, scaffolding, test layering, migrations, integration prerequisites, deployment gates, and milestone sizing. They are inspiration and evidence, not templates to copy blindly.
 

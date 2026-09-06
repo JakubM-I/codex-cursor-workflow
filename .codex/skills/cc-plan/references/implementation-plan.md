@@ -105,6 +105,18 @@ Risks Or Open Questions:
 
 - <Milestone or prerequisite> -> <Milestone that depends on it> because <reason>.
 
+For multi-stage or dependency-heavy plans, add a compact Mermaid diagram after the list. Use milestone IDs, prerequisites, blockers, and validation gates as labels so later agents can scan sequencing without reinterpreting the whole plan. Omit the diagram for very small or linear plans.
+
+Optional Milestone Diagram:
+
+```mermaid
+flowchart TD
+  Setup[<Prerequisite or setup>] --> M001[M-001 <Milestone>]
+  M001 --> Gate1{<Validation gate>}
+  Gate1 --> M002[M-002 <Milestone>]
+  M002 --> M003[M-003 <Milestone>]
+```
+
 ## Validation And Review Gates
 
 - <Gate, what evidence it requires, and when it should run.>
@@ -148,6 +160,8 @@ Omit sections only when genuinely irrelevant. Keep explicit `Not applicable` not
 ## Writing Rules
 
 * Make dependencies explicit: data before UI when UI depends on persisted state, auth before protected flows, integrations before integration-dependent workflows, deployment setup before release validation.
+* Use Mermaid diagrams when milestone order, prerequisites, blockers, validation gates, or parallelizable paths would be easier to scan visually.
+* Keep dependency diagrams synchronized with milestone IDs and the prose dependency map; do not let a diagram become the only explanation of sequencing.
 * Distinguish confirmed decisions from recommendations, assumptions, open questions, and user-owned choices.
 * Preserve architecture boundaries. If the plan requires changing stack, data model, auth, provider, deployment, or validation strategy, route back to `cc-architect`.
 * Preserve product and design boundaries. If the plan requires changing scope, flows, screens, visual direction, or acceptance criteria, route back to the owning stage.
@@ -160,6 +174,7 @@ Set `status: ready-for-task-specification` only when all of these are true:
 - [ ] Milestones are ordered and have stable IDs.
 - [ ] Each milestone has goal, scope, expected result, dependencies, validation notes, and task-specification notes.
 - [ ] Dependency chains and prerequisites are visible.
+- [ ] Non-trivial dependency chains, blockers, gates, or parallel paths are described in prose and, when useful, shown with a compact Mermaid diagram.
 - [ ] Acceptance criteria, functional areas, design constraints, and architecture decisions are referenced where useful.
 - [ ] Required tools, accounts, credentials, repositories, setup actions, and readiness gaps are visible.
 - [ ] Validation and review gates are clear enough to sequence implementation.

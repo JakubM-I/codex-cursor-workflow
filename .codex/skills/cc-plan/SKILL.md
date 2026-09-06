@@ -61,6 +61,8 @@ Define:
 * risks, assumptions, open planning decisions, and user-owned choices;
 * which milestone or slice should become the first Cursor-ready task specification.
 
+Use Mermaid diagrams in the implementation plan when milestone dependencies, prerequisites, blockers, validation gates, or parallelizable paths are easier to scan visually than in prose. Keep diagrams compact and tied to stable milestone IDs. Do not add diagrams for obvious or purely linear plans.
+
 Keep the plan coarse. A milestone may mention candidate task slices when this clarifies sequencing, but do not decompose every milestone into implementation tasks. Detailed Cursor task packets belong to a later workflow stage.
 
 ## Artifact Ownership
@@ -91,6 +93,7 @@ Review the plan against:
 * alignment with brief, product spec, functional spec, approved design artifacts, and technical architecture;
 * whether milestones are ordered by real dependencies rather than narrative convenience;
 * whether foundational setup enables useful vertical slices instead of becoming an endless platform phase;
+* whether complex dependency chains, blockers, gates, or parallel paths need a concise Mermaid diagram to avoid ambiguity for later task specifications;
 * whether acceptance criteria, design constraints, architecture decisions, and validation gates are traceable;
 * whether each milestone is coarse enough for roadmap planning but clear enough for later Cursor task specifications;
 * whether missing accounts, credentials, source repositories, tools, or decisions are visible;

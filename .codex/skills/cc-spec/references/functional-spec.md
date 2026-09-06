@@ -68,6 +68,8 @@ Acceptance Criteria:
 
 ## Main User Flows
 
+Use Mermaid flowcharts or state diagrams when a flow, lifecycle, branching path, dependency, permission boundary, or recovery path would be easier to verify visually than in prose. Keep diagrams text-based, compact, and tied to stable flow, feature, or acceptance-criterion IDs. Omit diagrams for simple linear flows.
+
 ### Flow-001 - <Flow Name>
 
 Goal:
@@ -85,6 +87,16 @@ Success Result:
 Failure And Recovery:
 
 - <Likely failure, blocked state, or recovery path.>
+
+Optional Diagram:
+
+```mermaid
+flowchart TD
+  Start[<Entry point>] --> Step1[<User or system step>]
+  Step1 --> Decision{<Decision or state>}
+  Decision -->|<Success>| Done[<Success result>]
+  Decision -->|<Failure>| Recover[<Recovery path>]
+```
 
 ## Screens Or Interaction Areas
 
@@ -156,6 +168,8 @@ Omit sections only when genuinely irrelevant. Keep explicit `Not applicable` not
 ## Writing Rules
 
 * Define behavior before screens when possible. Screens should serve flows, not replace them.
+* Use Mermaid diagrams only when they clarify sequence, branching, lifecycle, state, dependency, or permission relationships that prose would make hard to scan.
+* Keep Mermaid diagrams synchronized with the nearby text and stable IDs; do not let a diagram become the only source of functional behavior.
 * Include edge cases that would materially affect UX, trust, data safety, or acceptance.
 * Capture data expectations at product level without inventing schemas or storage details.
 * Do not select tools, frameworks, database structures, providers, endpoints, component libraries, or implementation sequence.
@@ -167,6 +181,7 @@ Set `status: ready-for-design-and-architecture` only when all of these are true:
 
 - [ ] Core capabilities are described with users, behavior, states, and acceptance criteria.
 - [ ] Main user flows are clear enough to design and reason about.
+- [ ] Non-trivial flows, states, or dependencies include a prose description and, when useful, a compact Mermaid diagram.
 - [ ] Screens or interaction areas cover the expected flows without becoming visual design.
 - [ ] Important empty states, errors, permissions, and edge cases are visible.
 - [ ] Product data expectations are clear at behavior level.

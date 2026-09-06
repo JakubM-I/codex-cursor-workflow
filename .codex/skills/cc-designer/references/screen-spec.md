@@ -45,6 +45,17 @@ Allowed `status` values:
 
 <Primary navigation model, hierarchy, entry points, and cross-screen movement.>
 
+Use a Mermaid diagram when the screen set, navigation model, modal flow, role-specific path, or cross-screen dependency is easier to verify visually than in prose. Keep diagrams compact and tied to stable screen and flow IDs. Omit diagrams for very small or linear screen sets.
+
+Optional Navigation Diagram:
+
+```mermaid
+flowchart TD
+  S001[S-001 <Screen>] --> S002[S-002 <Screen>]
+  S002 --> S003[S-003 <Screen>]
+  S002 --> Modal[<Modal or temporary state>]
+```
+
 ## Screen Map
 
 | ID | Screen Or Area | Purpose | Primary Users | Related Flows | Status |
@@ -125,6 +136,8 @@ Keep IDs stable once referenced by later artifacts. Use `S-001`, `S-002`, and so
 ## Writing Rules
 
 * Base screens on product flows and behavior, not on a generic app template.
+* Use Mermaid diagrams when they clarify navigation, screen dependencies, role-specific paths, or cross-screen state transitions.
+* Keep diagrams synchronized with the screen map and stable IDs; do not let a diagram replace per-screen purpose, states, or accessibility notes.
 * Include states that affect usability, trust, accessibility, or acceptance criteria.
 * Make responsive behavior explicit enough that architecture can account for it.
 * Record inspiration as reference evidence, not as a command to clone another product.
@@ -136,6 +149,7 @@ Set `status: ready-for-user-review` only when all of these are true:
 
 - [ ] Main screens or interaction areas cover the product's core flows.
 - [ ] Navigation and information architecture are understandable.
+- [ ] Non-trivial navigation or cross-screen dependencies are described in prose and, when useful, shown with a compact Mermaid diagram.
 - [ ] Each core screen has purpose, users, related flows, layout hierarchy, actions, visible information, and states.
 - [ ] Cross-screen patterns are visible.
 - [ ] Responsive and accessibility notes cover material risks.

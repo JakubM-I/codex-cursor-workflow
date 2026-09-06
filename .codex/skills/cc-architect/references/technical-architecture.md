@@ -77,6 +77,17 @@ Allowed `status` values:
 
 <Major modules, boundaries, ownership areas, client/server split, routing direction, background jobs, realtime/offline behavior, and how the structure supports future Cursor tasks.>
 
+Use Mermaid diagrams when architecture relationships are easier to verify visually than in prose. Good candidates include system component boundaries, data ownership, integration flow, event flow, deployment shape, trust boundaries, and module dependencies. Keep diagrams at architecture level and tie labels to stable names or ADR IDs where useful.
+
+Optional Component Diagram:
+
+```mermaid
+flowchart LR
+  Client[<Client/UI>] --> App[<Application Layer>]
+  App --> Data[(<Primary Data Store>)]
+  App --> External[<External Service>]
+```
+
 ## Data Architecture
 
 <Core entities, ownership, relationships, persistence direction, migrations, import/export, retention, backup, privacy, and data integrity expectations at architecture level.>
@@ -95,7 +106,23 @@ Allowed `status` values:
 
 ## Validation, Testing, And Quality Strategy
 
-- <Test layer or validation check, what it proves, when it runs, and which acceptance criteria or risks it covers.>
+<A concise strategy explaining which kinds of proof the project needs and why those layers fit the selected stack, product risks, and acceptance criteria.>
+
+| Test Layer Or Check | Scope | Evidence It Must Produce | Runs When | Related AC/Risk |
+| --- | --- | --- | --- | --- |
+| <Unit, integration, e2e, accessibility, contract, migration, security, performance, visual, smoke, manual QA, or custom check> | <What it covers and what it intentionally does not cover> | <Pass/fail signal, report, screenshot, log, command output, fixture result, or reviewed artifact> | <Local dev, pre-commit, CI, before deploy, after deploy, per milestone, release gate, or manual review> | <AC-001, ADR-001, risk ID, or `Not applicable`> |
+
+Required Test Data And Fixtures:
+
+- <Seed data, accounts, mocked services, generated files, snapshots, API fixtures, migration fixtures, or privacy-safe sample data needed for reliable tests.>
+
+Manual Or Exploratory Checks:
+
+- <Human review, device/browser check, visual inspection, accessibility pass, operational dry run, or user acceptance check that cannot be fully automated yet.>
+
+Deferred Test Coverage:
+
+- <Coverage intentionally delayed, why it is acceptable, and which implementation milestone or risk should revisit it.>
 
 ## Deployment, Environments, And Operations
 
@@ -134,8 +161,11 @@ Omit sections only when genuinely irrelevant. Keep explicit `Not applicable` not
 
 * Tie technical choices to product behavior, acceptance criteria, approved design constraints, source repository evidence, and user constraints.
 * Distinguish confirmed decisions from recommendations, assumptions, and open questions.
+* Use Mermaid diagrams when they clarify component, data, integration, event, deployment, module-dependency, or trust-boundary relationships that prose would make hard to scan.
+* Keep diagrams synchronized with the surrounding text. Diagrams support architecture decisions; they do not replace written rationale, risks, or handoff constraints.
 * Keep architecture at planning level: name major modules and data direction, but do not write complete schemas, endpoint specs, or low-level task lists unless the architecture decision requires that precision.
 * Include testing and deployment strategy here because implementation planning needs to sequence validation and environment work.
+* Plan test layers up front. Name what each layer proves, when it should run, what evidence it should produce, and which acceptance criteria, architecture decisions, or risks it covers.
 * Do not use tool popularity as a reason. Explain fit, tradeoffs, implementation cost, and risk.
 * Do not choose external services, auth providers, hosting, paid tools, or data providers silently when the choice affects cost, ownership, privacy, or account setup.
 
@@ -145,11 +175,13 @@ Set `status: ready-for-implementation-planning` only when all of these are true:
 
 - [ ] Stack direction is selected or bounded with clear rationale.
 - [ ] Application structure and major boundaries are understandable.
+- [ ] Non-trivial component, data, integration, event, deployment, or trust-boundary relationships are described in prose and, when useful, shown with compact Mermaid diagrams.
 - [ ] Data architecture covers core entities, persistence, integrity, and retention concerns that matter.
 - [ ] Required integrations and external service boundaries are visible.
 - [ ] Auth, permissions, security, and privacy are covered or explicitly not applicable.
 - [ ] Design-system and screen constraints that affect implementation are accounted for.
 - [ ] Testing, validation, deployment, environment, and operations strategy are clear enough to plan work.
+- [ ] Test layers identify scope, expected evidence, timing, required fixtures or test data, and related acceptance criteria or risks.
 - [ ] Required tools, skills, plugins, accounts, credentials, and source repositories are listed with readiness status.
 - [ ] Risks, assumptions, and open decisions are visible.
 - [ ] No unresolved decision would materially change stack, data, auth, integration, deployment, or validation strategy.

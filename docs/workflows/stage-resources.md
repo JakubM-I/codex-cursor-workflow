@@ -144,6 +144,7 @@ Supporting resources:
 * `cc-spec/references/product-spec.md` - product specification contract and readiness check;
 * `cc-spec/references/functional-spec.md` - functional specification contract, acceptance criteria style, and readiness check;
 * `cc-spec/references/requirements-review.md` - complexity assessment, critic depth, and findings handling contract;
+* Mermaid diagrams in `docs/project/functional-spec.md` when user flows, state transitions, or functional dependencies are easier to understand visually;
 * `.codex/agents/requirements-critic.md` - read-only independent requirements review subagent used by `cc-spec`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
 * source repositories, user-provided notes, or direct references when relevant and available;
@@ -160,7 +161,7 @@ Output artifacts:
 * `docs/project/product-spec.md`;
 * `docs/project/functional-spec.md`;
 * resolved and unresolved product decisions;
-* feature groups, user flows, product-level acceptance criteria, and unresolved functional questions inside the functional specification.
+* feature groups, user flows, optional Mermaid flow/state diagrams, product-level acceptance criteria, and unresolved functional questions inside the functional specification.
 
 Frontmatter or metadata needs:
 
@@ -194,6 +195,7 @@ Supporting resources:
 * `cc-designer/references/design-brief.md` - visual direction, UX principles, references, tooling, and handoff constraints;
 * `cc-designer/references/screen-spec.md` - screen/view inventory, navigation, states, responsive notes, and flow coverage;
 * `cc-designer/references/design-system.md` - token direction, component inventory, interaction patterns, accessibility rules, and UI polish expectations;
+* Mermaid diagrams in `docs/project/screen-spec.md` when screen maps, navigation, or cross-screen flows need a compact text source of truth;
 * `.agents/skills/make-interfaces-feel-better/` - full shared UI-polish lens for typography, surfaces, motion, icons, hit areas, and review;
 * Mobbin plugin - preferred source for real UI screens, flows, and website section references when available;
 * MagicPath - collaborative visual workspace when the user wants or needs visual iteration there; requires user login/project setup outside Codex when no direct integration is available;
@@ -215,6 +217,7 @@ Output artifacts:
 * `docs/project/design-brief.md`;
 * `docs/project/screen-spec.md`;
 * `docs/project/design-system.md`;
+* optional Mermaid screen, navigation, or interaction-flow diagrams when they reduce ambiguity;
 * visual references or generated design artifacts, when used;
 * design constraints for architecture and planning.
 
@@ -252,6 +255,7 @@ Supporting resources:
 * `cc-architect/references/technical-architecture.md` - artifact contract, required architecture areas, frontmatter, status values, and readiness check;
 * `cc-architect/references/technical-readiness.md` - source repository inspection, missing tools, skills, plugins, accounts, credentials, and installation/connection boundaries;
 * `cc-architect/references/architecture-review.md` - complexity assessment, review areas, finding groups, and handling rules;
+* Mermaid diagrams in `docs/project/technical-architecture.md` when system boundaries, data ownership, integration flow, event flow, deployment shape, or security boundaries need visual clarification;
 * source repositories, starter projects, examples, templates, and existing systems when available;
 * available stack-specific skills or plugins, selected only when they materially help the project;
 * available deployment, repository, design, data, auth, AI, or integration plugins when the selected architecture justifies them;
@@ -274,6 +278,7 @@ Output artifacts:
 * technical architecture specification;
 * stack decision or stack constraints;
 * data and integration plan;
+* optional Mermaid architecture, data, integration, event, or deployment diagrams when they improve implementation readiness;
 * authentication, authorization, and security plan when relevant;
 * validation and test strategy;
 * deployment and operations assumptions;
@@ -310,6 +315,7 @@ Supporting resources:
 
 * `cc-plan/references/implementation-plan.md` - artifact contract, milestone format, frontmatter, status values, traceability, and readiness check;
 * `cc-plan/references/planning-review.md` - complexity assessment, review areas, finding groups, and handling rules;
+* Mermaid diagrams in `docs/project/implementation-plan.md` when milestone dependencies, prerequisites, blockers, or validation gates are easier to scan visually;
 * `.codex/agents/planning-critic.md` - read-only independent planning review subagent used by `cc-plan`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
 * source repositories, starter projects, templates, examples, existing systems, and prior delivery notes when available;
 * `.agents/scripts/validate-project-artifacts.py` - deterministic check for required frontmatter, allowed statuses, related links, and stable IDs.
@@ -328,7 +334,7 @@ Output artifacts:
 
 * ordered implementation plan;
 * milestones with goal, scope, result, dependencies, traceability, validation notes, and task-specification notes;
-* dependency map, validation gates, setup prerequisites, launch-readiness notes, risks, assumptions, and open planning decisions;
+* dependency map, optional Mermaid milestone diagram, validation gates, setup prerequisites, launch-readiness notes, risks, assumptions, and open planning decisions;
 * first Cursor task-specification candidate;
 * enough context to create task-level specifications later without re-reading the whole project history.
 
