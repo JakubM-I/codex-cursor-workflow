@@ -24,13 +24,14 @@ When the user provides links, notes, or inspiration, inspect only material relev
 
 First, summarize the current understanding in plain language. Identify what is known, what is assumed, and which missing answers would materially change the project direction.
 
-Classify the discovery depth from the current ambiguity and consequence:
+Use a **standard discovery baseline** for every new project. A simple project may need fewer turns, but it does not skip discovery areas or let the agent fill product context from its own assumptions. A short round means at most three related questions in one message, not a cap on the number of rounds or discovery depth. Continue with dependent rounds until every applicable area below is confirmed, explicitly deferred, or recorded as a non-blocking assumption; state which known facts make a question unnecessary.
 
-* **Light** - a bounded idea with few material decisions; clarify only what the next stage needs.
-* **Standard** - a typical new project with several connected product decisions; use `cc-grill` to pressure-test the direction.
-* **Deep** - a strategic, high-risk, or highly ambiguous project; use `cc-grill`, explore credible alternative directions, and do not hide blocking decisions.
+Classify only the cases that need more scrutiny:
 
-Use `cc-grill` whenever the user asks to pressure-test the idea or when the project is Standard or Deep. Treat its output as discussion support, not as a second artifact. This skill remains responsible for the brief.
+* **Standard** - the default; cover the discovery areas below through focused discussion.
+* **Deep** - strategic, high-risk, or highly ambiguous work; use `cc-grill`, explore credible alternative directions, and do not hide blocking decisions.
+
+Use `cc-grill` whenever the user asks to pressure-test the idea or the project is Deep. Treat its output as discussion support, not as a second artifact. This skill remains responsible for the brief.
 
 Then guide the conversation through the applicable areas below. Cover each area deliberately, but do not force irrelevant questions or restart areas already settled by the user:
 
@@ -59,13 +60,13 @@ It also maintains the Brief row and project-level fields in `docs/project/status
 
 Create `docs/project/` only when the brief is ready to be saved. If a brief already exists, read it before asking questions, preserve settled information, and revise it in place. Do not create a separate functional specification, design brief, architecture document, implementation plan, task packet, or code.
 
-Read [the project brief contract](references/project-brief.md) before writing or revising the artifact. It defines required frontmatter, headings, status values, and the readiness check.
+Read [the project brief contract](references/project-brief.md) before writing or revising the artifact. It defines required frontmatter, headings, status values, the minimal `AGENTS.md` project snapshot, and the readiness check.
 
 ## Completion
 
 Write or update the brief when the dialogue has enough information for the next product-definition stage. A brief may remain `draft` when non-blocking assumptions or questions are still open. Do not claim it is ready for product and functional specification while a decision that changes the core user, problem, scope, or success outcome remains unresolved.
 
-When the brief remains `draft`, keep Brief as `in-progress` or `blocked`, record only material blockers, and name the next discovery action. When it becomes `ready-for-functional-spec`, mark Brief as `complete`, set Product / Functional Specification as the current stage, link the brief in the stage register, and append one concise update entry.
+When the brief remains `draft`, keep Brief as `in-progress` or `blocked`, record only material blockers, and name the next discovery action. When it becomes `ready-for-functional-spec`, update the `AGENTS.md` project snapshot, mark Brief as `complete`, set Product / Functional Specification as the current stage, link the brief in the stage register, append one concise update entry, then close Brief according to `.agents/artifacts/stage-closure.md`.
 
 Finish with a concise summary of:
 

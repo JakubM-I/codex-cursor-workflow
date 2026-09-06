@@ -18,7 +18,7 @@ When updating the file:
 * append one concise entry for a material transition, pause, unblock, or completion;
 * keep the most recent ten update entries. Older detail remains available through git and the linked artifacts.
 
-Do not mark a stage complete unless its own exit condition is satisfied. A project can be `active` while its current stage is `in-progress` or `blocked`.
+Do not report a stage as closed unless its own exit condition and `.agents/artifacts/stage-closure.md` are satisfied. If its checkpoint commit fails, keep or restore the stage to `in-progress` or `blocked`. A project can be `active` while its current stage is `in-progress` or `blocked`.
 
 ## Frontmatter
 

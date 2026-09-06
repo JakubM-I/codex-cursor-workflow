@@ -24,6 +24,7 @@ related:
   - docs/project/design-brief.md
   - docs/project/screen-spec.md
   - docs/project/design-system.md
+  - docs/project/asset-manifest.md
 stack:
   application: []
   data: []
@@ -130,7 +131,11 @@ Deferred Test Coverage:
 
 ## Developer Tooling And Setup
 
-- <Required or recommended CLI, SDK, plugin, skill, service account, credential, local dependency, script, or workflow prerequisite.>
+| Capability | Type | Required / recommended | Why it is needed | Availability / owner | Needed by |
+| --- | --- | --- | --- | --- | --- |
+| <Name> | <Skill, plugin, CLI, SDK, account, credential, environment, script> | <Required / recommended> | <Architecture-specific rationale> | <Available / missing; owner> | <Milestone or task> |
+
+List intentionally unneeded plausible tools below the matrix when their omission protects scope or avoids an unsupported assumption.
 
 ## Architecture Decisions
 
@@ -182,6 +187,6 @@ Set `status: ready-for-implementation-planning` only when all of these are true:
 - [ ] Design-system and screen constraints that affect implementation are accounted for.
 - [ ] Testing, validation, deployment, environment, and operations strategy are clear enough to plan work.
 - [ ] Test layers identify scope, expected evidence, timing, required fixtures or test data, and related acceptance criteria or risks.
-- [ ] Required tools, skills, plugins, accounts, credentials, and source repositories are listed with readiness status.
+- [ ] Required and recommended tools, skills, plugins, CLIs, SDKs, accounts, credentials, environments, and source repositories are listed in an implementation-capability matrix with rationale, availability, owner, and earliest needed milestone.
 - [ ] Risks, assumptions, and open decisions are visible.
 - [ ] No unresolved decision would materially change stack, data, auth, integration, deployment, or validation strategy.

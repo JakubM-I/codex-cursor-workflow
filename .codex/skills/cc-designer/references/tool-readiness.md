@@ -9,20 +9,21 @@ Use a two-layer model:
 * **Baseline workflow materials** are part of the project bootstrap when available. This includes shared skills such as `.agents/skills/make-interfaces-feel-better/`.
 * **Project-specific tools** are checked at the start of Designer. This includes account-backed plugins, visual workspaces, design platforms, and inspiration services such as Mobbin, MagicPath, Figma, Adobe, or Canva.
 
-Do not block design work on a tool that is merely nice to have. Do block completion when the user chose a visual-review workflow and has not yet reviewed or approved the resulting design.
+Do not block design work on a tool that is merely nice to have. Do block the selected design mode when its required tool is unavailable, and do not silently downgrade that mode. Documentation-only is available only as an explicit user opt-out from references and visual validation.
 
 ## Readiness Pass
 
 At the start of Designer:
 
 1. Read the brief, product specification, and functional specification.
-2. Identify which design activities are actually needed: reference research, visual workspace, generated assets, design-system planning, prototype/mockup review, or final artifact writing.
-3. Create a short tool plan with three groups:
+2. Present the three design modes: Reference research, Full visual design, and Documentation-only. Record the user's choice before creating the design direction.
+3. Identify the activities required by that mode: reference research, visual workspace, generated assets, design-system planning, prototype/mockup review, or final artifact writing.
+4. Create a short tool plan with three groups:
    * **Required for this stage** - without it, the requested design process cannot be completed.
    * **Recommended** - useful enough to ask for, but not blocking.
    * **Not needed now** - plausible tools intentionally skipped.
-4. Check available skills and tools before asking the user.
-5. Ask the user whether Codex should install/connect available missing plugins or whether the user will add them manually and confirm readiness.
+5. Check available skills and tools before asking the user.
+6. Ask the user whether Codex should install/connect available missing plugins or whether the user will add them manually and confirm readiness.
 
 Keep the question focused on the current project. Do not present a generic marketplace checklist.
 
@@ -42,7 +43,7 @@ If Mobbin is missing and would materially improve the work, ask whether the user
 
 ## MagicPath
 
-Use MagicPath when the design stage needs collaborative visual iteration or when the user wants to inspect and adjust the proposed design in a visual workspace.
+Use MagicPath when the user selects Full visual design and chooses it as the collaborative visual workspace.
 
 MagicPath readiness may require several separate things:
 
@@ -66,7 +67,7 @@ Operational flow:
 9. Record the MagicPath project link or reference in `docs/project/design-brief.md` when available.
 10. Keep Designer `in-progress` until the user explicitly approves the design direction.
 
-If no MagicPath integration is available, do not invent one. Continue with structured artifacts and any available screenshots, generated visuals, or browser-based manual collaboration. Record the limitation in the design brief under tooling and deliverables.
+If no MagicPath integration is available, do not invent one. Offer another available visual workspace or ask the user to choose another design mode. Record the limitation and the user's decision in the design brief.
 
 ## Other Design Tools
 
@@ -87,6 +88,6 @@ Tool setup and visual review affect project status:
 * During setup or design iteration, keep Designer `in-progress`.
 * If a required tool or login is missing, set the blocker to that exact missing action.
 * When artifacts are ready but awaiting user review, set the design artifacts to `ready-for-user-review` and keep Designer `in-progress`.
-* After explicit user approval, set design artifacts to `approved-for-architecture`, mark Designer `complete`, and move current stage to Architect.
+* After explicit user approval, resolve the asset-delivery decision in `docs/project/asset-manifest.md`. Only then set design artifacts to `approved-for-architecture`, mark Designer `complete`, and move current stage to Architect.
 
 Do not use Codex's own design review, a successful tool run, or a MagicPath project existing as a substitute for user approval.

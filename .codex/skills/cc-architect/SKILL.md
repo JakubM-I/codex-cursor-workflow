@@ -23,9 +23,10 @@ docs/project/functional-spec.md
 docs/project/design-brief.md
 docs/project/screen-spec.md
 docs/project/design-system.md
+docs/project/asset-manifest.md
 ```
 
-If product, functional, or design artifacts are missing, blocked, or not approved for architecture, explain the gap and route back to the owning stage. If the user has already fixed a stack or platform constraint, preserve it unless it conflicts with a material requirement; then surface the conflict and ask for a decision.
+If product, functional, or design artifacts are missing, blocked, or not approved for architecture, explain the gap and route back to the owning stage. If the asset manifest is missing or does not make every asset ready, not needed, or deferred to a named prerequisite, route back to Designer. If the user has already fixed a stack or platform constraint, preserve it unless it conflicts with a material requirement; then surface the conflict and ask for a decision.
 
 When source repositories, starter projects, examples, templates, or existing systems are referenced by the project artifacts or provided by the user, inspect them directly and extract as much practical architecture guidance as possible: conventions, package choices, deployment patterns, testing setup, data handling, auth model, integration boundaries, and operational constraints. Treat source repositories as stronger evidence than generic preferences, but do not copy project-specific assumptions that do not belong in the new project.
 
@@ -35,7 +36,7 @@ Work as a technical architect and decision partner, not as a template filler.
 
 Develop the architecture through inspection, option narrowing, and focused user interaction:
 
-* derive technical requirements from product behavior, acceptance criteria, screen structure, design-system constraints, data expectations, and integration needs;
+* derive technical requirements from product behavior, acceptance criteria, screen structure, design-system constraints, asset manifest, data expectations, and integration needs;
 * identify ambiguous choices that affect cost, delivery speed, security, data safety, maintainability, hosting, or future implementation tasks;
 * explain tradeoffs in plain language before asking the user to choose;
 * recommend a direction when the evidence is strong, while recording why alternatives were not chosen;
@@ -54,7 +55,7 @@ Before finalizing the architecture, read [the technical readiness contract](refe
 * helpful but optional tools that could speed up implementation, research, testing, deployment, or integration work;
 * tools that are plausible but intentionally not needed for the chosen architecture.
 
-When a useful skill or plugin is missing and can be installed or connected through Codex, tell the user what it would help with and ask whether Codex should install/connect it or whether the user will do it manually and confirm readiness. Do not install, connect, provision, deploy, or mutate external services without the user's authorization and the available tool support.
+When a useful skill or plugin is missing and can be installed or connected through Codex, tell the user what it would help with and ask whether Codex should install/connect it or whether the user will do it manually and confirm readiness. Build the implementation-capability matrix in the architecture artifact: it must distinguish required from recommended tools, explain the architecture-specific reason, identify availability and setup owner, and name the earliest implementation milestone that needs each capability. Do not install, connect, provision, deploy, or mutate external services without the user's authorization and the available tool support.
 
 If a tool is unavailable, record the limitation and continue with the best available local workflow when the architecture can still proceed. Do not pretend an integration, account, repository, or service exists.
 
@@ -133,7 +134,7 @@ Do not mark the stage complete while a missing decision would materially change:
 * deployment, hosting, environment, or secret handling;
 * the test and validation strategy needed for acceptance criteria.
 
-When the stage is ready, mark the architecture artifact as `ready-for-implementation-planning`, mark Architect as `complete`, set Implementation Plan as the current stage, link the architecture artifact in the stage register, and append one concise status update. Finish with a concise summary of:
+When the stage is ready, mark the architecture artifact as `ready-for-implementation-planning`, mark Architect as `complete`, set Implementation Plan as the current stage, link the architecture artifact in the stage register, append one concise status update, then close Architect according to `.agents/artifacts/stage-closure.md`. Finish with a concise summary of:
 
 * the technical architecture path and status;
 * the selected stack or stack constraints;

@@ -24,7 +24,8 @@ Use the user's message as the project description. If the description is missing
 4. Initialize git if the project is not already a git repository.
 5. Ensure the primary branch is named `main`.
 6. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
-7. Report exactly what was created or changed.
+7. Close Init according to `.agents/artifacts/stage-closure.md`.
+8. Report exactly what was created or changed.
 
 ## AGENTS.md Contract
 
@@ -89,7 +90,7 @@ If `.git/` already exists:
 - if the primary branch is `master` and there are no project-specific reasons to keep it, rename it to `main`;
 - if another branch is active, do not rename it automatically. Report the branch and ask before changing it.
 
-Do not create commits, remotes, GitHub repositories, branches other than `main`, or pull requests in this version of the skill.
+After successful initialization, read `.agents/artifacts/stage-closure.md` and create the Init baseline commit. Do not create remotes, GitHub repositories, branches other than `main`, or pull requests.
 
 ## Baseline Shared Materials
 
@@ -99,6 +100,7 @@ The baseline set currently includes:
 
 ```text
 .agents/artifacts/project-status.md
+.agents/artifacts/stage-closure.md
 .agents/scripts/validate-project-artifacts.py
 .agents/skills/make-interfaces-feel-better/
 ```
@@ -117,4 +119,5 @@ Finish with a concise summary:
 - whether baseline shared workflow materials were present, copied, or left unchanged;
 - whether git was initialized or already existed;
 - resulting current branch;
+- Init commit SHA, or the exact blocker that prevented stage closure;
 - anything intentionally left for later stages.

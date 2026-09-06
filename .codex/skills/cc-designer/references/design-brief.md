@@ -42,6 +42,10 @@ Allowed `status` values:
 
 <A concise description of the intended experience, visual character, and primary UX outcome.>
 
+## Design Working Mode
+
+<Reference research, Full visual design, or Documentation-only; record the user's explicit choice, the intended level of visual validation, and any connected or missing tools.>
+
 ## Experience Principles
 
 - <Design principle or priority that should guide layout, interaction, and visual tradeoffs.>
@@ -96,6 +100,10 @@ Allowed `status` values:
 
 - <Tools used or planned, user actions needed, links to workspaces, and ownership of visual deliverables.>
 
+## Visual Review Evidence
+
+<References, workspace links, prototype paths, or rendered mockups. For Full visual design, identify the desktop/mobile views and key states reviewed.>
+
 ## Assumptions To Validate
 
 - <Unconfirmed design assumption, why it matters, and how it could be validated.>
@@ -126,7 +134,8 @@ Omit empty optional detail only when the question was genuinely considered and d
 * Distinguish confirmed brand direction from recommended direction and assumptions.
 * Record what to adopt and avoid from references; do not copy another product wholesale.
 * Do not select frontend frameworks, UI packages, database structures, routes, API contracts, or implementation tasks.
-* Do not require a visual design tool unless the work actually needs that tool's output.
+* Do not silently select Documentation-only. Record the user's chosen mode and any deliberate limitation.
+* Full visual design requires visual evidence that the user can inspect before implementation.
 
 ## Readiness Check
 
@@ -140,6 +149,8 @@ Set `status: ready-for-user-review` only when all of these are true:
 - [ ] References explain what to adopt and avoid.
 - [ ] Accessibility and responsive expectations are explicit.
 - [ ] Tooling and deliverable ownership are clear enough to continue.
+- [ ] The chosen design mode and its reference or visual-review evidence are recorded.
+- [ ] `docs/project/asset-manifest.md` is linked and identifies the asset-delivery decision.
 - [ ] No unresolved decision would materially change the design direction or downstream architecture constraints.
 
-Set `status: approved-for-architecture` only after the readiness check passes and the user explicitly approves the design direction after reviewing the artifacts or chosen visual workspace.
+Set `status: approved-for-architecture` only after the readiness check passes and the user explicitly approves the design direction after reviewing the selected-mode evidence. Full visual design requires reviewed visual evidence, not just Markdown artifacts.

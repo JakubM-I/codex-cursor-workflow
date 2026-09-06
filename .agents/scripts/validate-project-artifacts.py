@@ -68,6 +68,19 @@ PROJECT_FILES = {
         "artifact": "design-system",
         "statuses": {"status": {"draft", "ready-for-user-review", "approved-for-architecture", "superseded"}},
     },
+    "docs/project/asset-manifest.md": {
+        "required": False,
+        "fields": ["artifact", "version", "status", "stage", "created", "updated", "sources", "related"],
+        "artifact": "asset-manifest",
+        "statuses": {
+            "status": {
+                "draft",
+                "ready-for-asset-decision",
+                "ready-for-implementation",
+                "superseded",
+            }
+        },
+    },
     "docs/project/technical-architecture.md": {
         "required": False,
         "fields": [

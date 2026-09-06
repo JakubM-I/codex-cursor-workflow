@@ -23,10 +23,11 @@ docs/project/functional-spec.md
 docs/project/design-brief.md
 docs/project/screen-spec.md
 docs/project/design-system.md
+docs/project/asset-manifest.md
 docs/project/technical-architecture.md
 ```
 
-If the technical architecture is missing, blocked, or not `ready-for-implementation-planning`, explain the gap and route back to `cc-architect`. If product or design artifacts are missing or not approved enough for planning, route back to the owning stage instead of inventing missing decisions.
+If the technical architecture is missing, blocked, or not `ready-for-implementation-planning`, explain the gap and route back to `cc-architect`. If product or design artifacts are missing or not approved enough for planning, route back to the owning stage instead of inventing missing decisions. Treat every asset marked deferred in `docs/project/asset-manifest.md` as a named prerequisite before the UI milestone that requires it.
 
 When source repositories, starter projects, examples, templates, existing systems, or previous delivery notes are referenced by the project artifacts or provided by the user, inspect them directly where practical. Extract implementation sequencing guidance such as setup order, module boundaries, bootstrapping steps, test layering, migration order, integration prerequisites, deployment constraints, and useful milestone patterns. Treat source repositories as evidence and inspiration, not as instructions to copy project-specific assumptions.
 
@@ -37,7 +38,7 @@ Work as a delivery planning partner, not as a backlog generator.
 Develop the roadmap through artifact inspection, source-repository analysis, option narrowing, and focused user interaction:
 
 * derive milestone candidates from capabilities, user flows, screens, architecture boundaries, data dependencies, integrations, and validation strategy;
-* identify dependency chains, risky prerequisites, and work that must happen before useful product slices can be built;
+* identify dependency chains, risky prerequisites, including deferred asset preparation, and work that must happen before useful product slices can be built;
 * recommend an order when the evidence is strong, and explain tradeoffs in plain language;
 * ask the user to decide when sequencing affects launch strategy, delivery risk, cost, external accounts, scope priority, or what should be usable first;
 * keep questions small, usually one material planning decision at a time;
@@ -118,7 +119,7 @@ Do not mark the stage complete while a missing decision would materially change:
 * validation gates needed before later work;
 * which milestone should become the first Cursor task specification.
 
-When the stage is ready, mark the plan artifact as `ready-for-task-specification`, mark Implementation Plan as `complete`, set the project current stage to `complete` for the current greenfield planning scope, link the plan artifact in the stage register, and append one concise status update. Finish with a concise summary of:
+When the stage is ready, mark the plan artifact as `ready-for-task-specification`, mark Implementation Plan as `complete`, set the project current stage to `complete` for the current greenfield planning scope, link the plan artifact in the stage register, append one concise status update, then close Implementation Plan according to `.agents/artifacts/stage-closure.md`. Finish with a concise summary of:
 
 * the implementation plan path and status;
 * the recommended milestone sequence;

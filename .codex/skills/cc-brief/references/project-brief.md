@@ -107,3 +107,20 @@ Set `status: ready-for-functional-spec` only when all of these are true:
 - [ ] No unresolved decision changes the core user, problem, scope, or success outcome.
 
 If a core decision is unresolved, keep the brief as `draft`, explain the blocker, and continue discovery with the user.
+
+## AGENTS.md Project Snapshot
+
+When this brief becomes `ready-for-functional-spec`, update the minimal `AGENTS.md` entry point. Preserve all existing repository instructions and keep this addition compact:
+
+```md
+## Project Snapshot
+
+<One sentence: intended outcome and primary user.>
+
+V1: <short scope boundary>.
+Out of scope: <most important confirmed exclusion>.
+
+Project state and detailed artifacts: `docs/project/status.md`, `docs/project/brief.md`.
+```
+
+Do not add feature lists, stack choices, commands, validation rules, Git rules, architecture, or implementation instructions. The snapshot is a durable orientation aid, not a second brief.

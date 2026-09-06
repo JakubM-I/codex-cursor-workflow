@@ -24,6 +24,7 @@ related:
   - docs/project/design-brief.md
   - docs/project/screen-spec.md
   - docs/project/design-system.md
+  - docs/project/asset-manifest.md
   - docs/project/technical-architecture.md
 plan_depth: standard
 tags: []
@@ -160,6 +161,7 @@ Omit sections only when genuinely irrelevant. Keep explicit `Not applicable` not
 ## Writing Rules
 
 * Make dependencies explicit: data before UI when UI depends on persisted state, auth before protected flows, integrations before integration-dependent workflows, deployment setup before release validation.
+* When the asset manifest defers an asset, make its preparation a named prerequisite before the UI task that needs it. Cursor must receive the approved asset pack or an explicit task to prepare it; it must not silently substitute unapproved assets.
 * Use Mermaid diagrams when milestone order, prerequisites, blockers, validation gates, or parallelizable paths would be easier to scan visually.
 * Keep dependency diagrams synchronized with milestone IDs and the prose dependency map; do not let a diagram become the only explanation of sequencing.
 * Distinguish confirmed decisions from recommendations, assumptions, open questions, and user-owned choices.

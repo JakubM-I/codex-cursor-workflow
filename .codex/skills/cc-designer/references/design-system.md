@@ -23,6 +23,7 @@ related:
   - docs/project/functional-spec.md
   - docs/project/design-brief.md
   - docs/project/screen-spec.md
+  - docs/project/asset-manifest.md
 ---
 ```
 
@@ -162,6 +163,7 @@ Set `status: ready-for-user-review` only when all of these are true:
 - [ ] Accessibility rules are explicit.
 - [ ] UI-polish expectations are captured at the system level.
 - [ ] Optional library considerations are framed as constraints or candidates, not hidden stack choices.
+- [ ] The asset manifest distinguishes final assets from provisional mockup material and records relevant iconography, imagery, font, and license constraints.
 - [ ] No unresolved design-system decision would materially change architecture or implementation planning.
 
 Set `status: approved-for-architecture` only after the readiness check passes and the user explicitly approves the design-system direction after reviewing the artifacts or chosen visual workspace.

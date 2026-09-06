@@ -116,7 +116,7 @@ Do not mark the stage complete while a missing decision would materially change:
 
 Also do not mark the stage complete until complexity has been assessed, the requirements review has run, automatic fixes have been applied, material product decisions have been confirmed or recorded as blockers, and deferred concerns have been routed to later stages.
 
-When the stage is ready, mark Product / Functional Specification as `complete`, set Design as the current stage, link both artifacts in the stage register, and append one concise status update. Finish with a concise summary of:
+When the stage is ready, mark Product / Functional Specification as `complete`, set Design as the current stage, link both artifacts in the stage register, append one concise status update, then close the stage according to `.agents/artifacts/stage-closure.md`. Finish with a concise summary of:
 
 * the product spec path and status;
 * the functional spec path and status;

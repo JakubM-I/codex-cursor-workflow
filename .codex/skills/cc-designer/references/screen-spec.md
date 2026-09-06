@@ -22,6 +22,7 @@ related:
   - docs/project/product-spec.md
   - docs/project/functional-spec.md
   - docs/project/design-brief.md
+  - docs/project/asset-manifest.md
 ---
 ```
 
@@ -154,6 +155,7 @@ Set `status: ready-for-user-review` only when all of these are true:
 - [ ] Cross-screen patterns are visible.
 - [ ] Responsive and accessibility notes cover material risks.
 - [ ] Deferred or out-of-scope screens are explicit.
+- [ ] Full visual design has reviewable visual evidence for core screens and layout-changing states.
 - [ ] No unresolved screen decision would materially change architecture or implementation planning.
 
 Set `status: approved-for-architecture` only after the readiness check passes and the user explicitly approves the screen structure after reviewing the artifacts or chosen visual workspace.

@@ -47,6 +47,7 @@ Supporting resources:
 
 * minimal `AGENTS.md` entrypoint contract defined in `cc-init`;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
+* `.agents/artifacts/stage-closure.md` - commit and closure contract for every stage;
 * `.agents/skills/make-interfaces-feel-better/` - full baseline shared UI-polish skill that target projects may receive during workflow bootstrap;
 * `.agents/scripts/validate-project-artifacts.py` - lightweight local validator for project artifact frontmatter, statuses, related links, and stable IDs;
 * Do ustalenia: project folder bootstrap script;
@@ -75,7 +76,7 @@ Frontmatter or metadata needs:
 
 Open decisions:
 
-* decide how small the first `AGENTS.md` should be;
+* Init creates the smallest `AGENTS.md`; Brief adds only the compact project snapshot;
 * decide which folders are created immediately and which are created on demand;
 * decide whether shared baseline skills such as `make-interfaces-feel-better` are copied during `cc-init` itself or by a separate bootstrap step that Init invokes;
 * decide whether GitHub setup is part of the default path or an explicit option.
@@ -195,10 +196,11 @@ Supporting resources:
 * `cc-designer/references/design-brief.md` - visual direction, UX principles, references, tooling, and handoff constraints;
 * `cc-designer/references/screen-spec.md` - screen/view inventory, navigation, states, responsive notes, and flow coverage;
 * `cc-designer/references/design-system.md` - token direction, component inventory, interaction patterns, accessibility rules, and UI polish expectations;
+* `cc-designer/references/asset-manifest.md` - required assets, provenance, formats, readiness, and delivery decision;
 * Mermaid diagrams in `docs/project/screen-spec.md` when screen maps, navigation, or cross-screen flows need a compact text source of truth;
 * `.agents/skills/make-interfaces-feel-better/` - full shared UI-polish lens for typography, surfaces, motion, icons, hit areas, and review;
 * Mobbin plugin - preferred source for real UI screens, flows, and website section references when available;
-* MagicPath - collaborative visual workspace when the user wants or needs visual iteration there; requires user login/project setup outside Codex when no direct integration is available;
+* MagicPath or another visual workspace - required for the selected Full visual design mode; requires user login/project setup outside Codex when no direct integration is available;
 * generated visual references or image tools, when useful for mood, art direction, bitmap mockups, or asset direction;
 * optional tools such as Figma, Adobe, or Canva only when the project and available plugins justify them;
 * `.codex/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
@@ -217,6 +219,7 @@ Output artifacts:
 * `docs/project/design-brief.md`;
 * `docs/project/screen-spec.md`;
 * `docs/project/design-system.md`;
+* `docs/project/asset-manifest.md`;
 * optional Mermaid screen, navigation, or interaction-flow diagrams when they reduce ambiguity;
 * visual references or generated design artifacts, when used;
 * design constraints for architecture and planning.
@@ -226,6 +229,7 @@ Frontmatter or metadata needs:
 * required for `docs/project/design-brief.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
 * required for `docs/project/screen-spec.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
 * required for `docs/project/design-system.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
+* required for `docs/project/asset-manifest.md`: `artifact`, `version`, `status`, `stage`, `created`, `updated`, `sources`, `related`;
 * design artifact statuses include `draft`, `ready-for-user-review`, `approved-for-architecture`, and `superseded`;
 * tool-specific outputs may have their own metadata formats, but project artifacts should link them instead of duplicating tool internals.
 
@@ -233,8 +237,8 @@ Open decisions:
 
 * Designer runs before Architect by default unless the user has already fixed technical constraints that must be known first;
 * use a hybrid installation model: baseline shared skills during Init/bootstrap, project-specific account-backed plugins at the start of Designer;
-* Designer can prepare artifacts for review, but it only marks the stage complete after explicit user approval of the design direction, preferably after reviewing MagicPath or another visual representation when that flow is used;
-* decide whether a lightweight single-artifact design mode is worth supporting for very small projects.
+* Designer begins by having the user select reference research, Full visual design, or an explicit Documentation-only opt-out;
+* Designer only marks the stage complete after explicit user approval of the selected-mode evidence and an asset-delivery decision;
 
 ### Architect
 
@@ -254,6 +258,7 @@ Supporting resources:
 
 * `cc-architect/references/technical-architecture.md` - artifact contract, required architecture areas, frontmatter, status values, and readiness check;
 * `cc-architect/references/technical-readiness.md` - source repository inspection, missing tools, skills, plugins, accounts, credentials, and installation/connection boundaries;
+* implementation-capability matrix in `docs/project/technical-architecture.md` - required and recommended skills, plugins, CLIs, SDKs, accounts, credentials, availability, owner, rationale, and earliest needed milestone;
 * `cc-architect/references/architecture-review.md` - complexity assessment, review areas, finding groups, and handling rules;
 * Mermaid diagrams in `docs/project/technical-architecture.md` when system boundaries, data ownership, integration flow, event flow, deployment shape, or security boundaries need visual clarification;
 * source repositories, starter projects, examples, templates, and existing systems when available;

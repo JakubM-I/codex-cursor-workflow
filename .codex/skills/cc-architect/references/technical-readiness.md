@@ -29,7 +29,7 @@ At the start of Architecture or before finalization:
 
 1. Read the available project artifacts and source repositories.
 2. Identify technical activities that are actually needed: stack research, framework setup, database planning, API/integration work, auth setup, deployment, testing, observability, design-system implementation, or AI/model use.
-3. Create a short tool plan with three groups:
+3. Create an implementation-capability matrix with three groups:
    * **Required for implementation** - without it, the selected architecture cannot be implemented or validated as planned.
    * **Recommended** - useful enough to ask for, but not blocking.
    * **Not needed now** - plausible tools intentionally skipped.
@@ -37,6 +37,8 @@ At the start of Architecture or before finalization:
 5. Ask whether Codex should install/connect available missing plugins or whether the user will add them manually and confirm readiness.
 
 Keep the question project-specific. Do not present a generic marketplace checklist.
+
+For every required or recommended capability, record: the skill, plugin, CLI, SDK, account, credential, or environment; why it helps this architecture; who owns setup; whether it is available; and the earliest milestone that needs it. This matrix is a required handoff to Implementation Plan and later Cursor task specifications, not a generic tooling appendix.
 
 ## Installation And Connection Boundaries
 

@@ -28,21 +28,27 @@ Treat user-provided brand files, screenshots, references, and tool outputs as di
 
 ## Tool And Plugin Readiness
 
-Designer is the first stage that normally needs account-backed creative and research tools. Use a hybrid installation model:
+Designer is the first stage that normally needs account-backed creative and research tools. Tool setup is mandatory; the selected design mode determines which tools must be connected. Use a hybrid installation model:
 
 * baseline shared skills that are part of the workflow, especially `.agents/skills/make-interfaces-feel-better/`, should be included during Init or repository bootstrap when available;
 * project-specific external tools and account-backed plugins should be checked at the start of Designer, because the needed set depends on product type, platform, and user preference.
 
-At the start of the stage, identify the useful tool set and ask the user whether Codex should install/connect the missing pieces or whether the user will add them manually and confirm readiness. Ask only for tools that materially improve the current design work.
+At the start of the stage, inspect available tools and ask the user to choose one design mode. Do not silently choose a documentation-only path:
+
+* **Reference research** - inspect and compare relevant UI references, then produce design artifacts without an original visual workspace. Requires an appropriate reference tool.
+* **Full visual design** - inspect references, create or iterate a visual design, and obtain visual approval. This is the default for a new user-facing interface. Requires a reference tool and a visual workspace such as MagicPath, Figma, or an equivalent available tool.
+* **Documentation-only** - no references and no visual design. This is an explicit user opt-out; record that later implementation will not have pre-code visual validation.
+
+Present the required, recommended, and intentionally unneeded tools for the selected mode. Ask the user whether Codex should install/connect available missing tools or whether the user will add them manually and confirm readiness. If a required tool for the selected mode is unavailable, keep Designer blocked until the user connects it or explicitly chooses another mode.
 
 Preferred tool routing:
 
 * **Mobbin** - use for real UI and UX references when available. Search specific screens, flows, or website sections from the functional spec. Inspect returned images before summarizing them. Cite Mobbin links in any user-facing reference list.
-* **MagicPath** - use as a collaborative visual workspace when the user wants visual iteration there. Since it may require the user's browser session and login, pause at the right moment and ask the user to log in, open or create the project, and confirm that Codex should continue from that workspace.
-* **Generated visual references** - use when a project needs mood, art direction, illustrative assets, or bitmap mockups that are not well covered by existing product references.
+* **MagicPath** - use as a collaborative visual workspace when the user selects the full visual-design mode and MagicPath is the chosen tool. Since it may require the user's browser session and login, pause at the right moment and ask the user to log in, open or create the project, and confirm that Codex should continue from that workspace.
+* **Generated visual references and assets** - use when the project needs mood, art direction, bitmap mockups, logos, icons, illustrations, or other asset direction that is not well covered by existing product references.
 * **Figma, Adobe, Canva, or similar tools** - use only when available and appropriate for the requested deliverable. Do not require a tool because it is popular; require it only when the work benefits from that tool's actual output.
 
-If a tool is unavailable, record the limitation and continue with the best available research, screenshots, structured design artifacts, or user-provided references. Do not pretend a manual visual workspace has been created.
+If a tool is unavailable, record the limitation. Do not pretend a manual visual workspace has been created or downgrade a selected mode without the user's explicit decision.
 
 ## Collaboration Model
 
@@ -79,6 +85,8 @@ Define:
 * accessibility, responsive behavior, and usability constraints;
 * design constraints that Architecture and Implementation Plan must account for.
 
+For **Full visual design**, create visual evidence that makes the proposed layout reviewable before implementation. Cover the primary desktop and mobile (when relevant) viewports plus the key task states or flows that would materially affect the layout. A visual workspace, linked static prototype, or rendered mockups are valid; a text-only screen specification is not.
+
 Use `.agents/skills/make-interfaces-feel-better/` as the default UI-polish lens when it is present. It should influence typography, surfaces, animation restraint, icon treatment, hit areas, and final design review. It should not override the product's brand direction, accessibility needs, or established design system.
 
 When using `make-interfaces-feel-better`, use the full skill directory, including its supporting files such as `typography.md`, `surfaces.md`, `animations.md`, `icons.md`, and `performance.md`. Read the relevant supporting file before applying detailed guidance in that category.
@@ -91,6 +99,7 @@ This skill owns:
 docs/project/design-brief.md
 docs/project/screen-spec.md
 docs/project/design-system.md
+docs/project/asset-manifest.md
 ```
 
 It also maintains the Designer row and project-level fields in `docs/project/status.md` according to the shared project-status contract. It does not write the technical architecture, implementation plan, Cursor task specs, or production code.
@@ -101,6 +110,7 @@ Before writing or revising artifacts, read:
 * [the design brief contract](references/design-brief.md);
 * [the screen spec contract](references/screen-spec.md);
 * [the design system contract](references/design-system.md).
+* [the asset manifest contract](references/asset-manifest.md).
 
 These references define required frontmatter, headings, status values, and readiness checks.
 
@@ -120,6 +130,7 @@ Review the design artifacts against:
 * accessibility and responsive expectations;
 * clear handoff constraints for architecture and planning;
 * UI polish using `.agents/skills/make-interfaces-feel-better/` when present.
+* the selected design mode, its reference or visual evidence, and asset-manifest completeness.
 
 Use `.codex/agents/design-critic.md` when an independent reviewer is available and the project is `standard` or `deep`. If subagent execution is unavailable, perform the same review as a clearly separated self-review and report that limitation. The reviewer is read-only and does not update artifacts or project status.
 
@@ -131,14 +142,16 @@ Apply only small clarity fixes automatically. Ask the user before changing brand
 
 Designer requires an explicit user approval gate before completion.
 
-When the design artifacts and any visual tool outputs are ready for review, keep the Designer stage `in-progress` and update `docs/project/status.md` with:
+When the design artifacts, selected-mode evidence, and asset manifest are ready for review, keep the Designer stage `in-progress` and update `docs/project/status.md` with:
 
 * Current stage: Designer
-* Next action: User reviews the design direction and requested visual workspace or artifacts.
+* Next action: User reviews the design direction, selected-mode evidence, and asset strategy.
 * Blockers: Awaiting user design approval, or a specific design decision if one is missing.
 * Designer row: `in-progress`, linked to the current design artifacts, with a note such as `Ready for user design review`.
 
-If MagicPath or another visual workspace is part of the chosen flow, ask the user to log in, open or create the project, review the design there, and either approve it or request changes. Record the workspace link or reference in the design artifacts when available.
+For Full visual design, ask the user to review the visual workspace or mockups and explicitly approve or request changes to the proposed layout, visual direction, and responsive behavior. Record the workspace link or visual-evidence reference in the design artifacts. A generic instruction to proceed is not design approval.
+
+After the user approves the design direction, ask whether outstanding assets in `asset-manifest.md` should be prepared now, supplied by the user, sourced with approved rights, or deferred to a named prerequisite task before UI implementation. Record the decision and do not create or source assets without the necessary authorization.
 
 When the user requests changes, revise the relevant design artifacts and visual workspace notes, then return to user review. Do not treat the design-critic verdict or Codex's own review as a substitute for user approval.
 
@@ -155,13 +168,14 @@ Do not mark the stage complete while a missing decision would materially change:
 * component system expectations;
 * design constraints that affect architecture.
 
-Also do not mark the stage complete until the user explicitly approves the design direction after reviewing the artifacts and, when used, the visual workspace such as MagicPath.
+Also do not mark the stage complete until the user explicitly approves the design direction after reviewing the selected-mode evidence and, for Full visual design, the visual workspace or mockups. The asset manifest must be `ready-for-implementation`, with each asset ready, not needed, or deferred to a named prerequisite task.
 
-When the stage is approved, mark the design artifacts as `approved-for-architecture`, mark Designer as `complete`, set Architect as the current stage, link all design artifacts in the stage register, and append one concise status update. Finish with a concise summary of:
+When the stage is approved, mark the design artifacts as `approved-for-architecture`, mark Designer as `complete`, set Architect as the current stage, link all design artifacts in the stage register, append one concise status update, then close Designer according to `.agents/artifacts/stage-closure.md`. Finish with a concise summary of:
 
 * the design brief path and status;
 * the screen spec path and status;
 * the design system path and status;
+* the asset manifest path and delivery decision;
 * the chosen visual/UX direction;
 * references or tool outputs used;
 * blocking decisions or assumptions, if any;

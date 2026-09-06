@@ -28,6 +28,8 @@ Do not force every agent to read every project document. Each stage or skill sho
 
 Keep `AGENTS.md` minimal in target projects. Treat it as an entry point or context index, not as the main workflow engine.
 
+Init creates the minimal entry point. Once Brief is ready, Brief adds a compact project snapshot with the intended outcome, primary user, v1 boundary, key exclusion, and links to the current project artifacts. It must not duplicate the brief or accumulate implementation rules.
+
 Use structured artifacts when they will be reused by later stages. If a file needs to be discovered, filtered, resumed, validated, or routed by agents, give it appropriate frontmatter or metadata.
 
 Use lightweight text diagrams when they clarify relationships that are hard to read in prose. Prefer Mermaid blocks in Markdown because they are versionable, reviewable in diffs, and readable by agents. Do not require diagrams for obvious or linear material; add them when order, state, dependency, data flow, ownership, or system boundaries could otherwise be misunderstood.
@@ -37,6 +39,8 @@ Each project has a compact workflow index at `docs/project/status.md`. Init crea
 Use deterministic scripts, hooks, or validations when a gate should not depend only on model memory.
 
 A lightweight shared validator may check project artifact frontmatter, statuses, related links, and stable IDs. It is not a replacement for stage judgment or user approval; it catches structural drift before later agents consume the artifacts.
+
+Every closed stage is a Git checkpoint. After its readiness, validation, and any required user approval, its owner commits only its owned artifacts and `docs/project/status.md`, then reports the short SHA to the user. A stage remains open when its checkpoint cannot be committed.
 
 ## Material Layers
 
@@ -83,6 +87,7 @@ Output:
 * minimal project entry point or context index;
 * project-status index with Brief as the next stage;
 * git repository with `main` as the primary branch;
+* initial Git checkpoint;
 * clear note of what was created and what remains unset.
 
 Exit condition:
@@ -105,7 +110,7 @@ The brief should answer:
 * what assumptions need validation;
 * what inputs, assets, accounts, or external references may be needed.
 
-This stage may use conversational pressure testing, inspiration research, or "grill me" style questioning. It should ask for one decision at a time when the user is needed.
+This stage uses a standard discovery baseline even for simple projects. It may use conversational pressure testing, inspiration research, or "grill me" style questioning, and should ask in small rounds of one to three related decisions when the user is needed. A round is only a conversational cadence, not a total question budget: continue with dependent rounds until each applicable discovery area is confirmed, explicitly deferred, or visible as an assumption. Simplicity reduces unnecessary exploration, not the need to cover user, outcome, scope, constraints, and references.
 
 Output:
 
@@ -171,11 +176,11 @@ Purpose:
 
 Define the visual and UX direction for the product.
 
-This stage may use design tools, UI inspiration sources, visual references, mockup tools, or design-specific skills. Examples include MagicPath, Mobbin, generated visual references, or project-specific design systems when available.
+At the start of Designer, the user selects one mode: reference research, full visual design, or an explicit documentation-only opt-out. A new user-facing interface defaults to full visual design. The agent must not silently decide that references, mockups, or visual tooling are unnecessary.
 
 Designer is the first stage where account-backed design tools are normally expected. Baseline shared UI skills can be included during Init or repository bootstrap, while project-specific plugins and design accounts should be checked at the start of Designer. Codex should present the useful tool set, identify what is missing, and ask whether Codex should install/connect available plugins or whether the user will add tools manually and confirm readiness.
 
-Mobbin is the preferred source for real UI and UX references when available. MagicPath is treated as a collaborative visual workspace: when needed, the user may be asked to log in, open or create the project, review the proposed design, and either approve it or request changes. If a tool is unavailable, the stage continues with structured artifacts, screenshots, generated references, or other available sources instead of pretending a tool-specific output exists.
+Mobbin is the preferred source for real UI and UX references when available. MagicPath is treated as a collaborative visual workspace for full visual design: the user may be asked to log in, open or create the project, review the proposed design, and either approve it or request changes. Tools required by the selected mode must be installed or connected before that mode can proceed; if they are unavailable, the user chooses another tool or explicitly changes mode.
 
 The design stage should focus on:
 
@@ -194,12 +199,13 @@ Output:
 * design brief;
 * screen or view specification;
 * design-system direction, including component and interaction notes;
+* `asset-manifest.md`, covering logos, icons, imagery, fonts, provisional mockup assets, provenance, and delivery timing;
 * references or generated design assets, when used;
 * design constraints for architecture and planning.
 
 Exit condition:
 
-The user has approved the design direction after reviewing the design artifacts or visual workspace, and the technical architecture can account for the intended product experience.
+The user has approved the design direction after reviewing the selected-mode evidence. Full visual design requires reviewable mockups or a visual workspace, including core layouts and layout-changing states. The asset manifest must either provide required assets or defer each one to a named prerequisite before the relevant UI task.
 
 ### Stage 5: Architect
 
