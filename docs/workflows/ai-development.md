@@ -332,30 +332,30 @@ The project has a coherent implementation roadmap. The next stage can create the
 
 Purpose:
 
-Convert only the next ready milestone slice into a precise Cursor task contract, then verify and close that delivery step before preparing the following task.
+Convert a ready milestone into a lightweight task map and its first precise Cursor task contract, then verify each delivery step before preparing the following task.
 
-The implementation plan remains the roadmap. Do not generate detailed contracts for all later milestones in advance: each Task Spec must incorporate the current repository state, completed-task evidence, and delivery-log implications.
+The implementation plan remains the roadmap. At milestone start, Codex may create a lightweight map of its intended task sequence and completion rule. It creates a detailed Cursor contract only for the first ready task; later contracts must incorporate the current repository state, completed-task evidence, and delivery-log implications.
 
 Responsibility split:
 
 * Cursor reads the bounded task context, writes only the requested code, performs only explicitly permitted lightweight self-checks, and reports the handoff;
-* Codex writes and revises the Task Spec, performs acceptance tests and broader validation, independently reviews against the original contract, records outcomes, and updates project artifacts;
+* `cc-task-spec` writes and revises the Task Spec; `cc-task-verify` performs acceptance tests and broader validation, independently reviews against the original contract, records outcomes, and updates project artifacts;
 * the user approves material changes to product, UX, architecture, security, cost, external accounts, deployment, or launch scope.
 
 Each Task Spec should contain a small verifiable objective; source context; in-scope and out-of-scope work; preconditions; required behavior; constraints and decision boundaries; acceptance criteria; permitted Cursor self-checks; Codex verification plan; and a precise handoff format. A milestone can require several Task Specs.
 
-After every Cursor handoff, Codex records verification evidence and a concise delivery record. If delivery changes a future milestone's practical implementation, update the plan before writing the affected Task Spec. If it changes an upstream decision, correct the owning artifact with a delivery-derived annotation and request user approval where required. Do not rely on conversation memory for these corrections.
+After every Cursor handoff, `cc-task-verify` records verification evidence and a concise delivery record. If corrections are required, the user approves them before `cc-task-spec` creates an explicit new revision for Cursor. If delivery changes a future milestone's practical implementation, update the plan before writing the affected Task Spec. If it changes an upstream decision, correct the owning artifact with a delivery-derived annotation and request user approval where required. Do not rely on conversation memory for these corrections.
 
 Output:
 
-* a current Cursor-ready task contract under `docs/tasks/`;
+* a current Cursor-ready task contract under `docs/tasks/M-<milestone>-<slug>/`, with the milestone ID in its filename;
 * Cursor's implementation report and Codex-owned verification outcome;
 * `docs/project/delivery-log.md` entries for accepted, blocked, or materially revised work;
 * corrected plan or source artifacts when delivery produces a material change.
 
 Exit condition for each loop iteration:
 
-The current task is accepted, blocked with a named owner and next action, or revised into a new bounded Cursor attempt. The next task is not prepared until relevant pending delivery implications are resolved.
+The current task is accepted, blocked with a named owner and next action, or awaiting the user's approval of a precise correction request. The next task is not prepared until relevant pending delivery implications are resolved. Once every task in a milestone map is accepted, Codex closes the milestone as a traceability check only; it does not run an additional global test.
 
 ## Future Workflow Parts
 

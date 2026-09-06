@@ -98,6 +98,10 @@ Task-Specification Notes:
 
 - <How this milestone should later be split into Cursor-ready task packets, if already visible at a coarse level.>
 
+Task Delivery Register:
+
+- <Added by `cc-task-spec` when this milestone begins; initially `Not started`.>
+
 Risks Or Open Questions:
 
 - <Risk, assumption, missing decision, or blocker tied to this milestone.>
@@ -156,6 +160,7 @@ Omit sections only when genuinely irrelevant. Keep explicit `Not applicable` not
 * Prefer vertical product slices once the foundation is ready. Avoid a long foundation phase unless the architecture or risk profile makes it necessary.
 * Each milestone should be large enough to explain a meaningful phase and small enough that a later task-spec stage can split it into one or more Cursor task packets.
 * Include candidate task slices only when they clarify sequencing. Do not write task-level acceptance criteria, file lists, implementation prompts, or code instructions here.
+* `cc-task-spec` later replaces the `Task Delivery Register` placeholder with a lightweight task map and current delivery state. That register tracks planned and accepted tasks; it does not make the plan a collection of detailed Cursor prompts.
 * Link to stable IDs from functional specs and architecture when useful. Do not invent acceptance criteria or ADRs in the plan.
 
 ## Writing Rules

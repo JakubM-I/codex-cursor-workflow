@@ -1,6 +1,8 @@
 # Cursor Task Specification Contract
 
-`docs/tasks/TASK-<number>-<short-name>.md` is a bounded implementation contract prepared by Codex for Cursor. It is not a roadmap, backlog entry, change request without acceptance criteria, test report, or a substitute for project architecture.
+`docs/tasks/M-<milestone>-<slug>/M-<milestone>-TASK-<number>-<slug>.md` is a bounded implementation contract prepared by Codex for Cursor. It is not a roadmap, backlog entry, change request without acceptance criteria, test report, or a substitute for project architecture.
+
+For example, the first task of a Foundation milestone could be stored as `docs/tasks/M-001-foundation/M-001-TASK-001-initialize-project.md`. The milestone ID appears in both the folder and filename so a task remains identifiable when copied, linked, or listed outside its folder.
 
 ## Frontmatter
 
@@ -102,6 +104,23 @@ Out of scope:
 ```
 
 Do not fabricate an acceptance-criterion ID. When the upstream functional specification does not have one, write a task-local observable condition and explain the source link. File lists belong only when they are known constraints; do not force Cursor into guessed file changes.
+
+## Milestone Task Delivery Register
+
+When `cc-task-spec` starts a milestone, add this compact register below that milestone in `docs/project/implementation-plan.md`:
+
+```md
+Task Delivery Register:
+
+- Delivery status: not-started | in-progress | complete | blocked
+- TASK-001 — <short objective>; depends on: <task IDs or `None`>; status: ready-for-cursor
+- TASK-002 — <short objective>; depends on: TASK-001; status: planned
+- Completion rule: every listed task is accepted and no delivery-log implication blocks the next milestone.
+```
+
+The register may reserve task IDs and describe their small objectives, but it must not become a collection of detailed Cursor instructions. Create the full specification for only the current ready task. If delivery exposes a genuinely necessary additional task, add it to the register with the reason before preparing its detailed specification.
+
+Completing a milestone does not require a separate end-to-end or global test merely because it is the last task. `cc-task-verify` marks it complete after every listed task is accepted and no open implication blocks the next milestone. Broader product or release testing belongs to a later, explicitly defined validation stage.
 
 ## Ready-For-Cursor Check
 

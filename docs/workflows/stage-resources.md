@@ -377,7 +377,26 @@ Open decisions:
 
 Purpose:
 
-Prepare one current Cursor implementation contract, then run Codex-owned verification, review, and delivery follow-up before the next contract is written.
+Create a lightweight task map for one implementation milestone, prepare only its current Cursor implementation contract, then run Codex-owned verification before the next contract is written.
+
+Process:
+
+```mermaid
+flowchart TD
+  Start[Start milestone M-001] --> Spec[Codex: cc-task-spec\nTask map + current TASK-001]
+  Spec --> Implement[Cursor: implement current task]
+  Implement --> Verify[Codex: cc-task-verify\nTests, review, evidence]
+  Verify --> Decision{Verification result}
+  Decision -->|Changes required| Approve[User approves corrections]
+  Approve --> Revise[Codex: cc-task-spec\nExplicit task revision]
+  Revise --> Implement
+  Decision -->|Accepted| Remaining{Another planned task?}
+  Remaining -->|Yes| Next[Codex: cc-task-spec\nNext detailed task only]
+  Next --> Implement
+  Remaining -->|No| Close[Mark milestone complete\nTask-map completeness only]
+```
+
+The final node does not run a new global test. Every task is verified by `cc-task-verify`; milestone closure only confirms that the planned task map is accepted and has no blocking delivery implication.
 
 Intended owner:
 
@@ -385,12 +404,12 @@ Codex; Cursor implements only the bounded code change; the user owns material de
 
 Primary skill or prompt:
 
-`.codex/skills/cc-task-spec/SKILL.md`.
+`.codex/skills/cc-task-spec/SKILL.md` followed by `.codex/skills/cc-task-verify/SKILL.md` after Cursor handoff.
 
 Supporting resources:
 
 * `cc-task-spec/references/task-specification.md` - task packet structure, statuses, and readiness check;
-* `cc-task-spec/references/delivery-loop.md` - evidence, outcome routing, and revision guidance;
+* `cc-task-verify/references/task-verification.md` - Codex evidence, correction-request, and outcome rules;
 * `.agents/artifacts/task-delivery.md` - cross-agent responsibility boundary;
 * `.agents/artifacts/delivery-log.md` - durable implementation-derived correction record;
 * `.cursor/rules/implement-task-spec.mdc` - Cursor-only implementation and handoff rules;
@@ -405,8 +424,8 @@ Input artifacts:
 
 Output artifacts:
 
-* one `docs/tasks/TASK-*.md` Cursor-ready specification;
-* Codex-owned task delivery history and `docs/project/delivery-log.md` entry;
+* a lightweight Task Delivery Register for the selected milestone and one `docs/tasks/M-<milestone>-<slug>/M-<milestone>-TASK-<number>-<slug>.md` Cursor-ready specification;
+* Codex-owned task verification history and `docs/project/delivery-log.md` entry;
 * corrected plan or source artifacts when delivery materially changes their assumptions.
 
 Frontmatter or metadata needs:

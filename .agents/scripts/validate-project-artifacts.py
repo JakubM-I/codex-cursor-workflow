@@ -300,7 +300,7 @@ def validate_task_specs(root: Path) -> list[str]:
         return []
 
     errors: list[str] = []
-    for path in sorted(task_dir.glob("TASK-*.md")):
+    for path in sorted(task_dir.glob("M-*/M-*-TASK-*.md")):
         frontmatter, parse_errors = parse_frontmatter(path)
         errors.extend(parse_errors)
         if frontmatter.get("artifact") != "cursor-task-spec":
@@ -316,6 +316,16 @@ def validate_task_specs(root: Path) -> list[str]:
             errors.append(f"{rel_path}: `milestone` should use M-001 format")
         if isinstance(revision, str) and not re.fullmatch(r"[1-9]\d*", revision):
             errors.append(f"{rel_path}: `revision` should be a positive integer")
+        if isinstance(task_id, str) and isinstance(milestone, str):
+            expected_file_prefix = f"{milestone}-{task_id}-"
+            if not path.name.startswith(expected_file_prefix):
+                errors.append(
+                    f"{rel_path}: filename should start with `{expected_file_prefix}`"
+                )
+            if not path.parent.name.startswith(f"{milestone}-"):
+                errors.append(
+                    f"{rel_path}: parent folder should start with `{milestone}-`"
+                )
 
     return errors
 

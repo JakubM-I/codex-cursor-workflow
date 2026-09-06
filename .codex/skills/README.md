@@ -11,12 +11,13 @@ Current skills:
 - `cc-designer/` - turns product and functional specifications into UX direction, screen structure, and design-system artifacts.
 - `cc-architect/` - turns product, design, and constraints into a technical architecture.
 - `cc-plan/` - turns architecture and upstream artifacts into an ordered implementation roadmap.
-- `cc-task-spec/` - turns the next ready plan slice into a Cursor task contract and coordinates Codex-owned verification and delivery follow-up.
+- `cc-task-spec/` - creates a lightweight task map for a ready milestone and writes its current Cursor task contract.
+- `cc-task-verify/` - verifies the implemented task, records evidence, and accepts it or returns a correction request.
 
 Expected future use:
 
 - stage orchestration skills;
 - task analysis skills;
-- deeper verification, review, and fix-guidance skills when delivery complexity justifies separating them from `cc-task-spec`.
+- deeper review and fix-guidance skills when delivery complexity justifies separating them from `cc-task-verify`.
 
 These skills may use shared material from `.agents/` when appropriate.

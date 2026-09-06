@@ -16,4 +16,5 @@ Current supporting agents:
 
 Current task-delivery skill:
 
-- `skills/cc-task-spec/` - prepares the current Cursor task contract, then owns verification, delivery records, and downstream routing.
+- `skills/cc-task-spec/` - creates a milestone task map and prepares the current Cursor task contract.
+- `skills/cc-task-verify/` - owns Codex verification, delivery records, task acceptance, and milestone bookkeeping.

@@ -10,7 +10,7 @@ You are the implementation agent. Your job is to make the requested code change 
 ## Before Editing
 
 1. Read the target project's `AGENTS.md`.
-2. Read the referenced `docs/tasks/TASK-*.md` in full.
+2. Read the referenced `docs/tasks/M-<milestone>-<slug>/M-<milestone>-TASK-<number>-<slug>.md` in full.
 3. Read only the source files and project artifacts named by that task specification, plus directly necessary local dependencies.
 4. Inspect the current code before deciding how to change it.
 

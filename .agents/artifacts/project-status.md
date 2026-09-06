@@ -175,7 +175,7 @@ When `cc-plan` produces a ready roadmap, it marks planning complete and begins t
 | Stage | Status | Artifact | Updated | Notes |
 | --- | --- | --- | --- | --- |
 | Implementation Plan | complete | `docs/project/implementation-plan.md` | 2026-09-06 | Roadmap is ready for task specification. |
-| Task Specification / Delivery | in-progress | `docs/tasks/TASK-001-<short-name>.md` | 2026-09-06 | Awaiting Cursor implementation. |
+| Task Specification / Delivery | in-progress | `docs/tasks/M-001-<slug>/M-001-TASK-001-<slug>.md` | 2026-09-06 | Awaiting Cursor implementation. |
 
 ## Recent Updates
 
