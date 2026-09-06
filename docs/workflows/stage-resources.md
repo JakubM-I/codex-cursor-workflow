@@ -8,6 +8,22 @@ Current scope: project creation from zero through the implementation plan.
 
 This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
 
+## Workflow At A Glance
+
+```mermaid
+flowchart LR
+  Init[Init] --> Brief[Brief]
+  Brief --> Spec[Product & Functional Specification]
+  Spec --> Design[Designer]
+  Design --> Review{Visual review and\nasset decision}
+  Review -->|Approved| Architect[Architect]
+  Review -->|Changes requested| Design
+  Architect --> Plan[Implementation Plan]
+  Plan --> Tasks[Later: Cursor task specifications]
+```
+
+Each completed stage is a Git checkpoint. Designer begins by selecting reference research, full visual design, or a deliberate documentation-only opt-out.
+
 ## How To Use This File
 
 For each workflow stage, track:
