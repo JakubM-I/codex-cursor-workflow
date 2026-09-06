@@ -4,7 +4,7 @@ This document is a working inventory of tools, skills, prompts, checklists, scri
 
 It is intentionally provisional. Its purpose is to help design the system while the workflow is still evolving. It may later be simplified, split into agent-specific skill files, or removed.
 
-Current scope: project creation from zero through the implementation plan.
+Current scope: greenfield project creation through the Task Specification and Delivery Loop.
 
 This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
 
@@ -19,7 +19,11 @@ flowchart LR
   Review -->|Approved| Architect[Architect]
   Review -->|Changes requested| Design
   Architect --> Plan[Implementation Plan]
-  Plan --> Tasks[Later: Cursor task specifications]
+  Plan --> TaskSpec[Task Specification]
+  TaskSpec --> Cursor[Cursor implementation]
+  Cursor --> Verify[Codex verification and review]
+  Verify --> Log[Delivery log and artifact updates]
+  Log --> TaskSpec
 ```
 
 Each completed stage is a Git checkpoint. Designer begins by selecting reference research, full visual design, or a deliberate documentation-only opt-out.
@@ -367,18 +371,57 @@ Frontmatter or metadata needs:
 
 Open decisions:
 
-* decide the later Cursor task packet contract and where it should live;
-* decide whether implementation-plan completion should always set the current project stage to `complete` for the greenfield planning scope, or to a future `task-specification` stage once that workflow part exists;
 * decide whether large projects need separate release-plan or rollout-plan artifacts, or whether those remain sections in the implementation plan.
+
+### Task Specification And Delivery Loop
+
+Purpose:
+
+Prepare one current Cursor implementation contract, then run Codex-owned verification, review, and delivery follow-up before the next contract is written.
+
+Intended owner:
+
+Codex; Cursor implements only the bounded code change; the user owns material decision approvals.
+
+Primary skill or prompt:
+
+`.codex/skills/cc-task-spec/SKILL.md`.
+
+Supporting resources:
+
+* `cc-task-spec/references/task-specification.md` - task packet structure, statuses, and readiness check;
+* `cc-task-spec/references/delivery-loop.md` - evidence, outcome routing, and revision guidance;
+* `.agents/artifacts/task-delivery.md` - cross-agent responsibility boundary;
+* `.agents/artifacts/delivery-log.md` - durable implementation-derived correction record;
+* `.cursor/rules/implement-task-spec.mdc` - Cursor-only implementation and handoff rules;
+* `.agents/scripts/validate-project-artifacts.py` - structural validation for project artifacts and task packets.
+
+Input artifacts:
+
+* ready implementation plan;
+* selected ready milestone and its upstream sources;
+* current repository state;
+* relevant accepted task records and unresolved delivery-log implications.
+
+Output artifacts:
+
+* one `docs/tasks/TASK-*.md` Cursor-ready specification;
+* Codex-owned task delivery history and `docs/project/delivery-log.md` entry;
+* corrected plan or source artifacts when delivery materially changes their assumptions.
+
+Frontmatter or metadata needs:
+
+* task packets use `artifact`, `version`, `status`, `stage`, `task_id`, `revision`, `milestone`, `created`, `updated`, `sources`, `related`, `depends_on`, and `tags`;
+* delivery log uses `artifact`, `version`, `status`, `created`, `updated`, and `related`.
+
+Open decisions:
+
+* whether a future high-assurance workflow should split Codex verification and independent code review into separately invocable skills;
+* whether release planning and knowledge capture should remain an extension of the delivery log or become their own closing stage.
 
 ## Later Workflow Areas
 
 These areas are intentionally not designed in detail yet:
 
 * existing project onboarding and current-state analysis;
-* conversion from an implementation-plan stage into a Cursor-ready task packet, including required context, optional context, acceptance criteria IDs, relevant design and architecture constraints, decisions Cursor may make locally, and decisions Cursor must route back to Codex;
-* Cursor implementation workflow, including how Cursor consumes task packets without needing the whole project history;
-* verification workflow, including runtime checks mapped back to acceptance criteria and design constraints;
-* code review workflow, including independent review against the original Codex contract rather than only general diff quality;
-* fix guidance and fix loops, including focused fix packets from Codex to Cursor, bounded retries, and criteria for returning to specification, design, or architecture;
 * completion and knowledge capture.

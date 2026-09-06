@@ -144,6 +144,10 @@ Fix:
 
 * fixture frontmatter was corrected to `project_status: complete` and `current_stage: complete` after the implementation plan completed.
 
+## Workflow-Scope Supersession
+
+This smoke test captured the earlier workflow boundary, where Implementation Plan was the final greenfield stage. Since the Task Specification and Delivery Loop was added on 2026-09-06, an equivalent current fixture must instead keep the project `active`, set `current_stage: task-specification`, and add the Task Specification / Delivery row after an implementation plan becomes `ready-for-task-specification`.
+
 ## Other Checks
 
 Frontmatter parse check:

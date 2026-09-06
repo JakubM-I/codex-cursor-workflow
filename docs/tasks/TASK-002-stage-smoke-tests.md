@@ -22,7 +22,7 @@ related:
 
 Run local structural smoke tests for the greenfield workflow stages before testing the full workflow on an example project.
 
-This complements the earlier isolated `cc-plan` smoke test by checking the artifact handoff shapes for Init, Brief, Product / Functional Specification, Designer, Architect, and the full pre-task-specification state.
+This complements the earlier isolated `cc-plan` smoke test by checking the artifact handoff shapes for Init, Brief, Product / Functional Specification, Designer, Architect, and the full pre-task-specification state. The Task Specification and Delivery Loop was added after this test report; its required fixture now continues from the ready plan instead of treating that state as the workflow endpoint.
 
 ## Test Fixture
 
@@ -113,10 +113,16 @@ No validator changes were needed during this test pass.
 
 ## Recommended Next Test
 
-Run the complete sequence on a fresh example project:
+Run the complete planning sequence on a fresh example project:
 
 ```text
 cc-init -> cc-brief -> cc-spec -> cc-designer -> cc-architect -> cc-plan
+```
+
+Then run a dedicated delivery-loop fixture:
+
+```text
+cc-task-spec -> Cursor implementation report -> Codex verification -> delivery log -> next cc-task-spec
 ```
 
 Pay special attention to:

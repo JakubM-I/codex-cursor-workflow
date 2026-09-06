@@ -42,7 +42,7 @@ Allowed `project_status` values:
 * `complete`;
 * `superseded`.
 
-Canonical `current_stage` values for the current greenfield workflow:
+Canonical `current_stage` values for the greenfield workflow:
 
 * `init`;
 * `brief`;
@@ -50,6 +50,8 @@ Canonical `current_stage` values for the current greenfield workflow:
 * `design`;
 * `architecture`;
 * `implementation-plan`;
+* `task-specification`;
+* `implementation`;
 * `complete`.
 
 Allowed stage-row statuses:
@@ -94,6 +96,8 @@ related:
 | Designer | not-started | - | - | - |
 | Architect | not-started | - | - | - |
 | Implementation Plan | not-started | - | - | - |
+| Task Specification / Delivery | not-started | - | - | - |
+| Task Specification / Delivery | not-started | - | - | - |
 
 ## Recent Updates
 
@@ -121,6 +125,7 @@ When `cc-brief` produces a ready brief, it updates the relevant values rather th
 | Designer | not-started | - | - | - |
 | Architect | not-started | - | - | - |
 | Implementation Plan | not-started | - | - | - |
+| Task Specification / Delivery | not-started | - | - | - |
 
 ## Recent Updates
 
@@ -147,10 +152,32 @@ When `cc-spec` produces both product-definition artifacts, it may link both in t
 | Designer | not-started | - | - | - |
 | Architect | not-started | - | - | - |
 | Implementation Plan | not-started | - | - | - |
+| Task Specification / Delivery | not-started | - | - | - |
 
 ## Recent Updates
 
 - 2026-08-31 - Product and functional specifications completed after standard requirements review. Designer is the next stage.
 - 2026-08-31 - Brief completed and linked. Product / Functional Specification is the next stage.
 - 2026-08-31 - Init completed. Brief is the next stage.
+```
+
+When `cc-plan` produces a ready roadmap, it marks planning complete and begins the just-in-time delivery loop rather than marking the project complete:
+
+```md
+## Current State
+
+- Current stage: Task Specification
+- Next action: Use `cc-task-spec` to prepare the smallest ready slice from `M-001`.
+- Blockers: None identified.
+
+## Stage Register
+
+| Stage | Status | Artifact | Updated | Notes |
+| --- | --- | --- | --- | --- |
+| Implementation Plan | complete | `docs/project/implementation-plan.md` | 2026-09-06 | Roadmap is ready for task specification. |
+| Task Specification / Delivery | in-progress | `docs/tasks/TASK-001-<short-name>.md` | 2026-09-06 | Awaiting Cursor implementation. |
+
+## Recent Updates
+
+- 2026-09-06 - Implementation Plan completed. Task Specification is the current stage.
 ```

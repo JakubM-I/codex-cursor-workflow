@@ -9,3 +9,10 @@ Do not put tool-specific instructions here when they only apply to Codex or Curs
 Current shared scripts:
 
 - `scripts/validate-project-artifacts.py` - lightweight local validation for project artifact frontmatter, statuses, related links, and stable IDs.
+
+Current shared artifact contracts:
+
+- `artifacts/project-status.md` - compact workflow position;
+- `artifacts/stage-closure.md` - closure rules for planning stages;
+- `artifacts/task-delivery.md` - Codex-Cursor responsibility boundary and delivery loop;
+- `artifacts/delivery-log.md` - durable, delivery-derived implications for later tasks.

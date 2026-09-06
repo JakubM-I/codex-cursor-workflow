@@ -119,7 +119,7 @@ Do not mark the stage complete while a missing decision would materially change:
 * validation gates needed before later work;
 * which milestone should become the first Cursor task specification.
 
-When the stage is ready, mark the plan artifact as `ready-for-task-specification`, mark Implementation Plan as `complete`, set the project current stage to `complete` for the current greenfield planning scope, link the plan artifact in the stage register, append one concise status update, then close Implementation Plan according to `.agents/artifacts/stage-closure.md`. Finish with a concise summary of:
+When the stage is ready, mark the plan artifact as `ready-for-task-specification`, mark Implementation Plan as `complete`, set the project current stage to `task-specification`, link the plan artifact in the stage register, append one concise status update, then close Implementation Plan according to `.agents/artifacts/stage-closure.md`. Finish with a concise summary of:
 
 * the implementation plan path and status;
 * the recommended milestone sequence;

@@ -1,8 +1,8 @@
 # AI Development Workflow
 
-This document describes the first part of a reusable workflow for building a new software project with Codex, Cursor, and the user.
+This document describes a reusable workflow for building a new software project with Codex, Cursor, and the user.
 
-Current scope: project creation from zero, from initialization to an implementation plan. Existing-project onboarding, task-level implementation specs, Cursor execution, verification, review, and fix loops will be designed later.
+Current scope: greenfield project creation from initialization through a just-in-time Task Specification and Delivery Loop. Existing-project onboarding and release workflow remain future work.
 
 This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
 
@@ -18,7 +18,7 @@ The preferred collaboration model is:
 * Cursor implements concrete tasks later, after the project plan has been converted into task-level specifications.
 * The user provides goals, decisions, priorities, feedback, accounts, assets, and final approval.
 
-This document stops at the project implementation plan. It does not yet define the detailed Cursor task workflow.
+The implementation plan is followed by a repeatable, just-in-time Task Specification and Delivery Loop. Cursor implements only the current bounded task; Codex owns verification, review, records, and routing of delivery-derived changes.
 
 ## Operating Principles
 
@@ -326,18 +326,42 @@ Output:
 
 Exit condition:
 
-The project has a coherent implementation roadmap. The next workflow part can create detailed task specifications for Cursor.
+The project has a coherent implementation roadmap. The next stage can create the first detailed Task Spec for Cursor.
+
+### Stage 7: Task Specification And Delivery Loop
+
+Purpose:
+
+Convert only the next ready milestone slice into a precise Cursor task contract, then verify and close that delivery step before preparing the following task.
+
+The implementation plan remains the roadmap. Do not generate detailed contracts for all later milestones in advance: each Task Spec must incorporate the current repository state, completed-task evidence, and delivery-log implications.
+
+Responsibility split:
+
+* Cursor reads the bounded task context, writes only the requested code, performs only explicitly permitted lightweight self-checks, and reports the handoff;
+* Codex writes and revises the Task Spec, performs acceptance tests and broader validation, independently reviews against the original contract, records outcomes, and updates project artifacts;
+* the user approves material changes to product, UX, architecture, security, cost, external accounts, deployment, or launch scope.
+
+Each Task Spec should contain a small verifiable objective; source context; in-scope and out-of-scope work; preconditions; required behavior; constraints and decision boundaries; acceptance criteria; permitted Cursor self-checks; Codex verification plan; and a precise handoff format. A milestone can require several Task Specs.
+
+After every Cursor handoff, Codex records verification evidence and a concise delivery record. If delivery changes a future milestone's practical implementation, update the plan before writing the affected Task Spec. If it changes an upstream decision, correct the owning artifact with a delivery-derived annotation and request user approval where required. Do not rely on conversation memory for these corrections.
+
+Output:
+
+* a current Cursor-ready task contract under `docs/tasks/`;
+* Cursor's implementation report and Codex-owned verification outcome;
+* `docs/project/delivery-log.md` entries for accepted, blocked, or materially revised work;
+* corrected plan or source artifacts when delivery produces a material change.
+
+Exit condition for each loop iteration:
+
+The current task is accepted, blocked with a named owner and next action, or revised into a new bounded Cursor attempt. The next task is not prepared until relevant pending delivery implications are resolved.
 
 ## Future Workflow Parts
 
 The following areas are intentionally outside the current scope and will be designed later:
 
 * onboarding or analysis of an existing project;
-* conversion of an implementation-plan stage into one or more Cursor task specifications, including a task packet contract with required context, optional context, acceptance criteria, relevant design and architecture constraints, and explicit decision boundaries;
-* Cursor implementation workflow, including how Cursor should consume task packets without reloading the full project history;
-* verification workflow, including runtime proof mapped back to acceptance criteria and design constraints;
-* code review workflow, including independent review against the original Codex contract and not only diff quality;
-* fix guidance and fix loops, including bounded Codex-to-Cursor fix packets and criteria for routing back to specification, design, or architecture;
 * completion and knowledge capture.
 
 ## Source of Truth

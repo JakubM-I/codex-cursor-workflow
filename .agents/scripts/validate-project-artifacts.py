@@ -28,6 +28,8 @@ PROJECT_FILES = {
                 "design",
                 "architecture",
                 "implementation-plan",
+                "task-specification",
+                "implementation",
                 "complete",
             },
         },
@@ -117,6 +119,45 @@ PROJECT_FILES = {
             "status": {"draft", "ready-for-task-specification", "blocked", "superseded"},
             "plan_depth": {"prototype", "standard", "high-assurance"},
         },
+    },
+    "docs/project/delivery-log.md": {
+        "required": False,
+        "fields": ["artifact", "version", "status", "created", "updated", "related"],
+        "artifact": "delivery-log",
+        "statuses": {"status": {"active", "complete", "superseded"}},
+    },
+}
+
+TASK_SPEC = {
+    "required": False,
+    "fields": [
+        "artifact",
+        "version",
+        "status",
+        "stage",
+        "task_id",
+        "revision",
+        "milestone",
+        "created",
+        "updated",
+        "sources",
+        "related",
+        "depends_on",
+        "tags",
+    ],
+    "artifact": "cursor-task-spec",
+    "statuses": {
+        "status": {
+            "draft",
+            "ready-for-cursor",
+            "implementation-reported",
+            "verification-in-progress",
+            "changes-required",
+            "accepted",
+            "blocked",
+            "superseded",
+        },
+        "stage": {"task-specification", "implementation"},
     },
 }
 
@@ -253,6 +294,32 @@ def validate_ids(root: Path) -> list[str]:
     return errors
 
 
+def validate_task_specs(root: Path) -> list[str]:
+    task_dir = root / "docs/tasks"
+    if not task_dir.exists():
+        return []
+
+    errors: list[str] = []
+    for path in sorted(task_dir.glob("TASK-*.md")):
+        frontmatter, parse_errors = parse_frontmatter(path)
+        errors.extend(parse_errors)
+        if frontmatter.get("artifact") != "cursor-task-spec":
+            continue
+        rel_path = str(path.relative_to(root))
+        errors.extend(validate_file(root, rel_path, TASK_SPEC))
+        task_id = frontmatter.get("task_id")
+        milestone = frontmatter.get("milestone")
+        revision = frontmatter.get("revision")
+        if isinstance(task_id, str) and not re.fullmatch(r"TASK-\d{3}", task_id):
+            errors.append(f"{rel_path}: `task_id` should use TASK-001 format")
+        if isinstance(milestone, str) and not re.fullmatch(r"M-\d{3}", milestone):
+            errors.append(f"{rel_path}: `milestone` should use M-001 format")
+        if isinstance(revision, str) and not re.fullmatch(r"[1-9]\d*", revision):
+            errors.append(f"{rel_path}: `revision` should be a positive integer")
+
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate Codex-Cursor project artifacts.")
     parser.add_argument("project_root", nargs="?", default=".", help="Project root to validate.")
@@ -263,6 +330,7 @@ def main() -> int:
 
     for rel_path, spec in PROJECT_FILES.items():
         errors.extend(validate_file(root, rel_path, spec))
+    errors.extend(validate_task_specs(root))
     errors.extend(validate_ids(root))
 
     if errors:

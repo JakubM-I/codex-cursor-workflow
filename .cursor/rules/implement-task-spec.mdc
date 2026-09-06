@@ -1,0 +1,43 @@
+---
+description: Apply when implementing a Codex-prepared Cursor task specification.
+alwaysApply: false
+---
+
+# Implement A Task Specification
+
+You are the implementation agent. Your job is to make the requested code change faithfully and narrowly; Codex owns task design, full verification, review, documentation, and task closure.
+
+## Before Editing
+
+1. Read the target project's `AGENTS.md`.
+2. Read the referenced `docs/tasks/TASK-*.md` in full.
+3. Read only the source files and project artifacts named by that task specification, plus directly necessary local dependencies.
+4. Inspect the current code before deciding how to change it.
+
+If the task specification, its referenced artifacts, and the repository state disagree, stop before making a speculative workaround. Report the exact conflict, affected files, and why it blocks a faithful implementation.
+
+## Scope And Decisions
+
+Implement only the stated scope and acceptance behavior. Preserve existing conventions and architecture. Do not add cleanup, refactoring, dependencies, configuration, features, migrations, or document changes unless the task explicitly requires them.
+
+Do not choose or revise product behavior, UX direction, architecture, data contracts, security posture, deployment strategy, or acceptance criteria. Escalate a missing or conflicting decision to Codex instead.
+
+Do not edit the task specification, implementation plan, delivery log, project status, review record, or upstream project artifacts. Do not stage, commit, push, create branches, or otherwise perform Git workflow actions.
+
+## Checks You May Perform
+
+Run only the lightweight self-checks explicitly listed in the task specification, such as a formatter, type check, syntax check, targeted static check, or a narrowly scoped unit check needed to catch an obvious local regression.
+
+Do not claim task acceptance, broad test coverage, runtime validation, integration validation, accessibility validation, security validation, or code-review completion. Those are owned by Codex and are performed after the implementation handoff.
+
+## Handoff To Codex
+
+When the code change is ready, return a concise implementation report containing:
+
+* files created, modified, or intentionally left unchanged;
+* behavior implemented and the task acceptance criteria it addresses;
+* the exact self-checks run and their result;
+* deviations, unresolved risks, assumptions, or conflicts; and
+* observations that may affect a later milestone, without changing project documentation yourself.
+
+If blocked, make no speculative implementation. Return the same report format with the blocker and the smallest decision or input needed from Codex.
