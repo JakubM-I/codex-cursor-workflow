@@ -55,6 +55,8 @@ Before finalizing the architecture, read [the technical readiness contract](refe
 * helpful but optional tools that could speed up implementation, research, testing, deployment, or integration work;
 * tools that are plausible but intentionally not needed for the chosen architecture.
 
+For a selected application stack, assess implementation guidance as a first-class capability, not as an afterthought. For example, a React UI may need framework/component-boundary guidance, styling-system discipline, browser/runtime test tooling, and visual QA support. Recommend an available skill, plugin, or project-local guidance only when it materially reduces a demonstrated delivery risk; otherwise record why native project conventions are sufficient. Distinguish whether the capability helps Cursor implementation, Codex verification, or both.
+
 When a useful skill or plugin is missing and can be installed or connected through Codex, tell the user what it would help with and ask whether Codex should install/connect it or whether the user will do it manually and confirm readiness. Build the implementation-capability matrix in the architecture artifact: it must distinguish required from recommended tools, explain the architecture-specific reason, identify availability and setup owner, and name the earliest implementation milestone that needs each capability. Do not install, connect, provision, deploy, or mutate external services without the user's authorization and the available tool support.
 
 If a tool is unavailable, record the limitation and continue with the best available local workflow when the architecture can still proceed. Do not pretend an integration, account, repository, or service exists.

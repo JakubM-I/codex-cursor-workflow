@@ -16,9 +16,9 @@ Confirm that Cursor's task revision is `ready-for-cursor` or `implementation-rep
 
 ## Verification
 
-Read [the verification guide](references/task-verification.md) before assessing the implementation. Run the task's Codex Verification Plan and any required project checks from `AGENTS.md`. Review against the frozen task contract, not merely against the diff or Cursor's self-check report.
+Read [the verification guide](references/task-verification.md) before assessing the implementation. First compare the changed source areas with the frozen scope and completion boundary. Then run the task's Codex Verification Plan and any required project checks from `AGENTS.md`; create or update Codex-owned executable acceptance evidence when that plan requires it. Review against the frozen task contract, not merely against the diff or Cursor's self-check report.
 
-Record the commands or other reproducible evidence, result, and limitations. Do not claim proof for an acceptance criterion that the evidence does not cover.
+Record the commands or other reproducible evidence, result, and limitations. Distinguish a product defect from a missing test runtime or fixture; the latter is an environment blocker owned by Codex/project setup, not a reason to send Cursor unrelated work. Do not claim proof for an acceptance criterion that the evidence does not cover.
 
 ## Outcomes
 

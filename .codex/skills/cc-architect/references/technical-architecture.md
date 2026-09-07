@@ -109,9 +109,9 @@ flowchart LR
 
 <A concise strategy explaining which kinds of proof the project needs and why those layers fit the selected stack, product risks, and acceptance criteria.>
 
-| Test Layer Or Check | Scope | Evidence It Must Produce | Runs When | Related AC/Risk |
-| --- | --- | --- | --- | --- |
-| <Unit, integration, e2e, accessibility, contract, migration, security, performance, visual, smoke, manual QA, or custom check> | <What it covers and what it intentionally does not cover> | <Pass/fail signal, report, screenshot, log, command output, fixture result, or reviewed artifact> | <Local dev, pre-commit, CI, before deploy, after deploy, per milestone, release gate, or manual review> | <AC-001, ADR-001, risk ID, or `Not applicable`> |
+| Test Layer Or Check | Owner | Scope | Evidence It Must Produce | Runs When | Related AC/Risk |
+| --- | --- | --- | --- | --- | --- |
+| <Unit, integration, e2e, accessibility, contract, migration, security, performance, visual, smoke, manual QA, or custom check> | <Cursor self-check, Codex verification, user review, or `Not applicable`> | <What it covers and what it intentionally does not cover> | <Pass/fail signal, report, screenshot, log, command output, fixture result, or reviewed artifact> | <Local dev, task verification, CI, before deploy, after deploy, release gate, or manual review> | <AC-001, ADR-001, risk ID, or `Not applicable`> |
 
 Required Test Data And Fixtures:
 
@@ -120,6 +120,8 @@ Required Test Data And Fixtures:
 Manual Or Exploratory Checks:
 
 - <Human review, device/browser check, visual inspection, accessibility pass, operational dry run, or user acceptance check that cannot be fully automated yet.>
+
+For UI work, name the approved visual reference, required viewport/state coverage, and owner of the comparison. A DOM, selector, or no-overflow assertion does not replace visual fidelity review.
 
 Deferred Test Coverage:
 
@@ -131,9 +133,9 @@ Deferred Test Coverage:
 
 ## Developer Tooling And Setup
 
-| Capability | Type | Required / recommended | Why it is needed | Availability / owner | Needed by |
-| --- | --- | --- | --- | --- | --- |
-| <Name> | <Skill, plugin, CLI, SDK, account, credential, environment, script> | <Required / recommended> | <Architecture-specific rationale> | <Available / missing; owner> | <Milestone or task> |
+| Capability | Type | Required / recommended | Why it is needed | Availability / setup owner | Used by | Needed by |
+| --- | --- | --- | --- | --- | --- | --- |
+| <Name> | <Skill, plugin, CLI, SDK, account, credential, environment, script> | <Required / recommended> | <Architecture-specific rationale> | <Available / missing; user, Codex, or environment owner> | <Cursor, Codex, or both> | <Milestone or task> |
 
 List intentionally unneeded plausible tools below the matrix when their omission protects scope or avoids an unsupported assumption.
 
@@ -187,6 +189,9 @@ Set `status: ready-for-implementation-planning` only when all of these are true:
 - [ ] Design-system and screen constraints that affect implementation are accounted for.
 - [ ] Testing, validation, deployment, environment, and operations strategy are clear enough to plan work.
 - [ ] Test layers identify scope, expected evidence, timing, required fixtures or test data, and related acceptance criteria or risks.
+- [ ] Each test layer has an explicit owner; E2E, acceptance, runtime, visual, accessibility, integration, and release proof are not implicitly delegated to Cursor.
+- [ ] Required test-runtime and visual-review prerequisites have a setup owner and earliest-needed milestone.
+- [ ] Stack-specific implementation guidance has been assessed and any useful missing capability has been recommended to the user.
 - [ ] Required and recommended tools, skills, plugins, CLIs, SDKs, accounts, credentials, environments, and source repositories are listed in an implementation-capability matrix with rationale, availability, owner, and earliest needed milestone.
 - [ ] Risks, assumptions, and open decisions are visible.
 - [ ] No unresolved decision would materially change stack, data, auth, integration, deployment, or validation strategy.

@@ -102,7 +102,7 @@ Allowed `status` values:
 
 ## Visual Review Evidence
 
-<References, workspace links, prototype paths, or rendered mockups. For Full visual design, identify the desktop/mobile views and key states reviewed.>
+<References, workspace links, prototype paths, or rendered mockups. For Full visual design, identify the desktop/mobile views and key states reviewed. Give every implementation-relevant view/state a stable label, such as `VR-001 desktop-board-default`, so Task Specs and Codex verification can cite it directly.>
 
 ## Assumptions To Validate
 
@@ -147,6 +147,7 @@ Set `status: ready-for-user-review` only when all of these are true:
 - [ ] Platform, viewport, and input assumptions are visible.
 - [ ] Visual direction covers typography, color, spacing, imagery/iconography/surfaces, and motion where relevant.
 - [ ] References explain what to adopt and avoid.
+- [ ] Full visual design evidence is indexed by the implementation-relevant screens, viewports, and states it governs.
 - [ ] Accessibility and responsive expectations are explicit.
 - [ ] Tooling and deliverable ownership are clear enough to continue.
 - [ ] The chosen design mode and its reference or visual-review evidence are recorded.

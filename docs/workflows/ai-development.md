@@ -338,18 +338,18 @@ The implementation plan remains the roadmap. At milestone start, Codex may creat
 
 Responsibility split:
 
-* Cursor reads the bounded task context, writes only the requested code, performs only explicitly permitted lightweight self-checks, and reports the handoff;
-* `cc-task-spec` writes and revises the Task Spec; `cc-task-verify` performs acceptance tests and broader validation, independently reviews against the original contract, records outcomes, and updates project artifacts;
+* Cursor reads the bounded task context, writes only the requested code, performs only explicitly permitted lightweight self-checks, and reports the handoff; it does not complete deliberately deferred feature work merely to make a broader flow feel finished;
+* `cc-task-spec` writes and revises the Task Spec; `cc-task-verify` checks scope before correctness, turns planned acceptance scenarios into Codex-owned executable evidence where needed, performs acceptance tests and broader validation, independently reviews against the original contract, records outcomes, and updates project artifacts;
 * the user approves material changes to product, UX, architecture, security, cost, external accounts, deployment, or launch scope.
 
-Each Task Spec should contain a small verifiable objective; source context; in-scope and out-of-scope work; preconditions; required behavior; constraints and decision boundaries; acceptance criteria; permitted Cursor self-checks; Codex verification plan; and a precise handoff format. A milestone can require several Task Specs.
+Each Task Spec should contain a small verifiable objective; source context; in-scope and out-of-scope work; a completion boundary; permitted and forbidden source areas; known later dependencies; declared temporary arrangements; preconditions; required behavior; constraints and decision boundaries; acceptance criteria; permitted Cursor self-checks; Codex verification plan with test ownership and environment readiness; and a precise handoff format. A milestone can require several Task Specs.
 
 After every Cursor handoff, `cc-task-verify` records verification evidence and a concise delivery record. If corrections are required, the user approves them before `cc-task-spec` creates an explicit new revision for Cursor. If delivery changes a future milestone's practical implementation, update the plan before writing the affected Task Spec. If it changes an upstream decision, correct the owning artifact with a delivery-derived annotation and request user approval where required. Do not rely on conversation memory for these corrections.
 
 Output:
 
 * a current Cursor-ready task contract under `docs/tasks/M-<milestone>-<slug>/`, with the milestone ID in its filename;
-* Cursor's implementation report and Codex-owned verification outcome;
+* Cursor's structured implementation report and Codex-owned verification outcome;
 * `docs/project/delivery-log.md` entries for accepted, blocked, or materially revised work;
 * corrected plan or source artifacts when delivery produces a material change.
 

@@ -58,6 +58,13 @@ Out of scope:
 
 - <Explicit non-goal that Cursor must not add.>
 
+## Completion Boundary And Dependencies
+
+- This task is complete when: <its own observable completion condition.>
+- Deliberately deferred: <later flow, integration, or polish not needed for this task, with owning task or milestone.>
+- Permitted source areas: <directories/files or `Only those named below`.>
+- Forbidden changes: <areas, documentation, dependencies, configuration, or `None beyond out-of-scope work`.>
+
 ## Context And Source Of Truth
 
 - <Exact source file, artifact, decision, or prior delivery record and the relevant section.>
@@ -65,6 +72,10 @@ Out of scope:
 ## Preconditions And Current State
 
 - <What must already exist or be true before implementation.>
+
+## Temporary Arrangements
+
+- <`None`, or a declared fake, placeholder, adapter, seam, or temporary UI state: purpose, observable behavior, replacement task/owner, and removal condition.>
 
 ## Required Implementation Behavior
 
@@ -84,9 +95,14 @@ Out of scope:
 
 - <Exact lightweight command or check; omit if no self-check is appropriate.>
 
+Cursor must not write or run E2E, acceptance, browser/runtime, visual, accessibility, integration, or release coverage unless this section explicitly assigns one narrow self-check.
+
 ## Codex Verification Plan
 
-- <Tests, runtime proof, review, integration check, accessibility check, or inspection Codex will perform.>
+- Acceptance scenario source: <architecture/spec scenario IDs or task-local observable scenarios.>
+- Executable evidence Codex will create or update: <durable regression test, ephemeral probe, manual script, or `Not needed`, with reason.>
+- Checks Codex will run: <tests, runtime proof, review, integration, accessibility, visual comparison, or inspection.>
+- Environment readiness: <required runner, browser/device, account, fixture, command, and owner; or `Not applicable`.>
 
 ## Cursor Handoff Format
 
@@ -95,6 +111,7 @@ Out of scope:
 - Behavior implemented and criteria addressed.
 - Self-checks run and results.
 - Deviations, risks, assumptions, conflicts, and downstream observations.
+- Temporary arrangements actually used and their named follow-up.
 
 ## Revision History
 
@@ -129,8 +146,11 @@ Completing a milestone does not require a separate end-to-end or global test mer
 - [ ] The task implements one coherent, verifiable slice of one ready milestone.
 - [ ] Preconditions and source context are specific enough to avoid reloading unrelated project history.
 - [ ] Scope and non-goals prevent opportunistic expansion.
+- [ ] The completion boundary says why this slice is done even if wider work is deferred.
+- [ ] Allowed and forbidden source areas, later dependencies, and any temporary arrangement are explicit.
 - [ ] All behavior and edge cases needed for acceptance are explicit.
 - [ ] Decision boundaries say what Cursor may decide and must escalate.
 - [ ] Cursor self-checks are lightweight and explicitly separated from Codex verification.
+- [ ] Test ownership, executable Codex evidence, and required runtime readiness are explicit.
 - [ ] Codex verification can produce evidence for every acceptance criterion.
 - [ ] Dependencies, assets, accounts, credentials, and prior delivery implications are ready or explicitly block the task.

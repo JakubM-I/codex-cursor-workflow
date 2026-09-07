@@ -93,6 +93,7 @@ Traceability:
 Validation Notes:
 
 - <What must be checked, demonstrated, reviewed, or recorded before moving on.>
+- Verification ownership and readiness: <which checks Cursor may self-run, which Codex will own, and any runner/browser/account/device prerequisite that must be ready before the first check.>
 
 Task-Specification Notes:
 
@@ -165,7 +166,7 @@ Omit sections only when genuinely irrelevant. Keep explicit `Not applicable` not
 
 ## Writing Rules
 
-* Make dependencies explicit: data before UI when UI depends on persisted state, auth before protected flows, integrations before integration-dependent workflows, deployment setup before release validation.
+* Make dependencies explicit: data before UI when UI depends on persisted state, auth before protected flows, integrations before integration-dependent workflows, deployment setup before release validation, and browser/test-runtime setup before a Codex-owned check that depends on it.
 * When the asset manifest defers an asset, make its preparation a named prerequisite before the UI task that needs it. Cursor must receive the approved asset pack or an explicit task to prepare it; it must not silently substitute unapproved assets.
 * Use Mermaid diagrams when milestone order, prerequisites, blockers, validation gates, or parallelizable paths would be easier to scan visually.
 * Keep dependency diagrams synchronized with milestone IDs and the prose dependency map; do not let a diagram become the only explanation of sequencing.
@@ -185,6 +186,7 @@ Set `status: ready-for-task-specification` only when all of these are true:
 - [ ] Acceptance criteria, functional areas, design constraints, and architecture decisions are referenced where useful.
 - [ ] Required tools, accounts, credentials, repositories, setup actions, and readiness gaps are visible.
 - [ ] Validation and review gates are clear enough to sequence implementation.
+- [ ] Each milestone identifies test ownership and any runtime/setup prerequisite before the first affected verification gate.
 - [ ] Risks, assumptions, and open planning decisions are visible.
 - [ ] The first Cursor task-specification candidate is identified.
 - [ ] No unresolved decision would materially change milestone order, first usable slice, or validation strategy.

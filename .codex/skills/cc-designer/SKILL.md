@@ -85,7 +85,7 @@ Define:
 * accessibility, responsive behavior, and usability constraints;
 * design constraints that Architecture and Implementation Plan must account for.
 
-For **Full visual design**, create visual evidence that makes the proposed layout reviewable before implementation. Cover the primary desktop and mobile (when relevant) viewports plus the key task states or flows that would materially affect the layout. A visual workspace, linked static prototype, or rendered mockups are valid; a text-only screen specification is not.
+For **Full visual design**, create visual evidence that makes the proposed layout reviewable before implementation. Cover the primary desktop and mobile (when relevant) viewports plus the key task states or flows that would materially affect the layout. A visual workspace, linked static prototype, or rendered mockups are valid; a text-only screen specification is not. Index each reference by screen/state so later Task Specs and Codex visual verification can cite a specific implementation target rather than asking Cursor to infer a layout.
 
 Use `.agents/skills/make-interfaces-feel-better/` as the default UI-polish lens when it is present. It should influence typography, surfaces, animation restraint, icon treatment, hit areas, and final design review. It should not override the product's brand direction, accessibility needs, or established design system.
 

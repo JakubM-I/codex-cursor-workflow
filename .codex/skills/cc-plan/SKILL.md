@@ -59,6 +59,7 @@ Define:
 * dependencies and prerequisites for each milestone;
 * acceptance criteria, design constraints, and architecture decisions each milestone must account for;
 * validation gates and evidence expected before moving on;
+* ownership of each verification layer and runner, browser, account, device, fixture, or other setup that must be ready before its gate;
 * risks, assumptions, open planning decisions, and user-owned choices;
 * which milestone or slice should become the first Cursor-ready task specification.
 
@@ -98,6 +99,7 @@ Review the plan against:
 * whether acceptance criteria, design constraints, architecture decisions, and validation gates are traceable;
 * whether each milestone is coarse enough for roadmap planning but clear enough for later Cursor task specifications;
 * whether missing accounts, credentials, source repositories, tools, or decisions are visible;
+* whether a Codex-owned verification gate depends on setup that has been explicitly sequenced before the first affected task;
 * whether the next stage can safely create the first task packet without inventing plan, architecture, or product decisions.
 
 Use `.codex/agents/planning-critic.md` when an independent reviewer is available and the project is `standard` or `deep`. If subagent execution is unavailable, perform the same review as a clearly separated self-review and report that limitation. The reviewer is read-only and does not update artifacts or project status.

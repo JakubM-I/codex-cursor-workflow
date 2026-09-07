@@ -384,8 +384,9 @@ Process:
 ```mermaid
 flowchart TD
   Start[Start milestone M-001] --> Spec[Codex: cc-task-spec\nTask map + current M-001-TASK-001]
-  Spec --> Implement[Cursor: implement current task]
-  Implement --> Verify[Codex: cc-task-verify\nTests, review, evidence]
+  Spec --> Implement[Cursor: bounded implementation\n+ permitted self-checks]
+  Implement --> Report[Cursor: structured handoff report]
+  Report --> Verify[Codex: cc-task-verify\nScope, executable tests, visual review, evidence]
   Verify --> Decision{Verification result}
   Decision -->|Changes required| Approve[User approves corrections]
   Approve --> Revise[Codex: cc-task-spec\nExplicit task revision]
@@ -396,7 +397,7 @@ flowchart TD
   Remaining -->|No| Close[Mark milestone complete\nTask-map completeness only]
 ```
 
-The final node does not run a new global test. Every task is verified by `cc-task-verify`; milestone closure only confirms that the planned task map is accepted and has no blocking delivery implication.
+The final node does not run a new global test. Every task is verified by `cc-task-verify`; milestone closure only confirms that the planned task map is accepted and has no blocking delivery implication. Cursor completes a task when its own completion boundary is met, even if a later task is still needed to finish a wider feature.
 
 Intended owner:
 
@@ -414,6 +415,12 @@ Supporting resources:
 * `.agents/artifacts/delivery-log.md` - durable implementation-derived correction record;
 * `.cursor/rules/implement-task-spec.mdc` - Cursor-only implementation and handoff rules;
 * `.agents/scripts/validate-project-artifacts.py` - structural validation for project artifacts and task packets.
+
+Test ownership:
+
+* Architecture selects layers, scenario sources, owners, and test-runtime prerequisites.
+* Cursor runs only the self-checks explicitly permitted by the current task.
+* Codex creates or updates executable acceptance/regression evidence when needed, runs E2E and other runtime/visual/integration proof, and accepts or blocks the task.
 
 Input artifacts:
 

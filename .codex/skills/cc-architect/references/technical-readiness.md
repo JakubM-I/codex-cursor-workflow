@@ -40,6 +40,15 @@ Keep the question project-specific. Do not present a generic marketplace checkli
 
 For every required or recommended capability, record: the skill, plugin, CLI, SDK, account, credential, or environment; why it helps this architecture; who owns setup; whether it is available; and the earliest milestone that needs it. This matrix is a required handoff to Implementation Plan and later Cursor task specifications, not a generic tooling appendix.
 
+For an implementation-facing stack, explicitly consider and record the result for these capability categories when relevant:
+
+* framework and component-boundary guidance (for example, React state, composition, and testing conventions);
+* styling-system and responsive-layout guidance (for example, CSS architecture, token use, and avoiding cross-surface selector coupling);
+* browser/runtime test runner and its machine prerequisites;
+* visual-review capability for representative viewports and critical states.
+
+Do not invent a React, CSS, or other stack-specific skill merely because the category exists. Inspect available skills, plugins, repository conventions, and user-provided sources. If no suitable capability is available, offer the user a concrete choice: proceed with documented project conventions, add a focused project-local guidance skill, or install/connect an identified available tool. Mark the resulting owner as `Cursor`, `Codex`, or `both` in the matrix.
+
 ## Installation And Connection Boundaries
 
 Codex may propose installing or connecting tools only when they materially help the current architecture or upcoming implementation.

@@ -18,7 +18,9 @@ If the task specification, its referenced artifacts, and the repository state di
 
 ## Scope And Decisions
 
-Implement only the stated scope and acceptance behavior. Preserve existing conventions and architecture. Do not add cleanup, refactoring, dependencies, configuration, features, migrations, or document changes unless the task explicitly requires them.
+Implement only the stated scope, completion boundary, and acceptance behavior. A wider feature may intentionally remain incomplete until a later task; do not extend this task to close that gap. Preserve existing conventions and architecture. Do not add cleanup, refactoring, dependencies, configuration, features, migrations, or document changes unless the task explicitly requires them.
+
+Use a fake, placeholder, adapter, feature flag, or other temporary arrangement only when the Task Spec explicitly permits it. Follow its stated behavior and removal owner. If a missing later dependency makes the specified arrangement impossible, stop and report the blocker rather than silently designing an alternative.
 
 Do not choose or revise product behavior, UX direction, architecture, data contracts, security posture, deployment strategy, or acceptance criteria. Escalate a missing or conflicting decision to Codex instead.
 
@@ -26,7 +28,7 @@ Do not edit the task specification, implementation plan, delivery log, project s
 
 ## Checks You May Perform
 
-Run only the lightweight self-checks explicitly listed in the task specification, such as a formatter, type check, syntax check, targeted static check, or a narrowly scoped unit check needed to catch an obvious local regression.
+Run only the lightweight self-checks explicitly listed in the task specification, such as a formatter, type check, syntax check, targeted static check, or a narrowly scoped unit check needed to catch an obvious local regression. Do not write or run E2E, acceptance, visual, accessibility, browser-runtime, integration, or release tests unless the task explicitly makes one a narrow Cursor-owned self-check.
 
 Do not claim task acceptance, broad test coverage, runtime validation, integration validation, accessibility validation, security validation, or code-review completion. Those are owned by Codex and are performed after the implementation handoff.
 
@@ -38,7 +40,8 @@ When the code change is ready, return a concise implementation report containing
 * files created, modified, or intentionally left unchanged;
 * behavior implemented and the task acceptance criteria it addresses;
 * the exact self-checks run and their result;
-* deviations, unresolved risks, assumptions, or conflicts; and
+* deviations, unresolved risks, assumptions, or conflicts;
+* temporary arrangements actually used and their named follow-up, if any; and
 * observations that may affect a later milestone, without changing project documentation yourself.
 
 If blocked, make no speculative implementation. Return the same report format with the blocker and the smallest decision or input needed from Codex.
