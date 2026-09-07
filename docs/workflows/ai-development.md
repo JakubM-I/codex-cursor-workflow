@@ -40,7 +40,7 @@ Use deterministic scripts, hooks, or validations when a gate should not depend o
 
 A lightweight shared validator may check project artifact frontmatter, statuses, related links, and stable IDs. It is not a replacement for stage judgment or user approval; it catches structural drift before later agents consume the artifacts.
 
-Every closed stage is a Git checkpoint. After its readiness, validation, and any required user approval, its owner commits only its owned artifacts and `docs/project/status.md`, then reports the short SHA to the user. A stage remains open when its checkpoint cannot be committed.
+Every closed stage is a Git checkpoint. In a newly initialized project, `cc-init` commits the baseline on `main`, then creates and switches to `dev`; later stage checkpoints go to `dev`. After readiness, validation, and any required user approval, the owner commits only its owned artifacts and `docs/project/status.md`, then reports the short SHA to the user. A stage remains open when its checkpoint cannot be committed. Codex never merges, pushes, or opens a pull request unless the user explicitly asks.
 
 ## Material Layers
 
@@ -345,6 +345,8 @@ Responsibility split:
 Each Task Spec should contain a small verifiable objective; source context; in-scope and out-of-scope work; a completion boundary; permitted and forbidden source areas; known later dependencies; declared temporary arrangements; preconditions; required behavior; constraints and decision boundaries; acceptance criteria; permitted Cursor self-checks; Codex verification plan with test ownership and environment readiness; and a precise handoff format. A milestone can require several Task Specs.
 
 After every Cursor handoff, `cc-task-verify` records verification evidence and a concise delivery record. If corrections are required, the user approves them before `cc-task-spec` creates an explicit new revision for Cursor. If delivery changes a future milestone's practical implementation, update the plan before writing the affected Task Spec. If it changes an upstream decision, correct the owning artifact with a delivery-derived annotation and request user approval where required. Do not rely on conversation memory for these corrections.
+
+Every accepted task is also one `dev`-branch implementation checkpoint. It includes the accepted implementation and its task-owned records; rejected or correction-in-progress attempts are not committed. The final accepted task of a milestone includes the milestone bookkeeping update, without a separate empty milestone commit.
 
 Output:
 

@@ -30,6 +30,10 @@ Choose exactly one outcome:
 
 If the evidence reveals a material change to product, design, architecture, security, cost, accounts, deployment, or release scope, mark the task blocked or changes-required as appropriate and route it to the owning artifact and user. Do not silently turn it into an implementation correction.
 
+## Accepted Task Checkpoint
+
+After an accepted result and before preparing another task, follow `.agents/artifacts/stage-closure.md` and the accepted-task checkpoint rule in `.agents/artifacts/task-delivery.md`. Inspect Git status, isolate only task-owned files, and create one commit on `dev`; do not use `git add -A`, include unrelated work, merge, push, or create a pull request. A revision or `changes-required` outcome is not committed. If the checkpoint cannot be created, record the exact Git blocker and do not advance to the next task.
+
 ## Milestone Bookkeeping
 
 After accepting a task, inspect its milestone Task Delivery Register. If another listed task remains, leave the milestone `in-progress` and name the next action: `cc-task-spec` for that task.

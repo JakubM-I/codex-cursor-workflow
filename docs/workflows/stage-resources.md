@@ -85,7 +85,7 @@ Output artifacts:
 
 * initialized project workspace;
 * minimal project entry point or context index;
-* git repository with `main` as the primary branch;
+* git repository with `main` as the stable baseline and active `dev` branch for workflow work;
 * `docs/project/status.md` with Brief as the next stage.
 
 Frontmatter or metadata needs:
@@ -398,6 +398,8 @@ flowchart TD
 ```
 
 The final node does not run a new global test. Every task is verified by `cc-task-verify`; milestone closure only confirms that the planned task map is accepted and has no blocking delivery implication. Cursor completes a task when its own completion boundary is met, even if a later task is still needed to finish a wider feature.
+
+Every accepted task becomes one `dev`-branch implementation checkpoint. Corrections and unaccepted attempts remain uncommitted; the final accepted task of a milestone includes its bookkeeping closure.
 
 Intended owner:
 

@@ -47,6 +47,12 @@ For each accepted, blocked, or materially revised task, Codex appends a record t
 
 Before the next task specification, Codex reads open `pending` implications. It applies them to the relevant future milestone, task context, or owning source artifact; it does not rely on conversation memory.
 
+## Accepted Task Checkpoint
+
+After `cc-task-verify` accepts a task, Codex creates one task checkpoint on the active `dev` branch before preparing the next task. It contains only the accepted task's implementation, Codex-owned durable regression evidence when created, Task Spec/history, Task Delivery Register changes, delivery-log record, and affected status or source artifacts.
+
+Do not commit an unaccepted attempt, a `changes-required` revision, or unrelated user work. When the accepted task is the last task in a milestone, include its bookkeeping closure in the same checkpoint rather than creating an empty milestone commit. If a checkpoint cannot be created because of Git identity, branch state, or unrelated changes, record the exact blocker and do not prepare the next task until the user resolves it.
+
 ## Milestone Completion
 
 A milestone remains `in-progress` while any task in its Task Delivery Register is planned, in progress, changes-required, or blocked. When `cc-task-verify` accepts the final listed task, it marks the milestone `complete` after checking only that every listed task is accepted and no open delivery-log implication blocks the next milestone.

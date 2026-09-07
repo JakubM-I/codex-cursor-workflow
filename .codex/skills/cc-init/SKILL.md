@@ -1,6 +1,6 @@
 ---
 name: cc-init
-description: Initialize a new project workspace for the Codex-Cursor workflow. Use when the user says they are starting or initiating a new project and provides a short project description. Creates a minimal AGENTS.md and initializes git with main as the primary branch.
+description: Initialize a new project workspace for the Codex-Cursor workflow. Use when the user says they are starting or initiating a new project and provides a short project description. Creates a minimal AGENTS.md, initializes Git with main as the stable base, then creates and switches to dev for workflow work.
 argument-hint: "[short project description]"
 ---
 
@@ -22,10 +22,11 @@ Use the user's message as the project description. If the description is missing
 2. Create or update `AGENTS.md` in the project root.
 3. Create or preserve `docs/project/status.md`.
 4. Initialize git if the project is not already a git repository.
-5. Ensure the primary branch is named `main`.
-6. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
-7. Close Init according to `.agents/artifacts/stage-closure.md`.
-8. Report exactly what was created or changed.
+5. Ensure the stable primary branch is named `main`.
+6. After the Init checkpoint on `main`, create and switch to `dev` for subsequent workflow work.
+7. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
+8. Close Init according to `.agents/artifacts/stage-closure.md`.
+9. Report exactly what was created or changed.
 
 ## AGENTS.md Contract
 
@@ -72,10 +73,14 @@ If `docs/project/status.md` already exists:
 
 ## Git Contract
 
+For a new project, `main` is the stable base and `dev` is the active integration branch. Codex may commit stage checkpoints and accepted task checkpoints on `dev`, but it must never merge `dev` into `main`, push either branch, create a remote, or open a pull request. Those actions remain the user's responsibility.
+
 If `.git/` does not exist:
 
 1. Run `git init`.
 2. Ensure the current branch is `main`.
+3. Create the Init baseline commit on `main` after the workspace artifacts and status have been prepared.
+4. Create `dev` from that commit and switch to it.
 
 If git initializes with `master`, rename it to `main` with:
 
@@ -88,9 +93,11 @@ If `.git/` already exists:
 - do not reinitialize it;
 - inspect the current branch;
 - if the primary branch is `master` and there are no project-specific reasons to keep it, rename it to `main`;
-- if another branch is active, do not rename it automatically. Report the branch and ask before changing it.
+- do not create, switch, merge, or rename branches automatically when the working tree is dirty, when an active branch other than `main` is in use, or when repository history makes the intended base uncertain; report the state and ask the user;
+- if the repository is clean on `main` and `dev` already exists, switch to `dev`;
+- if the repository is clean on `main` and `dev` does not exist, ask before creating it from `main`.
 
-After successful initialization, read `.agents/artifacts/stage-closure.md` and create the Init baseline commit. Do not create remotes, GitHub repositories, branches other than `main`, or pull requests.
+After successful initialization, read `.agents/artifacts/stage-closure.md`, create the Init baseline commit on `main`, then create and switch to `dev`. Do not create remotes, GitHub repositories, branches other than `dev`, or pull requests.
 
 ## Baseline Shared Materials
 
@@ -118,6 +125,6 @@ Finish with a concise summary:
 - whether `docs/project/status.md` was created, updated, or left unchanged;
 - whether baseline shared workflow materials were present, copied, or left unchanged;
 - whether git was initialized or already existed;
-- resulting current branch;
-- Init commit SHA, or the exact blocker that prevented stage closure;
+- resulting `main` and active branch;
+- Init commit SHA on `main`, or the exact blocker that prevented stage closure;
 - anything intentionally left for later stages.
