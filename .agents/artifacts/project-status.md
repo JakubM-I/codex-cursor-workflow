@@ -52,6 +52,8 @@ Canonical `current_stage` values for the greenfield workflow:
 * `implementation-plan`;
 * `task-specification`;
 * `implementation`;
+* `project-verification`;
+* `remediation`;
 * `complete`.
 
 Allowed stage-row statuses:
@@ -97,7 +99,7 @@ related:
 | Architect | not-started | - | - | - |
 | Implementation Plan | not-started | - | - | - |
 | Task Specification / Delivery | not-started | - | - | - |
-| Task Specification / Delivery | not-started | - | - | - |
+| Project Verification / Remediation | not-started | - | - | - |
 
 ## Recent Updates
 
@@ -126,6 +128,7 @@ When `cc-brief` produces a ready brief, it updates the relevant values rather th
 | Architect | not-started | - | - | - |
 | Implementation Plan | not-started | - | - | - |
 | Task Specification / Delivery | not-started | - | - | - |
+| Project Verification / Remediation | not-started | - | - | - |
 
 ## Recent Updates
 
@@ -176,6 +179,7 @@ When `cc-plan` produces a ready roadmap, it marks planning complete and begins t
 | --- | --- | --- | --- | --- |
 | Implementation Plan | complete | `docs/project/implementation-plan.md` | 2026-09-06 | Roadmap is ready for task specification. |
 | Task Specification / Delivery | in-progress | `docs/tasks/M-001-<slug>/M-001-TASK-001-<slug>.md` | 2026-09-06 | Awaiting Cursor implementation. |
+| Project Verification / Remediation | not-started | - | - | - |
 
 ## Recent Updates
 

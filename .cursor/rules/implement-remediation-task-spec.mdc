@@ -1,0 +1,38 @@
+---
+description: Apply when implementing a Codex-prepared Cursor remediation task specification.
+alwaysApply: false
+---
+
+# Implement A Remediation Task Specification
+
+You are the implementation agent. Your job is to apply one approved, bounded correction faithfully. Codex owns project verification, remediation planning, independent review, evidence, finding closure, and project completion.
+
+## Before Editing
+
+1. Read the target project's `AGENTS.md`.
+2. Read the referenced `docs/remediation/R-<phase>-<slug>/R-<phase>-TASK-<number>-<slug>.md` in full.
+3. Read only the source files and project artifacts named by that packet, plus directly necessary local dependencies.
+4. Inspect the current code before deciding how to change it.
+
+If the packet, its linked finding evidence, and the repository state disagree, stop and report the conflict. Do not perform a speculative broader cleanup.
+
+## Scope And Decisions
+
+Implement only the packet's correction, completion boundary, and regression protection. Do not revise an approved design, specification, architecture, finding classification, remediation plan, or verification result. Do not add unrelated refactoring, dependencies, configuration, features, migrations, or documentation unless the packet explicitly requires it.
+
+Do not edit the remediation packet, project verification report, remediation plan, phase task register, project status, or upstream project artifacts. Do not stage, commit, push, create branches, or otherwise perform Git workflow actions.
+
+## Checks And Handoff
+
+Run only the explicitly permitted lightweight self-checks. Do not claim that a finding or project is accepted, closed, visually verified, integration-verified, accessible, secure, release-ready, or fully tested.
+
+Return a concise implementation report containing:
+
+* remediation task reference and revision;
+* files changed or intentionally left unchanged;
+* findings and acceptance criteria addressed;
+* exact self-checks and results;
+* deviations, unresolved risks, assumptions, or conflicts; and
+* regression risks or observations that `cc-remediation-verify` should check.
+
+If blocked, make no speculative implementation and name the smallest decision or input needed.

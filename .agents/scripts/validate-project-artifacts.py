@@ -30,6 +30,8 @@ PROJECT_FILES = {
                 "implementation-plan",
                 "task-specification",
                 "implementation",
+                "project-verification",
+                "remediation",
                 "complete",
             },
         },
@@ -126,6 +128,54 @@ PROJECT_FILES = {
         "artifact": "delivery-log",
         "statuses": {"status": {"active", "complete", "superseded"}},
     },
+    "docs/project/project-verification-report.md": {
+        "required": False,
+        "fields": [
+            "artifact",
+            "version",
+            "status",
+            "stage",
+            "verification_mode",
+            "created",
+            "updated",
+            "sources",
+            "related",
+            "tags",
+        ],
+        "artifact": "project-verification-report",
+        "statuses": {
+            "status": {
+                "draft",
+                "awaiting-user-decision",
+                "remediation-in-progress",
+                "revalidation-in-progress",
+                "ready-for-user-acceptance",
+                "completed",
+                "blocked",
+                "superseded",
+            },
+            "stage": {"project-verification"},
+            "verification_mode": {"initial", "targeted-revalidation", "final-revalidation"},
+        },
+    },
+    "docs/project/remediation-plan.md": {
+        "required": False,
+        "fields": ["artifact", "version", "status", "stage", "created", "updated", "sources", "related", "tags"],
+        "artifact": "remediation-plan",
+        "statuses": {
+            "status": {
+                "draft",
+                "awaiting-user-decision",
+                "approved",
+                "in-progress",
+                "revalidation-needed",
+                "complete",
+                "blocked",
+                "superseded",
+            },
+            "stage": {"remediation"},
+        },
+    },
 }
 
 TASK_SPEC = {
@@ -162,11 +212,48 @@ TASK_SPEC = {
     },
 }
 
+REMEDIATION_TASK_SPEC = {
+    "required": False,
+    "fields": [
+        "artifact",
+        "version",
+        "status",
+        "stage",
+        "task_id",
+        "task_ref",
+        "revision",
+        "remediation_phase",
+        "finding_ids",
+        "created",
+        "updated",
+        "sources",
+        "related",
+        "depends_on",
+        "tags",
+    ],
+    "artifact": "cursor-remediation-task-spec",
+    "statuses": {
+        "status": {
+            "draft",
+            "ready-for-cursor",
+            "implementation-reported",
+            "verification-in-progress",
+            "changes-required",
+            "accepted",
+            "blocked",
+            "superseded",
+        },
+        "stage": {"remediation-task-specification", "remediation-implementation"},
+    },
+}
+
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 ID_DEFINITION_PATTERNS = [
     re.compile(r"^#{2,6}\s+((?:F|Flow|S|M)-\d{3})\s+-\s+"),
     re.compile(r"^-\s+(AC-\d{3})\s+-\s+"),
     re.compile(r"^\|\s+(ADR-\d{3})\s+\|"),
+    re.compile(r"^#{2,6}\s+(PV-\d{3})\s+-\s+"),
+    re.compile(r"^#{3,6}\s+(R-\d{3})\s+-\s+"),
 ]
 
 
@@ -337,6 +424,49 @@ def validate_task_specs(root: Path) -> list[str]:
     return errors
 
 
+def validate_remediation_task_specs(root: Path) -> list[str]:
+    task_dir = root / "docs/remediation"
+    if not task_dir.exists():
+        return []
+
+    errors: list[str] = []
+    for path in sorted(task_dir.glob("R-*/R-*-TASK-*.md")):
+        frontmatter, parse_errors = parse_frontmatter(path)
+        errors.extend(parse_errors)
+        if frontmatter.get("artifact") != "cursor-remediation-task-spec":
+            continue
+        rel_path = str(path.relative_to(root))
+        errors.extend(validate_file(root, rel_path, REMEDIATION_TASK_SPEC))
+        task_id = frontmatter.get("task_id")
+        task_ref = frontmatter.get("task_ref")
+        phase = frontmatter.get("remediation_phase")
+        revision = frontmatter.get("revision")
+        finding_ids = frontmatter.get("finding_ids")
+        if isinstance(task_id, str) and not re.fullmatch(r"TASK-\d{3}", task_id):
+            errors.append(f"{rel_path}: `task_id` should use TASK-001 format")
+        if isinstance(phase, str) and not re.fullmatch(r"R-\d{3}", phase):
+            errors.append(f"{rel_path}: `remediation_phase` should use R-001 format")
+        if isinstance(task_ref, str) and not re.fullmatch(r"R-\d{3}-TASK-\d{3}", task_ref):
+            errors.append(f"{rel_path}: `task_ref` should use R-001-TASK-001 format")
+        if isinstance(revision, str) and not re.fullmatch(r"[1-9]\d*", revision):
+            errors.append(f"{rel_path}: `revision` should be a positive integer")
+        if not isinstance(finding_ids, list) or not finding_ids:
+            errors.append(f"{rel_path}: `finding_ids` must list at least one PV-001-style finding")
+        elif any(not re.fullmatch(r"PV-\d{3}", str(finding_id)) for finding_id in finding_ids):
+            errors.append(f"{rel_path}: `finding_ids` should use PV-001 format")
+        if isinstance(task_id, str) and isinstance(phase, str):
+            expected_file_prefix = f"{phase}-{task_id}-"
+            expected_task_ref = f"{phase}-{task_id}"
+            if task_ref != expected_task_ref:
+                errors.append(f"{rel_path}: `task_ref` should be `{expected_task_ref}`")
+            if not path.name.startswith(expected_file_prefix):
+                errors.append(f"{rel_path}: filename should start with `{expected_file_prefix}`")
+            if not path.parent.name.startswith(f"{phase}-"):
+                errors.append(f"{rel_path}: parent folder should start with `{phase}-`")
+
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate Codex-Cursor project artifacts.")
     parser.add_argument("project_root", nargs="?", default=".", help="Project root to validate.")
@@ -348,6 +478,7 @@ def main() -> int:
     for rel_path, spec in PROJECT_FILES.items():
         errors.extend(validate_file(root, rel_path, spec))
     errors.extend(validate_task_specs(root))
+    errors.extend(validate_remediation_task_specs(root))
     errors.extend(validate_ids(root))
 
     if errors:

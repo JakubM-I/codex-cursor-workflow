@@ -16,3 +16,4 @@ Current shared artifact contracts:
 - `artifacts/stage-closure.md` - closure rules for planning stages;
 - `artifacts/task-delivery.md` - Codex-Cursor responsibility boundary and delivery loop;
 - `artifacts/delivery-log.md` - durable, delivery-derived implications for later tasks.
+- `artifacts/project-verification.md` - project-wide verification, remediation, and user-decision boundary.

@@ -13,6 +13,9 @@ Current skills:
 - `cc-plan/` - turns architecture and upstream artifacts into an ordered implementation roadmap.
 - `cc-task-spec/` - creates a lightweight task map for a ready milestone and writes its current Cursor task contract.
 - `cc-task-verify/` - verifies the implemented task, records evidence, and accepts it or returns a correction request.
+- `cc-project-verify/` - verifies a completed project, records cross-cutting findings, plans approved remediation, and revalidates closure.
+- `cc-remediation-task-spec/` - maps one approved remediation phase and prepares its current Cursor correction packet.
+- `cc-remediation-verify/` - verifies one remediation packet and routes the next correction or project revalidation.
 
 Expected future use:
 

@@ -4,7 +4,7 @@ This document is a working inventory of tools, skills, prompts, checklists, scri
 
 It is intentionally provisional. Its purpose is to help design the system while the workflow is still evolving. It may later be simplified, split into agent-specific skill files, or removed.
 
-Current scope: greenfield project creation through the Task Specification and Delivery Loop.
+Current scope: greenfield project creation through planned delivery, project-wide verification, approved remediation, and final user acceptance.
 
 This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
 
@@ -15,18 +15,16 @@ flowchart LR
   Init[Init] --> Brief[Brief]
   Brief --> Spec[Product & Functional Specification]
   Spec --> Design[Designer]
-  Design --> Review{Visual review and\nasset decision}
-  Review -->|Approved| Architect[Architect]
-  Review -->|Changes requested| Design
+  Design --> Architect[Architect]
   Architect --> Plan[Implementation Plan]
-  Plan --> TaskSpec[Task Specification]
-  TaskSpec --> Cursor[Cursor implementation]
-  Cursor --> Verify[Codex verification and review]
-  Verify --> Log[Delivery log and artifact updates]
-  Log --> TaskSpec
+  Plan --> Delivery[Task specification and delivery loop]
+  Delivery --> ProjectVerify[Project verification and remediation loop]
+  ProjectVerify --> Complete[Project complete]
 ```
 
 Each completed stage is a Git checkpoint. Designer begins by selecting reference research, full visual design, or a deliberate documentation-only opt-out.
+
+The two loop stages are intentionally expanded only in their own sections below: **Task Specification And Delivery Loop** and **Project Verification And Remediation**.
 
 ## How To Use This File
 
@@ -445,11 +443,76 @@ Frontmatter or metadata needs:
 Open decisions:
 
 * whether a future high-assurance workflow should split Codex verification and independent code review into separately invocable skills;
-* whether release planning and knowledge capture should remain an extension of the delivery log or become their own closing stage.
+
+### Project Verification And Remediation
+
+Purpose:
+
+Verify an implemented project as a coherent whole, obtain user decisions for findings and feedback, route approved corrections through a separate remediation loop, and revalidate the resulting project before final acceptance.
+
+Process:
+
+```mermaid
+flowchart TD
+  Start[Planned delivery complete] --> Verify[cc-project-verify: audit and review]
+  Verify --> Report[Project Verification Report: PV findings]
+  Report --> User{User decision}
+  User -->|Approved| Plan[Remediation Plan: R phases]
+  User -->|Deferred/rejected| Record[Record decision and limits]
+  Plan --> Spec[cc-remediation-task-spec: current phase map + packet]
+  Spec --> Cursor[Cursor correction]
+  Cursor --> TaskVerify[cc-remediation-verify]
+  TaskVerify -->|More phase work| Spec
+  TaskVerify -->|Phase ready| Verify
+  Verify -->|Ready| Acceptance[User accepts final report]
+```
+
+Intended owner:
+
+Codex owns audit, planning, and evidence; Cursor implements a bounded approved correction; the user owns correction scope, deferrals, material decisions, and final acceptance.
+
+Primary skills or prompts:
+
+* `.codex/skills/cc-project-verify/SKILL.md`;
+* `.codex/skills/cc-remediation-task-spec/SKILL.md`;
+* `.codex/skills/cc-remediation-verify/SKILL.md`.
+
+Supporting resources:
+
+* `.agents/artifacts/project-verification.md` - shared lifecycle and responsibility boundary;
+* `cc-project-verify/references/project-verification.md` - report and remediation-plan artifact contracts;
+* `cc-remediation-task-spec/references/remediation-task-specification.md` - packet and phase task-map contract;
+* `cc-remediation-verify/references/remediation-verification.md` - targeted evidence and routing rules;
+* `.codex/agents/project-verification-critic.md` - read-only independent review when project complexity or consequence warrants it;
+* `.cursor/rules/implement-remediation-task-spec.mdc` - Cursor-only remediation packet boundary;
+* `.agents/scripts/validate-project-artifacts.py` - frontmatter, status, relation, and stable-ID validation.
+
+Input artifacts:
+
+* current implementation and planned-delivery evidence;
+* product, functional, design, architecture, asset, and implementation-plan artifacts as needed for traceability;
+* delivery-log implications;
+* user feedback and decisions;
+* after remediation, completed remediation packets and their verification histories.
+
+Output artifacts:
+
+* `docs/project/project-verification-report.md`, containing the evidence matrix, `PV-*` findings, limitations, decision state, and revalidation history;
+* `docs/project/remediation-plan.md`, containing approved `R-*` phases and their compact phase delivery registers;
+* one current `docs/remediation/R-<phase>-<slug>/R-<phase>-TASK-<number>-<slug>.md` packet at a time;
+* final user acceptance or explicit documented deferrals and limitations.
+
+Rules:
+
+* Project verification does not rewrite the implementation plan, add remediation work to an implementation milestone, or revise accepted implementation Task Specs.
+* `cc-project-verify` creates the report and phase map but never repeatedly authors the next detailed correction packet.
+* `cc-remediation-task-spec` creates a task map only for the active remediation phase and prepares only its next ready packet.
+* `cc-remediation-verify` accepts a bounded correction but marks a finding only `ready-for-revalidation`; only `cc-project-verify` closes it after project-level evidence.
+* User feedback is not silently classified as a defect. Record and obtain approval before it enters the remediation plan.
 
 ## Later Workflow Areas
 
 These areas are intentionally not designed in detail yet:
 
 * existing project onboarding and current-state analysis;
-* completion and knowledge capture.
+* broader long-running knowledge-capture and post-release operating workflows.

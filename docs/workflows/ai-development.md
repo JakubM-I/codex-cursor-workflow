@@ -2,7 +2,7 @@
 
 This document describes a reusable workflow for building a new software project with Codex, Cursor, and the user.
 
-Current scope: greenfield project creation from initialization through a just-in-time Task Specification and Delivery Loop. Existing-project onboarding and release workflow remain future work.
+Current scope: greenfield project creation from initialization through planned delivery, project-wide verification, approved remediation, and final user acceptance. Existing-project onboarding remains future work.
 
 This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
 
@@ -18,7 +18,7 @@ The preferred collaboration model is:
 * Cursor implements concrete tasks later, after the project plan has been converted into task-level specifications.
 * The user provides goals, decisions, priorities, feedback, accounts, assets, and final approval.
 
-The implementation plan is followed by a repeatable, just-in-time Task Specification and Delivery Loop. Cursor implements only the current bounded task; Codex owns verification, review, records, and routing of delivery-derived changes.
+The implementation plan is followed by a repeatable, just-in-time Task Specification and Delivery Loop. Cursor implements only the current bounded task; Codex owns verification, review, records, and routing of delivery-derived changes. After planned delivery, a separate project-verification and remediation loop checks the whole project without changing the original delivery workflow.
 
 ## Operating Principles
 
@@ -359,12 +359,43 @@ Exit condition for each loop iteration:
 
 The current task is accepted, blocked with a named owner and next action, or awaiting the user's approval of a precise correction request. The next task is not prepared until relevant pending delivery implications are resolved. Once every task in a milestone map is accepted, Codex closes the milestone as a traceability check only; it does not run an additional global test.
 
+### Stage 8: Project Verification And Remediation
+
+Purpose:
+
+Verify the completed project across its boundaries: implemented behavior, product acceptance criteria, approved design evidence, architecture risks, integration and runtime behavior, and delivery-record limitations. This stage is not another implementation-plan milestone and does not retroactively revise accepted planned-delivery tasks.
+
+The stage begins with `cc-project-verify`. It creates a traceable Project Verification Report, runs evidence appropriate to project risk, and performs an independent consistency review when warranted. The report distinguishes evidence-backed findings from unproven criteria and subjective user feedback.
+
+When a user approves remediation, `cc-project-verify` creates a Remediation Plan with `R-001`-style phases. `cc-remediation-task-spec` then creates a small task map only for the current phase and prepares one detailed Remediation Task Spec for Cursor. `cc-remediation-verify` verifies each completed correction. This loop remains separate from `cc-task-spec` and `cc-task-verify`, because its source is an approved `PV-001`-style project finding rather than the implementation plan.
+
+After a remediation phase or all approved corrections are ready, `cc-project-verify` runs targeted revalidation of their stated impact areas. It may widen to a full audit only when the correction, risk, or user request warrants it.
+
+Responsibility split:
+
+* `cc-project-verify` owns the project report, findings, user-decision gate, remediation phase plan, revalidation, and final readiness result;
+* `cc-remediation-task-spec` owns only the current remediation-phase task map and its next detailed Cursor packet;
+* Cursor implements only the current packet and permitted lightweight self-checks;
+* `cc-remediation-verify` owns evidence for one packet and routes the next remediation task or project revalidation;
+* the user approves remediation scope, material changes, deferrals, and final project acceptance.
+
+Output:
+
+* `docs/project/project-verification-report.md` with `PV-*` findings, traceable evidence, limitations, and final decision;
+* `docs/project/remediation-plan.md` with approved `R-*` phases and their task-map state;
+* current remediation packets under `docs/remediation/R-<phase>-<slug>/`;
+* targeted revalidation evidence and an explicit user acceptance or recorded limitation.
+
+Exit condition:
+
+Every approved finding has been closed by project-level revalidation, or has an explicit user-approved deferral. The user has accepted the final report. A milestone being complete is not, by itself, this exit condition.
+
 ## Future Workflow Parts
 
 The following areas are intentionally outside the current scope and will be designed later:
 
 * onboarding or analysis of an existing project;
-* completion and knowledge capture.
+* broader long-running knowledge-capture and post-release operating workflows.
 
 ## Source of Truth
 
