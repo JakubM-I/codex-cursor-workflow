@@ -30,7 +30,7 @@ related:
 Allowed `status` values:
 
 * `draft` - design-system direction is in progress or non-blocking questions remain;
-* `ready-for-user-review` - Codex's proposed design-system direction is ready for the user to inspect in the artifacts or visual workspace;
+* `ready-for-user-review` - Claude Code's proposed design-system direction is ready for the user to inspect in the artifacts or visual workspace;
 * `approved-for-architecture` - the user has approved the design-system direction and tokens, components, states, and constraints are clear enough for architecture and planning;
 * `superseded` - another design-system artifact has replaced this one.
 

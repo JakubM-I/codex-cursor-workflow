@@ -6,7 +6,7 @@ It is intentionally provisional. Its purpose is to help design the system while 
 
 Current scope: greenfield project creation through planned delivery, project-wide verification, approved remediation, and final user acceptance.
 
-This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
+This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.claude/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
 
 ## Workflow At A Glance
 
@@ -42,6 +42,7 @@ Use this file to decide where a material belongs:
 
 * `.agents/` for shared materials used by more than one agent;
 * `.codex/` for Codex-specific stage skills, analysis prompts, subagents, review prompts, and orchestration;
+* `.claude/` for Claude Code-specific stage skills, prompts, supporting agents, and design materials;
 * `.cursor/` for Cursor-specific implementation rules, coding prompts, and editor-native rules;
 * `docs/` for human-readable workflow design documents in this repository, and generated project artifacts or records inside target projects.
 
@@ -202,11 +203,11 @@ Define the product's UX and visual direction.
 
 Intended owner:
 
-Codex, using design tools and user feedback.
+Claude Code, using design tools and user feedback.
 
 Primary skill or prompt:
 
-`.codex/skills/cc-designer/SKILL.md`.
+`.claude/skills/cc-designer/SKILL.md`.
 
 Supporting resources:
 
@@ -221,8 +222,8 @@ Supporting resources:
 * MagicPath or another visual workspace - required for the selected Full visual design mode; requires user login/project setup outside Codex when no direct integration is available;
 * generated visual references or image tools, when useful for mood, art direction, bitmap mockups, or asset direction;
 * optional tools such as Figma, Adobe, or Canva only when the project and available plugins justify them;
-* `.codex/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
-* `.codex/agents/design-critic.md` - read-only UX/design reviewer subagent for standard and deep design reviews, defaulting to `gpt-5.6-luna` with `medium` reasoning effort.
+* `.claude/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
+* `.claude/agents/design-critic.md` - read-only UX/design reviewer subagent for standard and deep design reviews, defaulting to `gpt-5.6-luna` with `medium` reasoning effort.
 
 Input artifacts:
 

@@ -1,10 +1,10 @@
 # AI Development Workflow
 
-This document describes a reusable workflow for building a new software project with Codex, Cursor, and the user.
+This document describes a reusable workflow for building a new software project with Codex, Claude Code, Cursor, and the user.
 
 Current scope: greenfield project creation from initialization through planned delivery, project-wide verification, approved remediation, and final user acceptance. Existing-project onboarding remains future work.
 
-This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
+This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, `.claude/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
 
 The workflow is intended to be portable. The whole workflow system may be copied into another repository and adapted there. In every repository, the user's latest instruction and current project state remain the source of truth.
 
@@ -14,7 +14,8 @@ The workflow is organized as project stages. Each stage should eventually have a
 
 The preferred collaboration model is:
 
-* Codex guides project discovery, product definition, design direction, technical architecture, and implementation planning.
+* Codex guides project discovery, product definition, technical architecture, and implementation planning.
+* Claude Code owns the Designer stage and its UX and visual-design artifacts.
 * Cursor implements concrete tasks later, after the project plan has been converted into task-level specifications.
 * The user provides goals, decisions, priorities, feedback, accounts, assets, and final approval.
 
@@ -48,10 +49,11 @@ Recommended material layers:
 
 * `.agents/` - shared instructions, checklists, skills, scripts, and reusable conventions.
 * `.codex/` - Codex-specific stage skills, analysis prompts, subagent definitions, orchestration, review prompts, and supporting materials.
+* `.claude/` - Claude Code-specific stage skills, prompts, supporting agents, and design materials.
 * `.cursor/` - Cursor-specific implementation rules, coding prompts, editor-native rules, and implementation support.
 * `docs/` - in this workflow-system repository, human-readable workflow design documentation and local source notes; in target projects, generated project artifacts, plans, task records, reviews, and knowledge records.
 
-Use the narrowest layer that fits. Shared materials belong in `.agents/`. Codex orchestration belongs in `.codex/`. Cursor implementation guidance belongs in `.cursor/`.
+Use the narrowest layer that fits. Shared materials belong in `.agents/`. Codex orchestration belongs in `.codex/`. Claude Code design materials belong in `.claude/`. Cursor implementation guidance belongs in `.cursor/`.
 
 System skills created for this workflow should use the `cc-` prefix and a short action-oriented name, for example `cc-init`.
 
@@ -178,7 +180,7 @@ Define the visual and UX direction for the product.
 
 At the start of Designer, the user selects one mode: reference research, full visual design, or an explicit documentation-only opt-out. A new user-facing interface defaults to full visual design. The agent must not silently decide that references, mockups, or visual tooling are unnecessary.
 
-Designer is the first stage where account-backed design tools are normally expected. Baseline shared UI skills can be included during Init or repository bootstrap, while project-specific plugins and design accounts should be checked at the start of Designer. Codex should present the useful tool set, identify what is missing, and ask whether Codex should install/connect available plugins or whether the user will add tools manually and confirm readiness.
+Designer is the first stage where account-backed design tools are normally expected. Baseline shared UI skills can be included during Init or repository bootstrap, while project-specific plugins and design accounts should be checked at the start of Designer. Claude Code should present the useful tool set, identify what is missing, and ask whether Claude Code should install/connect available plugins or whether the user will add tools manually and confirm readiness.
 
 Mobbin is the preferred source for real UI and UX references when available. MagicPath is treated as a collaborative visual workspace for full visual design: the user may be asked to log in, open or create the project, review the proposed design, and either approve it or request changes. Tools required by the selected mode must be installed or connected before that mode can proceed; if they are unavailable, the user chooses another tool or explicitly changes mode.
 

@@ -39,12 +39,12 @@ At the start of the stage, inspect available tools and ask the user to choose on
 * **Full visual design** - inspect references, create or iterate a visual design, and obtain visual approval. This is the default for a new user-facing interface. Requires a reference tool and a visual workspace such as MagicPath, Figma, or an equivalent available tool.
 * **Documentation-only** - no references and no visual design. This is an explicit user opt-out; record that later implementation will not have pre-code visual validation.
 
-Present the required, recommended, and intentionally unneeded tools for the selected mode. Ask the user whether Codex should install/connect available missing tools or whether the user will add them manually and confirm readiness. If a required tool for the selected mode is unavailable, keep Designer blocked until the user connects it or explicitly chooses another mode.
+Present the required, recommended, and intentionally unneeded tools for the selected mode. Ask the user whether Claude Code should install/connect available missing tools or whether the user will add them manually and confirm readiness. If a required tool for the selected mode is unavailable, keep Designer blocked until the user connects it or explicitly chooses another mode.
 
 Preferred tool routing:
 
 * **Mobbin** - use for real UI and UX references when available. Search specific screens, flows, or website sections from the functional spec. Inspect returned images before summarizing them. Cite Mobbin links in any user-facing reference list.
-* **MagicPath** - use as a collaborative visual workspace when the user selects the full visual-design mode and MagicPath is the chosen tool. Since it may require the user's browser session and login, pause at the right moment and ask the user to log in, open or create the project, and confirm that Codex should continue from that workspace.
+* **MagicPath** - use as a collaborative visual workspace when the user selects the full visual-design mode and MagicPath is the chosen tool. Since it may require the user's browser session and login, pause at the right moment and ask the user to log in, open or create the project, and confirm that Claude Code should continue from that workspace.
 * **Generated visual references and assets** - use when the project needs mood, art direction, bitmap mockups, logos, icons, illustrations, or other asset direction that is not well covered by existing product references.
 * **Figma, Adobe, Canva, or similar tools** - use only when available and appropriate for the requested deliverable. Do not require a tool because it is popular; require it only when the work benefits from that tool's actual output.
 
@@ -64,7 +64,7 @@ Develop the design direction through inspection, reference gathering, and focuse
 * ask the user to decide when a choice affects brand personality, target feel, major layout model, workflow density, or design-tool ownership;
 * record unresolved but non-blocking design assumptions rather than inventing certainty.
 
-Use `.codex/agents/design-researcher.md` when the project needs independent reference gathering, especially for Mobbin searches, competitor/inspiration comparison, or multiple possible UX patterns. The researcher is read-only and returns evidence to `cc-designer`; it does not write design artifacts or choose the final direction.
+Use `.claude/agents/design-researcher.md` when the project needs independent reference gathering, especially for Mobbin searches, competitor/inspiration comparison, or multiple possible UX patterns. The researcher is read-only and returns evidence to `cc-designer`; it does not write design artifacts or choose the final direction.
 
 Ask small rounds of questions. Prefer one material design decision at a time. Group at most three independent questions when they can be answered without creating dependent branches.
 
@@ -132,7 +132,7 @@ Review the design artifacts against:
 * UI polish using `.agents/skills/make-interfaces-feel-better/` when present.
 * the selected design mode, its reference or visual evidence, and asset-manifest completeness.
 
-Use `.codex/agents/design-critic.md` when an independent reviewer is available and the project is `standard` or `deep`. If subagent execution is unavailable, perform the same review as a clearly separated self-review and report that limitation. The reviewer is read-only and does not update artifacts or project status.
+Use `.claude/agents/design-critic.md` when an independent reviewer is available and the project is `standard` or `deep`. If subagent execution is unavailable, perform the same review as a clearly separated self-review and report that limitation. The reviewer is read-only and does not update artifacts or project status.
 
 When a project artifact validator is available, run it before moving design artifacts to `ready-for-user-review` or `approved-for-architecture`. Treat validator failures as corrections for the owning stage artifacts, not as permission to rewrite unrelated documents.
 
@@ -153,7 +153,7 @@ For Full visual design, ask the user to review the visual workspace or mockups a
 
 After the user approves the design direction, ask whether outstanding assets in `asset-manifest.md` should be prepared now, supplied by the user, sourced with approved rights, or deferred to a named prerequisite task before UI implementation. Record the decision and do not create or source assets without the necessary authorization.
 
-When the user requests changes, revise the relevant design artifacts and visual workspace notes, then return to user review. Do not treat the design-critic verdict or Codex's own review as a substitute for user approval.
+When the user requests changes, revise the relevant design artifacts and visual workspace notes, then return to user review. Do not treat the design-critic verdict or Claude Code's own review as a substitute for user approval.
 
 ## Completion
 

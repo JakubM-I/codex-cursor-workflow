@@ -27,7 +27,7 @@ related:
 Allowed `status` values:
 
 * `draft` - design direction is in progress or non-blocking questions remain;
-* `ready-for-user-review` - Codex's proposed design direction is ready for the user to inspect in the artifacts or visual workspace;
+* `ready-for-user-review` - Claude Code's proposed design direction is ready for the user to inspect in the artifacts or visual workspace;
 * `approved-for-architecture` - the user has approved the UX and visual direction and it is clear enough for architecture and implementation planning;
 * `superseded` - another design brief has replaced this one.
 

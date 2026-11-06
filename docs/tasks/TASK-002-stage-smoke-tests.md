@@ -11,7 +11,7 @@ related:
   - .codex/skills/cc-init/SKILL.md
   - .codex/skills/cc-brief/SKILL.md
   - .codex/skills/cc-spec/SKILL.md
-  - .codex/skills/cc-designer/SKILL.md
+  - .claude/skills/cc-designer/SKILL.md
   - .codex/skills/cc-architect/SKILL.md
   - .codex/skills/cc-plan/SKILL.md
 ---

@@ -29,7 +29,7 @@ related:
 Allowed `status` values:
 
 * `draft` - screen structure is in progress or non-blocking questions remain;
-* `ready-for-user-review` - Codex's proposed screen structure is ready for the user to inspect in the artifacts or visual workspace;
+* `ready-for-user-review` - Claude Code's proposed screen structure is ready for the user to inspect in the artifacts or visual workspace;
 * `approved-for-architecture` - the user has approved the screen structure and states and they are clear enough for architecture and planning;
 * `superseded` - another screen spec has replaced this one.
 

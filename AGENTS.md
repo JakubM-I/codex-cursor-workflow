@@ -2,7 +2,7 @@
 
 ## Project Scope
 
-This repository is a workspace for designing a reusable AI-assisted development workflow for cooperation between Codex and Cursor.
+This repository is a workspace for designing a reusable AI-assisted development workflow for cooperation between Codex, Claude Code, and Cursor.
 
 The goal is to prepare instructions, task templates, review guidelines, skills, and supporting workflow documents that can later be copied or adapted into other software projects.
 
@@ -19,6 +19,8 @@ Workflow documentation lives in `docs/workflows/`.
 Shared agent materials live in `.agents/`.
 
 Codex-specific materials live in `.codex/`.
+
+Claude Code-specific materials live in `.claude/`.
 
 Cursor-specific materials live in `.cursor/`.
 

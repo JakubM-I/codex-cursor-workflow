@@ -23,7 +23,7 @@ At the start of Designer:
    * **Recommended** - useful enough to ask for, but not blocking.
    * **Not needed now** - plausible tools intentionally skipped.
 5. Check available skills and tools before asking the user.
-6. Ask the user whether Codex should install/connect available missing plugins or whether the user will add them manually and confirm readiness.
+6. Ask the user whether Claude Code should install/connect available missing plugins or whether the user will add them manually and confirm readiness.
 
 Keep the question focused on the current project. Do not present a generic marketplace checklist.
 
@@ -47,7 +47,7 @@ Use MagicPath when the user selects Full visual design and chooses it as the col
 
 MagicPath readiness may require several separate things:
 
-* a Codex plugin or connector, if one is available in the user's environment;
+* a Claude Code plugin or connector, if one is available in the user's environment;
 * a MagicPath-specific skill or instructions supplied by the connector during setup;
 * user login in the MagicPath session;
 * a new or existing MagicPath project opened in the internal browser;
@@ -57,7 +57,7 @@ MagicPath readiness may require several separate things:
 Operational flow:
 
 1. Check whether a MagicPath plugin, connector, MCP tool, or MagicPath-provided skill is available.
-2. If MagicPath requires installation or connection, ask the user to approve installing/connecting it through Codex, or to do it manually and confirm when ready.
+2. If MagicPath requires installation or connection, ask the user to approve installing/connecting it through Claude Code, or to do it manually and confirm when ready.
 3. After the connection is available, read any MagicPath-provided skill or setup instructions before using it.
 4. Open MagicPath in the internal browser when browser control is available, or ask the user to open it there manually.
 5. Ask the user to log in if needed.
@@ -90,4 +90,4 @@ Tool setup and visual review affect project status:
 * When artifacts are ready but awaiting user review, set the design artifacts to `ready-for-user-review` and keep Designer `in-progress`.
 * After explicit user approval, resolve the asset-delivery decision in `docs/project/asset-manifest.md`. Only then set design artifacts to `approved-for-architecture`, mark Designer `complete`, and move current stage to Architect.
 
-Do not use Codex's own design review, a successful tool run, or a MagicPath project existing as a substitute for user approval.
+Do not use Claude Code's own design review, a successful tool run, or a MagicPath project existing as a substitute for user approval.
