@@ -55,9 +55,9 @@ Critic depth: standard
 
 ## Always Run The Critic
 
-Run `requirements-critic` for every `cc-spec` completion attempt.
+Run the Claude Code CLI reviewer defined in `.claude/agents/requirements-critic.md` for every `cc-spec` completion attempt, using `.agents/skills/cc-stage-review/SKILL.md`.
 
-Use `gpt-5.6-luna` with `medium` reasoning effort by default. This is the normal configuration for `light` and `standard` reviews, and it is also acceptable for many `deep` reviews. Raise the model or reasoning effort only when the complexity assessment shows high consequence, ambiguity, sensitive data, compliance concerns, or many dependent flows.
+Use Claude Code's `sonnet` model alias by default. For justified deep review, use `opus` and record that choice in the report.
 
 The depth changes the scope and expected effort:
 
@@ -65,7 +65,7 @@ The depth changes the scope and expected effort:
 * `standard` - full requirements pass across roles, capabilities, flows, screens, data, edge cases, non-goals, and hidden decisions.
 * `deep` - rigorous pass including decision dependencies, risk, privacy, negative scenarios, conflict analysis, and readiness to unblock Design and Architecture.
 
-If subagent execution is unavailable in the current environment, run the same review as a clearly separated self-review and report that limitation. Do not skip the review silently.
+If Claude Code CLI is unavailable or cannot run the review, save a report that records the limitation and block the review gate. Do not substitute a self-review.
 
 ## Handling Critic Findings
 
@@ -73,7 +73,7 @@ Classify every material finding before editing:
 
 ### Automatic Fix
 
-Apply directly when the correction improves clarity without changing product direction. Examples:
+These are candidates for the stage owner to consider after manual invocation; do not apply them during the automatic reviewer run. Examples:
 
 * unclear wording;
 * duplicate or weakly named section;
@@ -116,7 +116,7 @@ Reject findings that expand scope without evidence, contradict confirmed user de
 Do not mark `cc-spec` complete until:
 
 - [ ] complexity has been assessed;
-- [ ] `requirements-critic` has run at the selected depth, or a self-review fallback has been reported;
+- [ ] an external requirements review report exists at the selected depth and its material findings have been manually assessed by `cc-spec`;
 - [ ] automatic fixes have been applied;
 - [ ] material product decisions have been confirmed by the user or recorded as blockers;
 - [ ] deferred items are routed to the correct later stage;
@@ -124,7 +124,7 @@ Do not mark `cc-spec` complete until:
 
 ## Status Update
 
-Record only a compact review trace in `docs/project/status.md`. The status file should show that the stage passed requirements review and at what depth, but it should not contain the full critic report or detailed fix list.
+Record a compact review trace and report link in `docs/project/status.md`. The status file should not contain the full critic report or detailed fix list.
 
 Good examples:
 

@@ -45,29 +45,12 @@ If Mobbin is missing and would materially improve the work, ask whether the user
 
 Use MagicPath when the user selects Full visual design and chooses it as the collaborative visual workspace.
 
-MagicPath readiness may require several separate things:
+1. Check the MagicPath integration available in Claude Code and read its setup and tool instructions. If connection or authentication is required, ask the user to complete the needed step. The user can sign in through their regular browser.
+2. Verify the intended workspace and the integration's project and canvas capabilities. Reuse the confirmed project when one already exists. For a new project, create it through the integration when it exposes that operation. If the integration can edit an existing project but cannot create one, ask the user to create it in their MagicPath dashboard and share its link.
+3. Use the brief, product spec, functional spec, reference findings, and design direction to create or iterate the designs on the remote canvas through the integration. Start when the connection and target project are ready. Opening a browser tab is optional for the user and independent of Claude Code's work.
+4. Record the project link in `docs/project/design-brief.md` and share it with the user for review in their regular browser. If the integration returns only a project reference, provide that reference and the dashboard location instead. Keep Designer `in-progress` until the user explicitly approves the design direction.
 
-* a Claude Code plugin or connector, if one is available in the user's environment;
-* a MagicPath-specific skill or instructions supplied by the connector during setup;
-* user login in the MagicPath session;
-* a new or existing MagicPath project opened in the internal browser;
-* enough project context copied or handed to the workspace to create the visual design;
-* explicit user review and approval after the design is visible.
-
-Operational flow:
-
-1. Check whether a MagicPath plugin, connector, MCP tool, or MagicPath-provided skill is available.
-2. If MagicPath requires installation or connection, ask the user to approve installing/connecting it through Claude Code, or to do it manually and confirm when ready.
-3. After the connection is available, read any MagicPath-provided skill or setup instructions before using it.
-4. Open MagicPath in the internal browser when browser control is available, or ask the user to open it there manually.
-5. Ask the user to log in if needed.
-6. Ask the user to create or open the project workspace.
-7. Use the brief, product spec, functional spec, Mobbin/reference findings, and design direction to create or update the visual workspace.
-8. Ask the user to review the design in MagicPath and either approve it or request changes.
-9. Record the MagicPath project link or reference in `docs/project/design-brief.md` when available.
-10. Keep Designer `in-progress` until the user explicitly approves the design direction.
-
-If no MagicPath integration is available, do not invent one. Offer another available visual workspace or ask the user to choose another design mode. Record the limitation and the user's decision in the design brief.
+If the integration is unavailable or cannot edit the canvas, offer another available visual workspace or ask the user to choose another design mode. Record the limitation and the user's decision in the design brief.
 
 ## Other Design Tools
 

@@ -1,7 +1,7 @@
 ---
 name: cc-spec
 description: Turn a ready project brief into product and functional specifications through collaborative product definition. Use after cc-brief when the project needs product behavior, flows, screens or areas, states, data expectations, and product-level acceptance criteria before design, architecture, or implementation planning.
-argument-hint: "[brief path, notes, references, or product decisions]"
+argument-hint: "[brief path, notes, references, or product decisions] or [review report path, optional correction notes]"
 ---
 
 # CC Spec
@@ -16,6 +16,8 @@ docs/project/functional-spec.md
 This is a product and requirements stage. It defines what should exist, how the product should behave, how users move through it, what states matter, and how success is recognized at the product level. It does not choose a technical stack, design visual details, create wireframes, define data schemas, or plan implementation stages.
 
 ## Inputs And Context
+
+When the user supplies an external stage-review report for this stage, start with [Resume With A Report](../../../.agents/artifacts/stage-review.md#resume-with-a-report). The report path is sufficient, with optional notes to scope or prioritize fixes.
 
 Read `.agents/artifacts/project-status.md` and `docs/project/status.md` when they exist. At the start of this stage, mark Product / Functional Specification as `in-progress` unless the project is already blocked or paused. Do not change another stage's row except when recording a completed handoff from this stage.
 
@@ -71,16 +73,16 @@ Before marking the stage ready, run an independent requirements review.
 
 First classify the project complexity as `light`, `standard`, or `deep` based on user roles, flows, data sensitivity, integrations, business or operational consequence, ambiguity, and open decisions. Do not classify by project type alone: a landing page may need more scrutiny when it handles conversion, lead capture, segmentation, or important business messaging.
 
-Then run `requirements-critic` at the selected depth, using `gpt-5.6-luna` with `medium` reasoning effort by default. The critic is read-only. It reviews the brief, product spec, and functional spec, then returns findings grouped as:
+Then use `.agents/skills/cc-stage-review/SKILL.md` to run the read-only Claude Code CLI reviewer defined in `.claude/agents/requirements-critic.md`. It reviews the brief, product spec, and functional spec and saves a report before any closure decision.
 
 * automatic fix candidates;
 * issues requiring user decision;
 * items to defer or route elsewhere;
 * reviewed areas with no material issue, when useful.
 
-If subagent execution is not available, perform the same review as a clearly separated self-review and report that limitation. Do not skip the review silently.
+If Claude Code CLI is unavailable or fails, record that limitation in the report and block the review gate. Do not substitute a same-model self-review.
 
-After the critic pass, apply only small fixes that do not change product direction. Stop and ask the user before changing scope, roles, flows, capabilities, data behavior, priorities, or conflicts between artifacts. Route design, architecture, and implementation concerns to the proper handoff sections. When updating project status, include only a compact review trace such as `Ready after standard requirements review`; keep detailed findings in the specs.
+Keep the stage `in-progress` after the automatic report. The user manually invokes `cc-spec` with that report; only then assess findings and make authorized changes. Stop and ask the user before changing scope, roles, flows, capabilities, data behavior, priorities, or conflicts between artifacts. Route design, architecture, and implementation concerns to the proper handoff sections. Material changes require a fresh external review.
 
 ## Artifact Ownership
 

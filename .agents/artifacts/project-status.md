@@ -8,7 +8,7 @@ It is not a replacement for stage artifacts, task records, review reports, or gi
 
 `cc-init` creates this file. Every stage-owner skill reads it before starting work and updates it before handing off to the next stage.
 
-Supporting skills, exploratory subagents, validators, and checklists do not update it directly. They return findings to the stage-owner skill, which decides whether the state changed.
+Supporting skills, exploratory subagents, validators, and checklists do not update it directly. External reviewers return a report to the stage-owner skill; the owner records the report trace but does not assess or apply findings until the user manually invokes it with that report.
 
 When updating the file:
 
@@ -16,6 +16,7 @@ When updating the file:
 * update only the current stage's row, the project-level current state, blockers, next action, and the recent update list;
 * link to the stage artifact instead of duplicating its content;
 * append one concise entry for a material transition, pause, unblock, or completion;
+* after a successful external review, add its report link and reviewer to the current stage's Notes, copy the filled-in manual resume line from the report into Next action, and append one concise review entry;
 * keep the most recent ten update entries. Older detail remains available through git and the linked artifacts.
 
 Do not report a stage as closed unless its own exit condition and `.agents/artifacts/stage-closure.md` are satisfied. If its checkpoint commit fails, keep or restore the stage to `in-progress` or `blocked`. A project can be `active` while its current stage is `in-progress` or `blocked`.
@@ -101,6 +102,14 @@ related:
 | Task Specification / Delivery | not-started | - | - | - |
 | Project Verification / Remediation | not-started | - | - | - |
 
+## Reviewer Runtime
+
+| CLI | Availability | Checked | Notes |
+| --- | --- | --- | --- |
+| codex | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
+| claude | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
+| gemini | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
+
 ## Recent Updates
 
 - YYYY-MM-DD - Init completed. Brief is the next stage.
@@ -129,6 +138,14 @@ When `cc-brief` produces a ready brief, it updates the relevant values rather th
 | Implementation Plan | not-started | - | - | - |
 | Task Specification / Delivery | not-started | - | - | - |
 | Project Verification / Remediation | not-started | - | - | - |
+
+## Reviewer Runtime
+
+| CLI | Availability | Checked | Notes |
+| --- | --- | --- | --- |
+| codex | available | 2026-08-31 | Version check only; authentication and model access are unverified. |
+| claude | available | 2026-08-31 | Version check only; authentication and model access are unverified. |
+| gemini | unavailable | 2026-08-31 | Version check only; authentication and model access are unverified. |
 
 ## Recent Updates
 

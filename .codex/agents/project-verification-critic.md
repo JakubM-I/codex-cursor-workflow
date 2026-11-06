@@ -1,6 +1,8 @@
 ---
 name: project-verification-critic
 description: Independently review a completed project's evidence, cross-cutting consistency, design fidelity, delivery implications, and readiness for remediation or user acceptance. Used by cc-project-verify as a read-only critic.
+model: gpt-6.1-sol
+reasoning_effort: high
 ---
 
 # Project Verification Critic

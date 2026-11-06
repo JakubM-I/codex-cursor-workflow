@@ -20,13 +20,14 @@ Use the user's message as the project description. If the description is missing
 
 1. Identify the target project root.
 2. Create or update `AGENTS.md` in the project root.
-3. Create or preserve `docs/project/status.md`.
-4. Initialize git if the project is not already a git repository.
-5. Ensure the stable primary branch is named `main`.
-6. After the Init checkpoint on `main`, create and switch to `dev` for subsequent workflow work.
-7. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
-8. Close Init according to `.agents/artifacts/stage-closure.md`.
-9. Report exactly what was created or changed.
+3. Run `bash .agents/scripts/check-reviewer-clis.sh` and record Codex, Claude Code, and Gemini CLI availability in `docs/project/status.md`.
+4. Create or preserve `docs/project/status.md`.
+5. Initialize git if the project is not already a git repository.
+6. Ensure the stable primary branch is named `main`.
+7. After the Init checkpoint on `main`, create and switch to `dev` for subsequent workflow work.
+8. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
+9. Close Init according to `.agents/artifacts/stage-closure.md`.
+10. Report exactly what was created or changed.
 
 ## AGENTS.md Contract
 
@@ -115,6 +116,12 @@ The baseline set currently includes:
 Do not overwrite substantial existing shared materials without asking. If a target project already has a different version of a shared skill, report the conflict and ask whether to preserve, merge, or replace it.
 
 Account-backed plugins and user-authenticated tools are not baseline materials. `cc-init` should not install or connect them by default.
+
+## Reviewer CLI Readiness
+
+Run the shared CLI check after the workflow materials are available. Add a compact `## Reviewer Runtime` table to `docs/project/status.md` with `codex`, `claude`, and `gemini`, each CLI's availability, version output when available, check date, and a note that login and model access remain unverified until an authorized review runs.
+
+Do not block Init solely because Claude Code or Gemini is unavailable. The Brief, Specification, Designer, or Implementation Plan review gate blocks when its configured reviewer is unavailable. Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, `.agents/scripts/check-reviewer-clis.sh`, `.claude/`, `.gemini/`, and root `CLAUDE.md` when they are part of the workflow bundle.
 
 ## Output
 

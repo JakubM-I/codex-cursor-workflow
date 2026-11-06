@@ -1,7 +1,7 @@
 ---
 name: cc-brief
 description: Discover and pressure-test a new project's product direction through structured dialogue. Use after cc-init when the user provides a project idea, notes, or references and needs a durable project brief before product and functional specification, design, architecture, or implementation planning.
-argument-hint: "[project idea, notes, or reference paths]"
+argument-hint: "[project idea, notes, or reference paths] or [review report path, optional correction notes]"
 ---
 
 # CC Brief
@@ -11,6 +11,8 @@ Turn the user's early project idea into a clear, durable project brief through c
 This is a discovery stage. It establishes why the project should exist, for whom, what outcome it should create, and the boundaries that protect its scope. It does not choose a stack, design screens, define detailed product behavior, write acceptance criteria, or plan implementation.
 
 ## Inputs And Context
+
+When the user supplies an external stage-review report for this stage, start with [Resume With A Report](../../../.agents/artifacts/stage-review.md#resume-with-a-report). The report path is sufficient, with optional notes to scope or prioritize fixes.
 
 Use the invocation, existing project entry point, and project materials already available in the repository as starting context. Treat user-provided or authoritative project documents as the source for product and business facts.
 
@@ -63,6 +65,10 @@ Create `docs/project/` only when the brief is ready to be saved. If a brief alre
 Read [the project brief contract](references/project-brief.md) before writing or revising the artifact. It defines required frontmatter, headings, status values, the minimal `AGENTS.md` project snapshot, and the readiness check.
 
 ## Completion
+
+Before closing a ready brief, use `.agents/skills/cc-stage-review/SKILL.md` for the automatic Claude Code CLI review with `.claude/agents/brief-critic.md`. Save the report before any closure decision. Keep Brief `in-progress` while the user reviews the report.
+
+Only after the user manually invokes `cc-brief` with that report may this skill assess findings and make authorized changes. If the assessment changes the brief materially, run a fresh external review. Do not close Brief while a `Must Fix` or unresolved material finding remains.
 
 Write or update the brief when the dialogue has enough information for the next product-definition stage. A brief may remain `draft` when non-blocking assumptions or questions are still open. Do not claim it is ready for product and functional specification while a decision that changes the core user, problem, scope, or success outcome remains unresolved.
 

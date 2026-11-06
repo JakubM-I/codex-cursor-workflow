@@ -118,8 +118,9 @@ Supporting resources:
 
 * `cc-brief/references/project-brief.md` - artifact contract and readiness check;
 * `.codex/skills/cc-grill/SKILL.md` - pressure-test support for Standard and Deep discovery;
+* `.claude/agents/brief-critic.md` - automatic read-only Claude Code CLI review for business risks, assumptions, contradictions, and difficult questions;
+* `.agents/skills/cc-stage-review/` and `.agents/artifacts/stage-review.md` - report contract; the user manually invokes the owner to assess findings;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
-* later, if justified: focused use of `requirements-critic` for brief-level requirement risks;
 * later, if justified and authorized: inspiration or market research support.
 
 Input artifacts:
@@ -143,7 +144,7 @@ Frontmatter or metadata needs:
 Open decisions:
 
 * whether the brief needs a separate change log or revision history once projects become long-lived;
-* whether Brief should ever use `requirements-critic`, or whether requirements criticism should remain owned by `cc-spec`.
+* whether future workflows need more than one independent brief reviewer for unusually high-risk projects.
 
 ### Product / Functional Specification
 
@@ -165,7 +166,8 @@ Supporting resources:
 * `cc-spec/references/functional-spec.md` - functional specification contract, acceptance criteria style, and readiness check;
 * `cc-spec/references/requirements-review.md` - complexity assessment, critic depth, and findings handling contract;
 * Mermaid diagrams in `docs/project/functional-spec.md` when user flows, state transitions, or functional dependencies are easier to understand visually;
-* `.codex/agents/requirements-critic.md` - read-only independent requirements review subagent used by `cc-spec`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
+* `.claude/agents/requirements-critic.md` - read-only Claude Code CLI reviewer for requirements logic, flows, and scope;
+* `.agents/skills/cc-stage-review/` and `.agents/artifacts/stage-review.md` - automatic external-review run and durable report contract; the user manually invokes the stage owner to assess findings;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
 * source repositories, user-provided notes, or direct references when relevant and available;
 * `.agents/scripts/validate-project-artifacts.py` - deterministic check for required frontmatter, allowed statuses, related links, and stable IDs.
@@ -219,11 +221,12 @@ Supporting resources:
 * Mermaid diagrams in `docs/project/screen-spec.md` when screen maps, navigation, or cross-screen flows need a compact text source of truth;
 * `.agents/skills/make-interfaces-feel-better/` - full shared UI-polish lens for typography, surfaces, motion, icons, hit areas, and review;
 * Mobbin plugin - preferred source for real UI screens, flows, and website section references when available;
-* MagicPath or another visual workspace - required for the selected Full visual design mode; requires user login/project setup outside Codex when no direct integration is available;
+* MagicPath or another visual workspace for Full visual design. Claude Code works through the connected MagicPath integration, and the user reviews the remote project from their regular browser.
 * generated visual references or image tools, when useful for mood, art direction, bitmap mockups, or asset direction;
 * optional tools such as Figma, Adobe, or Canva only when the project and available plugins justify them;
 * `.claude/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
-* `.claude/agents/design-critic.md` - read-only UX/design reviewer for standard and deep design reviews, defaulting to Claude Code's `sonnet` model alias; use `opus` for justified high-consequence or deep reviews.
+* `.gemini/agents/design-critic.md` - read-only Gemini CLI reviewer for design-system, asset, and brief alignment;
+* `.agents/skills/cc-stage-review/` and `.agents/artifacts/stage-review.md` - automatic external-review run and durable report contract; the user manually invokes the stage owner to assess findings.
 
 Input artifacts:
 
@@ -283,7 +286,7 @@ Supporting resources:
 * source repositories, starter projects, examples, templates, and existing systems when available;
 * available stack-specific skills or plugins, selected only when they materially help the project;
 * available deployment, repository, design, data, auth, AI, or integration plugins when the selected architecture justifies them;
-* `.codex/agents/architecture-critic.md` - read-only independent architecture review subagent used by `cc-architect`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
+* `.codex/agents/architecture-critic.md` - unchanged read-only Codex subagent, defaulting to `gpt-6.1-sol` with `high` reasoning effort;
 * later, if justified: focused security, performance, or deployment reviewer subagents for larger projects.
 
 Input artifacts:
@@ -340,7 +343,8 @@ Supporting resources:
 * `cc-plan/references/implementation-plan.md` - artifact contract, milestone format, frontmatter, status values, traceability, and readiness check;
 * `cc-plan/references/planning-review.md` - complexity assessment, review areas, finding groups, and handling rules;
 * Mermaid diagrams in `docs/project/implementation-plan.md` when milestone dependencies, prerequisites, blockers, or validation gates are easier to scan visually;
-* `.codex/agents/planning-critic.md` - read-only independent planning review subagent used by `cc-plan`, defaulting to `gpt-5.6-luna` with `medium` reasoning effort;
+* `.claude/agents/planning-critic.md` - read-only Claude Code CLI reviewer for milestone order, dependencies, and validation gates;
+* `.agents/skills/cc-stage-review/` and `.agents/artifacts/stage-review.md` - automatic external-review run and durable report contract; the user manually invokes the stage owner to assess findings;
 * source repositories, starter projects, templates, examples, existing systems, and prior delivery notes when available;
 * `.agents/scripts/validate-project-artifacts.py` - deterministic check for required frontmatter, allowed statuses, related links, and stable IDs.
 
@@ -484,7 +488,7 @@ Supporting resources:
 * `cc-project-verify/references/project-verification.md` - report and remediation-plan artifact contracts;
 * `cc-remediation-task-spec/references/remediation-task-specification.md` - packet and phase task-map contract;
 * `cc-remediation-verify/references/remediation-verification.md` - targeted evidence and routing rules;
-* `.codex/agents/project-verification-critic.md` - read-only independent review when project complexity or consequence warrants it;
+* `.codex/agents/project-verification-critic.md` - unchanged read-only Codex subagent for higher-assurance project verification, defaulting to `gpt-6.1-sol` with `high` reasoning effort;
 * `.cursor/rules/implement-remediation-task-spec.mdc` - Cursor-only remediation packet boundary;
 * `.agents/scripts/validate-project-artifacts.py` - frontmatter, status, relation, and stable-ID validation.
 

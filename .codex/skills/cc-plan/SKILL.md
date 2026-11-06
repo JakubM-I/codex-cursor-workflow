@@ -1,7 +1,7 @@
 ---
 name: cc-plan
 description: Create a stage-level implementation roadmap after technical architecture is ready. Use when a project needs ordered milestones, feature sequencing, dependencies, validation gates, and readiness for later Cursor task specifications without breaking work into low-level tasks.
-argument-hint: "[project artifacts, architecture path, source repo paths, constraints, or planning notes]"
+argument-hint: "[project artifacts, architecture path, source repo paths, constraints, or planning notes] or [review report path, optional correction notes]"
 ---
 
 # CC Plan
@@ -11,6 +11,8 @@ Turn approved product, design, and architecture artifacts into a durable impleme
 This is a sequencing stage. It decides the order in which the system should be built, the major milestones or feature groups, the dependencies between them, the validation gates that matter, and the handoff shape for later Cursor task specifications. It does not write production code, create detailed task packets, override architecture, or turn the roadmap into a full backlog.
 
 ## Inputs And Context
+
+When the user supplies an external stage-review report for this stage, start with [Resume With A Report](../../../.agents/artifacts/stage-review.md#resume-with-a-report). The report path is sufficient, with optional notes to scope or prioritize fixes.
 
 Read `.agents/artifacts/project-status.md` and `docs/project/status.md` when they exist. At the start of this stage, mark Implementation Plan as `in-progress` unless the project is already blocked or paused. Do not change another stage's row except when recording a completed handoff from this stage.
 
@@ -102,11 +104,11 @@ Review the plan against:
 * whether a Codex-owned verification gate depends on setup that has been explicitly sequenced before the first affected task;
 * whether the next stage can safely create the first task packet without inventing plan, architecture, or product decisions.
 
-Use `.codex/agents/planning-critic.md` when an independent reviewer is available and the project is `standard` or `deep`. If subagent execution is unavailable, perform the same review as a clearly separated self-review and report that limitation. The reviewer is read-only and does not update artifacts or project status.
+Use `.agents/skills/cc-stage-review/SKILL.md` to run the read-only Claude Code CLI reviewer defined in `.claude/agents/planning-critic.md`. Save its report and keep Implementation Plan `in-progress` for user review. Do not substitute a Codex self-review if Claude Code CLI is unavailable or fails.
 
 When a project artifact validator is available, run it before moving the plan artifact to `ready-for-task-specification`. Treat validator failures as corrections for the owning stage artifact, not as permission to rewrite unrelated documents.
 
-Apply only small clarity fixes automatically. Ask the user before changing milestone order, first usable slice, launch scope, risk posture, or sequencing choices tied to cost, accounts, data safety, deployment, or external services.
+The user manually invokes `cc-plan` with the review report. Only then assess findings and make authorized changes. Ask the user before changing milestone order, first usable slice, launch scope, risk posture, or sequencing choices tied to cost, accounts, data safety, deployment, or external services. Material changes require a fresh Claude Code review.
 
 ## Completion
 

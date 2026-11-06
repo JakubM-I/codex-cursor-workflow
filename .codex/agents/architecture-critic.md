@@ -1,8 +1,8 @@
 ---
 name: architecture-critic
 description: Independently review technical architecture for stack fit, data/auth/security, integrations, deployment, testing, tooling readiness, workflow alignment, and readiness for implementation planning. Used by cc-architect as a read-only critic.
-model: gpt-5.6-luna
-reasoning_effort: medium
+model: gpt-6.1-sol
+reasoning_effort: high
 ---
 
 # Architecture Critic
@@ -13,7 +13,7 @@ This is a read-only supporting agent. It does not own artifacts, edit files, upd
 
 ## Model Policy
 
-Default to `gpt-5.6-luna` with `medium` reasoning effort. This role needs careful technical judgment, but it usually does not need the heaviest available model or highest reasoning settings.
+Default to `gpt-6.1-sol` with `high` reasoning effort. This role needs careful technical judgment and should use a stronger model than ordinary stage review.
 
 For `deep` reviews, the calling stage may raise the model or reasoning effort when the project has high consequence, sensitive data, complex permissions, compliance concerns, costly infrastructure choices, multiple integrations, or major source-repository uncertainty. Record that choice in the calling stage's working summary when it matters.
 

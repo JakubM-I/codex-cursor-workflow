@@ -1,7 +1,7 @@
 ---
 name: cc-designer
 description: Define a project's UX and visual direction after product and functional specification. Use when the project needs screen structure, interaction model, inspiration research, design system direction, component inventory, or design-tool handoff before technical architecture or implementation planning.
-argument-hint: "[product/functional spec paths, design notes, brand references, or tool preferences]"
+argument-hint: "[product/functional spec paths, design notes, brand references, or tool preferences] or [review report path, optional correction notes]"
 ---
 
 # CC Designer
@@ -11,6 +11,8 @@ Turn ready product and functional specifications into durable UX and visual-desi
 This is a design-planning stage. It defines how the product experience should be structured, feel, and behave visually. It may use external design tools, visual inspiration, screenshots, generated references, and shared UI-polish guidance. It does not choose the technical stack, create production code, plan implementation tasks, or make final brand decisions the user has not approved.
 
 ## Inputs And Context
+
+When the user supplies an external stage-review report for this stage, start with [Resume With A Report](../../../.agents/artifacts/stage-review.md#resume-with-a-report). The report path is sufficient, with optional notes to scope or prioritize fixes.
 
 Read `.agents/artifacts/project-status.md` and `docs/project/status.md` when they exist. At the start of this stage, mark Designer as `in-progress` unless the project is already blocked or paused. Do not change another stage's row except when recording a completed handoff from this stage.
 
@@ -44,7 +46,7 @@ Present the required, recommended, and intentionally unneeded tools for the sele
 Preferred tool routing:
 
 * **Mobbin** - use for real UI and UX references when available. Search specific screens, flows, or website sections from the functional spec. Inspect returned images before summarizing them. Cite Mobbin links in any user-facing reference list.
-* **MagicPath** - use as a collaborative visual workspace when the user selects the full visual-design mode and MagicPath is the chosen tool. Since it may require the user's browser session and login, pause at the right moment and ask the user to log in, open or create the project, and confirm that Claude Code should continue from that workspace.
+* **MagicPath** - for Full visual design, work on the remote canvas through the MagicPath integration in Claude Code. Create or reuse the project through that integration as described in [the tool readiness contract](references/tool-readiness.md#magicpath). Give the user the project link for review in their regular browser.
 * **Generated visual references and assets** - use when the project needs mood, art direction, bitmap mockups, logos, icons, illustrations, or other asset direction that is not well covered by existing product references.
 * **Figma, Adobe, Canva, or similar tools** - use only when available and appropriate for the requested deliverable. Do not require a tool because it is popular; require it only when the work benefits from that tool's actual output.
 
@@ -132,11 +134,11 @@ Review the design artifacts against:
 * UI polish using `.agents/skills/make-interfaces-feel-better/` when present.
 * the selected design mode, its reference or visual evidence, and asset-manifest completeness.
 
-Use `.claude/agents/design-critic.md` when an independent reviewer is available and the project is `standard` or `deep`. If subagent execution is unavailable, perform the same review as a clearly separated self-review and report that limitation. The reviewer is read-only and does not update artifacts or project status.
+Use `.agents/skills/cc-stage-review/SKILL.md` to run the read-only Gemini CLI reviewer defined in `.gemini/agents/design-critic.md`. Save its report and keep Designer `in-progress` for user review. Do not substitute a Claude Code self-review if Gemini CLI is unavailable or fails.
 
 When a project artifact validator is available, run it before moving design artifacts to `ready-for-user-review` or `approved-for-architecture`. Treat validator failures as corrections for the owning stage artifacts, not as permission to rewrite unrelated documents.
 
-Apply only small clarity fixes automatically. Ask the user before changing brand direction, primary layout model, navigation model, density, motion personality, or design-tool deliverable ownership.
+The user manually invokes `cc-designer` with the review report. Only then assess findings and make authorized changes. Ask the user before changing brand direction, primary layout model, navigation model, density, motion personality, or design-tool deliverable ownership. Material changes require a fresh Gemini review.
 
 ## User Review And Approval
 

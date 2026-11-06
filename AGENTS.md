@@ -22,6 +22,8 @@ Codex-specific materials live in `.codex/`.
 
 Claude Code-specific materials live in `.claude/`.
 
+Gemini-specific review materials live in `.gemini/`.
+
 Cursor-specific materials live in `.cursor/`.
 
 Temporary task notes for work on this repository may be created in `docs/tasks/` when useful. Use concise, descriptive filenames, for example:

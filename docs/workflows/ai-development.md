@@ -159,7 +159,7 @@ The functional specification may include:
 
 The stage should be collaborative and proactive. Codex should not only generate documents from the brief: it should inspect relevant source material, propose product framing, ask focused questions, challenge unclear or risky choices, recommend options when useful, and record unresolved assumptions instead of silently inventing decisions.
 
-Before completion, the stage should run a requirements review. Codex first classifies complexity as `light`, `standard`, or `deep`, then uses an independent requirements critic at that depth. The default critic configuration is `gpt-5.6-luna` with `medium` reasoning effort, with escalation only when `deep` complexity or high consequence justifies it. The critic does not edit artifacts or decide product direction. Codex applies minor clarity fixes, asks the user to approve material product decisions, routes design, architecture, or implementation concerns to later stages, and records only a compact review trace in project status.
+Before completion, the stage should run a requirements review. Codex classifies complexity as `light`, `standard`, or `deep`, then automatically runs the independent Claude Code CLI reviewer at that depth. The reviewer writes no project changes; its report is linked in project status. The user reviews that report and manually invokes Codex to assess it, route findings, request material decisions, and make authorized changes. A material change requires a fresh review before closure.
 
 Output:
 
@@ -182,7 +182,7 @@ At the start of Designer, the user selects one mode: reference research, full vi
 
 Designer is the first stage where account-backed design tools are normally expected. Baseline shared UI skills can be included during Init or repository bootstrap, while project-specific plugins and design accounts should be checked at the start of Designer. Claude Code should present the useful tool set, identify what is missing, and ask whether Claude Code should install/connect available plugins or whether the user will add tools manually and confirm readiness.
 
-Mobbin is the preferred source for real UI and UX references when available. MagicPath is treated as a collaborative visual workspace for full visual design: the user may be asked to log in, open or create the project, review the proposed design, and either approve it or request changes. Tools required by the selected mode must be installed or connected before that mode can proceed; if they are unavailable, the user chooses another tool or explicitly changes mode.
+Mobbin is the preferred source for real UI and UX references when available. When MagicPath is selected for full visual design, Claude Code creates or reuses the project through the connected integration and works on its remote canvas. The user reviews the project from the MagicPath dashboard or project link in their regular browser and approves it or requests changes. If the integration supports editing only, the user can supply an existing project link. If a required tool is unavailable, the user chooses another tool or explicitly changes mode.
 
 The design stage should focus on:
 
@@ -208,6 +208,8 @@ Output:
 Exit condition:
 
 The user has approved the design direction after reviewing the selected-mode evidence. Full visual design requires reviewable mockups or a visual workspace, including core layouts and layout-changing states. The asset manifest must either provide required assets or defer each one to a named prerequisite before the relevant UI task.
+
+Before completion, Claude Code automatically runs a read-only Gemini CLI design review. The report is recorded in project status for the user to inspect. The user then manually invokes Claude Code with the report to assess findings and make any authorized change; a material change requires another Gemini review before stage closure.
 
 ### Stage 5: Architect
 
@@ -315,7 +317,7 @@ Validation Notes:
 - bledny plik daje zrozumialy komunikat.
 ```
 
-Before completion, the stage should run a planning review. Codex first classifies planning complexity as `light`, `standard`, or `deep`, then uses an independent planning critic at that depth when available. The default critic configuration is `gpt-5.6-luna` with `medium` reasoning effort, with escalation only when `deep` complexity or high consequence justifies it. The critic does not edit artifacts or decide sequencing. Codex applies minor clarity fixes, asks the user to approve material planning changes, routes upstream gaps to the owning stage, and records only a compact review trace in project status.
+Before completion, the stage should run a planning review. Codex classifies planning complexity as `light`, `standard`, or `deep`, then automatically runs the independent Claude Code CLI reviewer at that depth. The reviewer writes no project changes; its report is linked in project status. The user reviews that report and manually invokes Codex to assess it, route findings, request material decisions, and make authorized changes. A material change requires a fresh review before closure.
 
 Output:
 
