@@ -29,7 +29,7 @@ Do not force every agent to read every project document. Each stage or skill sho
 
 Keep `AGENTS.md` minimal in target projects. Treat it as an entry point or context index, not as the main workflow engine.
 
-Init creates the minimal entry point. Once Brief is ready, Brief adds a compact project snapshot with the intended outcome, primary user, v1 boundary, key exclusion, and links to the current project artifacts. It must not duplicate the brief or accumulate implementation rules.
+Init prepares the minimal entry points. `CLAUDE.md` imports the target project's `AGENTS.md` and points Claude Code to Designer. Once Brief is ready, Brief adds a compact project snapshot to `AGENTS.md` with the intended outcome, primary user, v1 boundary, key exclusion, and links to the current project artifacts. It must not duplicate the brief or accumulate implementation rules.
 
 Use structured artifacts when they will be reused by later stages. If a file needs to be discovered, filtered, resumed, validated, or routed by agents, give it appropriate frontmatter or metadata.
 
@@ -76,17 +76,18 @@ Initialize a new project workspace for the Codex-Cursor workflow.
 Possible responsibilities:
 
 * create or update a minimal `AGENTS.md` entry point;
+* create a minimal `CLAUDE.md` entry point if missing;
 * initialize git;
 * ensure the primary branch is named `main`;
 * create the minimal project-status index at `docs/project/status.md`;
 * prepare optional scripts, hooks, repo metadata, or remote repository setup in later versions.
 
-The first version of this stage should stay conservative: create the minimal `AGENTS.md` entry point, project-status index, and initialize git with `main`. It should not gather the whole project brief, decide the technical architecture, create a remote repository, or plan implementation.
+This stage prepares the minimal project entry points and project-status index and initializes git with `main`. It should not gather the whole project brief, decide the technical architecture, create a remote repository, or plan implementation.
 
 Output:
 
 * initialized project workspace;
-* minimal project entry point or context index;
+* minimal `AGENTS.md` and `CLAUDE.md` project entry points;
 * project-status index with Brief as the next stage;
 * git repository with `main` as the primary branch;
 * initial Git checkpoint;

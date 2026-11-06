@@ -1,14 +1,14 @@
 ---
 name: cc-init
-description: Initialize a new project workspace for the Codex-Cursor workflow. Use when the user says they are starting or initiating a new project and provides a short project description. Creates a minimal AGENTS.md, initializes Git with main as the stable base, then creates and switches to dev for workflow work.
+description: Initialize a new project workspace for the Codex, Claude Code, and Cursor workflow. Use when the user starts a new project and provides a short description. Creates minimal AGENTS.md and CLAUDE.md entry points, initializes Git with main as the stable base, then creates and switches to dev for workflow work.
 argument-hint: "[short project description]"
 ---
 
 # CC Init
 
-Initialize the target project workspace for the Codex-Cursor workflow.
+Initialize the target project workspace for the Codex, Claude Code, and Cursor workflow.
 
-This skill is for the first project stage. It creates the minimal local entry point, project-status index, and git baseline needed before project discovery. It does not gather the full brief, choose a stack, create a design, or plan implementation.
+This skill is for the first project stage. It creates the minimal local entry points, project-status index, and git baseline needed before project discovery. It does not gather the full brief, choose a stack, create a design, or plan implementation.
 
 Init may prepare baseline workflow materials that are intended to be available across later stages, such as shared skills already bundled with the workflow. It does not install or connect project-specific account-backed plugins. Tools such as Mobbin, MagicPath, Figma, Adobe, Canva, or other external design/research services are checked and requested by the stage that needs them, usually `cc-designer`.
 
@@ -20,13 +20,13 @@ Use the user's message as the project description. If the description is missing
 
 1. Identify the target project root.
 2. Create or update `AGENTS.md` in the project root.
-3. Run `bash .agents/scripts/check-reviewer-clis.sh` and record Codex, Claude Code, and Gemini CLI availability in `docs/project/status.md`.
-4. Create or preserve `docs/project/status.md`.
-5. Initialize git if the project is not already a git repository.
-6. Ensure the stable primary branch is named `main`.
-7. After the Init checkpoint on `main`, create and switch to `dev` for subsequent workflow work.
-8. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
-9. Close Init according to `.agents/artifacts/stage-closure.md`.
+3. Create `CLAUDE.md` in the project root if it is missing.
+4. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
+5. Create or preserve `docs/project/status.md`. Run `bash .agents/scripts/check-reviewer-clis.sh` when available and record Codex, Claude Code, and Gemini CLI availability there.
+6. Initialize git if the project is not already a git repository.
+7. Ensure the stable primary branch is named `main`.
+8. Close Init according to `.agents/artifacts/stage-closure.md`.
+9. After the Init checkpoint on `main`, create and switch to `dev` for subsequent workflow work, subject to the Git contract below.
 10. Report exactly what was created or changed.
 
 ## AGENTS.md Contract
@@ -44,7 +44,7 @@ It should include:
 
 ## Context
 
-Use the Codex-Cursor workflow materials in this repository to decide which project context is needed for the current stage.
+Use the workflow materials in this repository to decide which project context is needed for the current stage.
 
 Project details, requirements, architecture, design, plans, and task specifications should be created and linked as the workflow progresses.
 ```
@@ -59,11 +59,25 @@ If `AGENTS.md` already exists:
 - do not overwrite substantial existing content without asking;
 - if the file looks unrelated or already detailed, summarize the situation and ask whether to replace, merge, or leave it unchanged.
 
+## CLAUDE.md Contract
+
+After preparing the target project's `AGENTS.md`, create a root `CLAUDE.md` with this exact content if the file is missing:
+
+```md
+# Claude Code Entry Point
+
+@AGENTS.md
+
+Claude Code owns the Designer stage only. For that stage, read and follow `.claude/skills/cc-designer/SKILL.md` and its referenced contracts. The Designer handoff is the approved design artifacts for Codex's Architect stage.
+```
+
+Preserve an existing `CLAUDE.md` and report any missing import or Designer routing. The import resolves to the target project's `AGENTS.md`. Check that the Designer skill path exists in the target and report a missing `.claude/` bundle if needed. Include a newly created `CLAUDE.md` in the Init checkpoint.
+
 ## Project Status Contract
 
 Read `.agents/artifacts/project-status.md` before creating or updating `docs/project/status.md`.
 
-Create `docs/project/` and the initial status file after the minimal project entry point has been established. Set Init to `complete`, set the project to `active`, and set Brief as the current next stage.
+Create `docs/project/` and the initial status file after the project entry points have been established. Set Init to `complete`, set the project to `active`, and set Brief as the current next stage.
 
 If `docs/project/status.md` already exists:
 
@@ -121,7 +135,7 @@ Account-backed plugins and user-authenticated tools are not baseline materials. 
 
 Run the shared CLI check after the workflow materials are available. Add a compact `## Reviewer Runtime` table to `docs/project/status.md` with `codex`, `claude`, and `gemini`, each CLI's availability, version output when available, check date, and a note that login and model access remain unverified until an authorized review runs.
 
-Do not block Init solely because Claude Code or Gemini is unavailable. The Brief, Specification, Designer, or Implementation Plan review gate blocks when its configured reviewer is unavailable. Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, `.agents/scripts/check-reviewer-clis.sh`, `.claude/`, `.gemini/`, and root `CLAUDE.md` when they are part of the workflow bundle.
+Do not block Init solely because Claude Code or Gemini is unavailable. The Brief, Specification, Designer, or Implementation Plan review gate blocks when its configured reviewer is unavailable. Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, `.agents/scripts/check-reviewer-clis.sh`, `.claude/`, and `.gemini/` when they are part of the workflow bundle.
 
 ## Output
 
@@ -129,6 +143,7 @@ Finish with a concise summary:
 
 - project root;
 - whether `AGENTS.md` was created, updated, or left unchanged;
+- whether `CLAUDE.md` was created or preserved;
 - whether `docs/project/status.md` was created, updated, or left unchanged;
 - whether baseline shared workflow materials were present, copied, or left unchanged;
 - whether git was initialized or already existed;

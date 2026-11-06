@@ -67,7 +67,7 @@ Allowed stage-row statuses:
 
 ## Initial File
 
-`cc-init` creates this initial file after creating the minimal project entry point:
+`cc-init` creates this initial file after preparing the project entry points:
 
 ```md
 ---
@@ -79,6 +79,7 @@ created: YYYY-MM-DD
 updated: YYYY-MM-DD
 related:
   - AGENTS.md
+  - CLAUDE.md
 ---
 
 # Project Status
@@ -93,7 +94,7 @@ related:
 
 | Stage | Status | Artifact | Updated | Notes |
 | --- | --- | --- | --- | --- |
-| Init | complete | `AGENTS.md` | YYYY-MM-DD | Workspace initialized. |
+| Init | complete | `AGENTS.md`, `CLAUDE.md` | YYYY-MM-DD | Workspace initialized. |
 | Brief | not-started | - | - | - |
 | Product / Functional Specification | not-started | - | - | - |
 | Designer | not-started | - | - | - |

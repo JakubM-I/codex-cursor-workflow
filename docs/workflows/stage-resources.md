@@ -64,7 +64,7 @@ Primary skill or prompt:
 
 Supporting resources:
 
-* minimal `AGENTS.md` entrypoint contract defined in `cc-init`;
+* minimal `AGENTS.md` and `CLAUDE.md` entry point contracts defined in `cc-init`;
 * `.agents/artifacts/project-status.md` - shared project-status contract;
 * `.agents/artifacts/stage-closure.md` - commit and closure contract for every stage;
 * `.agents/skills/make-interfaces-feel-better/` - full baseline shared UI-polish skill that target projects may receive during workflow bootstrap;
@@ -83,7 +83,7 @@ Input artifacts:
 Output artifacts:
 
 * initialized project workspace;
-* minimal project entry point or context index;
+* minimal `AGENTS.md` and `CLAUDE.md` project entry points;
 * git repository with `main` as the stable baseline and active `dev` branch for workflow work;
 * `docs/project/status.md` with Brief as the next stage.
 
