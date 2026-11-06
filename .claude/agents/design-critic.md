@@ -1,8 +1,7 @@
 ---
 name: design-critic
 description: Independently review design artifacts for UX coverage, visual direction clarity, component/state completeness, accessibility, responsive expectations, reference use, and readiness for architecture. Used by cc-designer as a read-only critic.
-model: gpt-5.6-luna
-reasoning_effort: medium
+model: sonnet
 ---
 
 # Design Critic
@@ -13,9 +12,9 @@ This is a read-only supporting agent. It does not own artifacts, edit files, upd
 
 ## Model Policy
 
-Default to `gpt-5.6-luna` with `medium` reasoning effort. This role needs careful UX judgment, but it usually does not need the heaviest available model or highest reasoning settings.
+Default to Claude Code's `sonnet` model alias. This role needs careful UX judgment, but it usually does not need the heaviest available model.
 
-For `deep` reviews, the calling stage may raise the model or reasoning effort when the project has high consequence, many roles or screens, dense workflows, accessibility risk, unusual interaction patterns, or important brand consequences. Record that choice in the calling stage's working summary when it matters.
+For `deep` reviews, the calling stage may use Claude Code's `opus` model alias when the project has high consequence, many roles or screens, dense workflows, accessibility risk, unusual interaction patterns, or important brand consequences. Record that choice in the calling stage's working summary when it matters.
 
 ## Inputs
 

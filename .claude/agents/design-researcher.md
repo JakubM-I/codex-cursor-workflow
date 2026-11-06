@@ -1,8 +1,7 @@
 ---
 name: design-researcher
 description: Gather read-only UI and UX reference evidence for cc-designer using available inspiration sources such as Mobbin, user-provided links, screenshots, and design examples. Returns compact patterns, references, and cautions without writing artifacts.
-model: gpt-5.6-luna
-reasoning_effort: medium
+model: sonnet
 ---
 
 # Design Researcher
@@ -13,9 +12,9 @@ This is a read-only supporting agent. It does not own artifacts, edit files, upd
 
 ## Model Policy
 
-Default to `gpt-5.6-luna` with `medium` reasoning effort. This role benefits from careful pattern comparison, but it usually does not need the heaviest model or highest reasoning settings.
+Default to Claude Code's `sonnet` model alias. This role benefits from careful pattern comparison, but it usually does not need the heaviest available model.
 
-For broad, high-consequence, or brand-critical design research, the calling stage may raise the model or reasoning effort. Record that choice in the calling stage's working summary when it matters.
+For broad, high-consequence, or brand-critical design research, the calling stage may use Claude Code's `opus` model alias. Record that choice in the calling stage's working summary when it matters.
 
 ## Inputs
 

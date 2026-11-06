@@ -223,7 +223,7 @@ Supporting resources:
 * generated visual references or image tools, when useful for mood, art direction, bitmap mockups, or asset direction;
 * optional tools such as Figma, Adobe, or Canva only when the project and available plugins justify them;
 * `.claude/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
-* `.claude/agents/design-critic.md` - read-only UX/design reviewer subagent for standard and deep design reviews, defaulting to `gpt-5.6-luna` with `medium` reasoning effort.
+* `.claude/agents/design-critic.md` - read-only UX/design reviewer for standard and deep design reviews, defaulting to Claude Code's `sonnet` model alias; use `opus` for justified high-consequence or deep reviews.
 
 Input artifacts:
 

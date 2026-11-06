@@ -1,4 +1,5 @@
 .DS_Store
 docs/sources
+docs/local-backup
 test-review
 config.toml
