@@ -81,6 +81,7 @@ Possible responsibilities:
 * initialize git;
 * ensure the primary branch is named `main`;
 * create the minimal project-status index at `docs/project/status.md`;
+* verify Codex, Claude Code, and Antigravity CLI installation, authentication evidence, and live access to the workflow models through minimal requests, recording results in project status;
 * prepare optional scripts, hooks, repo metadata, or remote repository setup in later versions.
 
 This stage prepares the minimal project entry points and project-status index and initializes git with `main`. It should not gather the whole project brief, decide the technical architecture, create a remote repository, or plan implementation.
@@ -96,7 +97,7 @@ Output:
 
 Exit condition:
 
-The project workspace is ready for project discovery.
+The project workspace is ready for project discovery after all three CLI readiness probes pass. An unresolved login, model-access, quota, network, or runtime issue keeps Init blocked with a named setup action.
 
 ### Stage 2: Brief
 

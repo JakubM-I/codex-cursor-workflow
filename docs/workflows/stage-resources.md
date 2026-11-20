@@ -70,6 +70,7 @@ Supporting resources:
 * `.agents/artifacts/stage-closure.md` - commit and closure contract for every stage;
 * `.agents/skills/make-interfaces-feel-better/` - full baseline shared UI-polish skill that target projects may receive during workflow bootstrap;
 * `.agents/scripts/validate-project-artifacts.py` - lightweight local validator for project artifact frontmatter, statuses, related links, and stable IDs;
+* `.agents/scripts/check-reviewer-clis.sh` and `check-reviewer-clis.py` - bounded installation, authentication, and live model readiness probes for Codex, Claude Code, and Antigravity during Init;
 * Do ustalenia: project folder bootstrap script;
 * Do ustalenia: git initialization script for later automation;
 * Do ustalenia: GitHub repository creation script or checklist;
@@ -86,7 +87,7 @@ Output artifacts:
 * initialized project workspace;
 * minimal `AGENTS.md` and `CLAUDE.md` project entry points;
 * git repository with `main` as the stable baseline and active `dev` branch for workflow work;
-* `docs/project/status.md` with Brief as the next stage.
+* `docs/project/status.md` with CLI readiness evidence and Brief as the next stage after the readiness gate passes.
 
 Frontmatter or metadata needs:
 

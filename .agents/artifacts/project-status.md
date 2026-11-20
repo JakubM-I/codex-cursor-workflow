@@ -69,6 +69,8 @@ Allowed stage-row statuses:
 
 `cc-init` creates this initial file after preparing the project entry points:
 
+The example represents a successful Init. While a CLI readiness check is unresolved, set `current_stage: init`, keep Init `blocked`, and make the failed check's setup action the next action. The Reviewer Runtime table records the tested model and time together with authentication and live-request evidence. A saved credential alone counts as `configured`. A successful request counts as `verified-by-request` and `ready` for that model at that time. Failures and installation-only checks leave readiness unverified or failed. Record the returned failure category and the required setup action without copying credentials or raw diagnostic logs.
+
 ```md
 ---
 artifact: project-status
@@ -105,11 +107,11 @@ related:
 
 ## Reviewer Runtime
 
-| CLI | Availability | Checked | Notes |
-| --- | --- | --- | --- |
-| codex | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
-| claude | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
-| agy | <available / unavailable> | YYYY-MM-DD | Antigravity version check only. Authentication and model access are unverified. |
+| CLI | Installed / version | Authentication | Tested model | Probe | Ready | Checked |
+| --- | --- | --- | --- | --- | --- | --- |
+| codex | Yes / <version> | verified-by-request | gpt-6.1-sol | passed | Yes | <timestamp> |
+| claude | Yes / <version> | verified-by-request | sonnet | passed | Yes | <timestamp> |
+| agy | Yes / <version> | verified-by-request | gemini-4-neon-high | passed | Yes | <timestamp> |
 
 ## Recent Updates
 
@@ -142,11 +144,11 @@ When `cc-brief` produces a ready brief, it updates the relevant values rather th
 
 ## Reviewer Runtime
 
-| CLI | Availability | Checked | Notes |
-| --- | --- | --- | --- |
-| codex | available | 2026-08-31 | Version check only; authentication and model access are unverified. |
-| claude | available | 2026-08-31 | Version check only; authentication and model access are unverified. |
-| agy | unavailable | 2026-08-31 | Antigravity version check only. Authentication and model access are unverified. |
+| CLI | Installed / version | Authentication | Tested model | Probe | Ready | Checked |
+| --- | --- | --- | --- | --- | --- | --- |
+| codex | Yes / <version> | verified-by-request | gpt-6.1-sol | passed | Yes | <timestamp> |
+| claude | Yes / <version> | verified-by-request | sonnet | passed | Yes | <timestamp> |
+| agy | Yes / <version> | verified-by-request | gemini-4-neon-high | passed | Yes | <timestamp> |
 
 ## Recent Updates
 

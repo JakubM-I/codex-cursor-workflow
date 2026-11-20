@@ -96,8 +96,8 @@ By default, assess each material finding and apply verified, in-scope fixes that
 
 For Designer, supply `.antigravity/agents/design-critic.md` as the reviewer instruction and select the model according to its Model Policy. Record the reviewer runtime and model separately. Existing reports with `reviewer: gemini` or `reviewer_cli: gemini` retain their original provenance when the owner resumes from them. In older reports without model metadata, record model access as unknown.
 
-1. Run `.agents/scripts/check-reviewer-clis.sh` during Init and before the first required external review when the prior result is stale or missing.
-2. A version check proves only that a CLI executable is available. It does not prove login, account entitlement, model access, or a successful real review.
+1. Run `bash .agents/scripts/check-reviewer-clis.sh` during Init. Before a review, refresh the relevant CLI's readiness with `--cli claude` or `--cli agy` when the result is missing, stale, failed, or for a different model. Select the intended model with the corresponding model flag when needed.
+2. Readiness requires a successful minimal model request as well as an installed CLI. Record authentication evidence, tested model, probe outcome, and check time in project status. Authentication, quota, network, and execution failures require their own setup actions.
 3. Use the current reviewer's agent definition as the review instruction and name the exact artifacts to read. Do not give the reviewer write authority or ask it to run project-changing commands.
 4. Capture CLI output. If the CLI is unavailable, unauthenticated, or fails, write the limitation in the report and block the review gate; do not silently substitute a same-model self-review.
 5. After a successful report, update the current stage row's Notes with the report link and reviewer, set Next action to the filled-in resume line, and append a one-line Recent Updates entry. Keep detailed findings in the report.

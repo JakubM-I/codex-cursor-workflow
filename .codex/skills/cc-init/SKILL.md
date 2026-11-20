@@ -22,7 +22,7 @@ Use the user's message as the project description. If the description is missing
 2. Create or update `AGENTS.md` in the project root.
 3. Create `CLAUDE.md` in the project root if it is missing.
 4. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
-5. Create or preserve `docs/project/status.md`. Run `bash .agents/scripts/check-reviewer-clis.sh` when available and record Codex, Claude Code, and Antigravity CLI availability there.
+5. Create or preserve `docs/project/status.md`. Run `bash .agents/scripts/check-reviewer-clis.sh` and record installation, authentication evidence, model, live probe, and readiness for Codex, Claude Code, and Antigravity. Resolve failures before closing Init.
 6. Initialize git if the project is not already a git repository.
 7. Ensure the stable primary branch is named `main`.
 8. Close Init according to `.agents/artifacts/stage-closure.md`.
@@ -77,7 +77,7 @@ Preserve an existing `CLAUDE.md` and report any missing import or Designer routi
 
 Read `.agents/artifacts/project-status.md` before creating or updating `docs/project/status.md`.
 
-Create `docs/project/` and the initial status file after the project entry points have been established. Set Init to `complete`, set the project to `active`, and set Brief as the current next stage.
+Create `docs/project/` and the initial status file after the project entry points have been established. After the CLI readiness gate passes, set Init to `complete`, set the project to `active`, and set Brief as the current next stage. While readiness is unresolved, keep Init `blocked`, `current_stage: init`, and name the failing CLI and its next setup action.
 
 If `docs/project/status.md` already exists:
 
@@ -133,9 +133,15 @@ Account-backed plugins and user-authenticated tools are not baseline materials. 
 
 ## Reviewer CLI Readiness
 
-Run the shared CLI check after the workflow materials are available. Add a compact `## Reviewer Runtime` table to `docs/project/status.md` with `codex`, `claude`, and `agy` (Antigravity), each CLI's availability, version output when available, check date, and a note that login and model access remain unverified until an authorized review runs.
+Run the shared CLI check after the workflow materials are available. It requires Python 3 using the standard library. Its default mode checks installed versions, reads authentication status where supported, and sends one minimal request per installed CLI from an empty temporary directory. Explain that these requests consume a small amount of account usage as part of Init. The current defaults match the workflow reviewers, using `gpt-6.1-sol`, `sonnet`, and `gemini-4-neon-high`. Each request has a 60-second timeout.
 
-Do not block Init solely because Claude Code or Antigravity is unavailable. The Brief, Specification, Designer, or Implementation Plan review gate blocks when its configured reviewer is unavailable. Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, `.agents/scripts/check-reviewer-clis.sh`, `.claude/`, and `.antigravity/` when they are part of the workflow bundle.
+Record the returned JSON lines in a compact `## Reviewer Runtime` table in `docs/project/status.md`. Include installation and version, authentication evidence, tested model, probe result, readiness, check time, and the next action for failures. Persist only the summarized evidence. A successful version or login command alone leaves readiness unverified. Ready means a successful response from the tested model at the recorded time.
+
+All three CLIs must pass before Init closes. For missing login, ask the user to authenticate through the CLI's supported login flow. Distinguish access, quota, network, timeout, incompatible CLI version, and execution-permission failures from confirmed missing authentication. On failure, report the exact known blocker and retry only the affected CLI with `--cli codex`, `--cli claude`, or `--cli agy`. Follow environment approval rules when the check needs network or access to CLI runtime directories. If execution remains blocked, record readiness as unverified.
+
+Use `--codex-model`, `--claude-model`, or `--agy-model` when an approved workflow configuration changes the selected model. A later review that uses a different model, such as `opus` or Neon XHigh, requires a readiness check for that selection. The optional `--presence-only` mode is for installation diagnostics.
+
+Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, both `.agents/scripts/check-reviewer-clis.sh` and `.agents/scripts/check-reviewer-clis.py`, `.claude/`, and `.antigravity/` when they are part of the workflow bundle.
 
 ## Output
 
@@ -146,6 +152,7 @@ Finish with a concise summary:
 - whether `CLAUDE.md` was created or preserved;
 - whether `docs/project/status.md` was created, updated, or left unchanged;
 - whether baseline shared workflow materials were present, copied, or left unchanged;
+- CLI readiness results, tested models, and any login or setup actions;
 - whether git was initialized or already existed;
 - resulting `main` and active branch;
 - Init commit SHA on `main`, or the exact blocker that prevented stage closure;
