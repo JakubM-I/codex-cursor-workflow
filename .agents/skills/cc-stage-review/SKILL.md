@@ -14,7 +14,7 @@ Read `.agents/artifacts/stage-review.md` and `docs/project/status.md` before act
 
 1. Check reviewer CLI availability with `bash .agents/scripts/check-reviewer-clis.sh`. If the configured CLI is unavailable, write a blocked review report and return to the owner; do not substitute another reviewer or a self-review.
 2. Build a prompt containing the agent-definition path, review depth, exact artifact paths, explicit exclusions, and: `Read only. Return findings in the External Stage Review Contract format. Do not modify files or use write-capable tools.`
-3. Invoke the configured CLI in non-interactive prompt mode. The normal forms are `claude -p <prompt>` and `gemini -p <prompt>`; inspect `--help` when the installed CLI requires a different documented non-interactive form.
+3. Invoke the configured CLI in non-interactive prompt mode. Use `claude -p <prompt>` for Claude Code reviews. For Designer, use `agy --mode plan --model gemini-4-neon-high -p <prompt>` and supply `.antigravity/agents/design-critic.md` in the prompt. Select `gemini-4-neon-xhigh` for justified deep reviews according to that instruction. Confirm model availability through `agy models` before the first review or when availability changes. Inspect `agy --help` for the installed version's supported flags. Capture the requested model and any model reported by the CLI in the report.
 4. Capture the output and create the report at the contract path. The stage owner, not the reviewer, writes the report file and status trace.
 5. Keep the stage `in-progress`. Give the user the filled-in resume line from the report contract and record it as the next action. Leave assessment and corrections for the owner's manual resume.
 

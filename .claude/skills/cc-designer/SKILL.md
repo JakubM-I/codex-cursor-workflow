@@ -134,11 +134,11 @@ Review the design artifacts against:
 * UI polish using `.agents/skills/make-interfaces-feel-better/` when present.
 * the selected design mode, its reference or visual evidence, and asset-manifest completeness.
 
-Use `.agents/skills/cc-stage-review/SKILL.md` to run the read-only Gemini CLI reviewer defined in `.gemini/agents/design-critic.md`. Save its report and keep Designer `in-progress` for user review. Do not substitute a Claude Code self-review if Gemini CLI is unavailable or fails.
+Use `.agents/skills/cc-stage-review/SKILL.md` to run the read-only Antigravity CLI reviewer defined in `.antigravity/agents/design-critic.md`. It uses Gemini 4 Neon High by default, with XHigh for justified deep reviews. Save its report and keep Designer `in-progress` for user review. Record an unavailable CLI or model as a review blocker.
 
 When a project artifact validator is available, run it before moving design artifacts to `ready-for-user-review` or `approved-for-architecture`. Treat validator failures as corrections for the owning stage artifacts, not as permission to rewrite unrelated documents.
 
-The user manually invokes `cc-designer` with the review report. Only then assess findings and make authorized changes. Ask the user before changing brand direction, primary layout model, navigation model, density, motion personality, or design-tool deliverable ownership. Material changes require a fresh Gemini review.
+The user manually invokes `cc-designer` with the review report. Only then assess findings and make authorized changes. Ask the user before changing brand direction, primary layout model, navigation model, density, motion personality, or design-tool deliverable ownership. Material changes require a fresh Antigravity review with the selected Gemini model.
 
 ## User Review And Approval
 

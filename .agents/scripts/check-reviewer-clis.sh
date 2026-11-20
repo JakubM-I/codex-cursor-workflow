@@ -3,7 +3,7 @@
 # Reports local CLI discoverability only. It never sends a model prompt.
 set -u
 
-for reviewer_cli in codex claude gemini; do
+for reviewer_cli in codex claude agy; do
   if command -v "$reviewer_cli" >/dev/null 2>&1; then
     reviewer_version=$("$reviewer_cli" --version 2>&1 | head -n 1)
     printf '%s\tavailable\t%s\n' "$reviewer_cli" "${reviewer_version:-version unavailable}"

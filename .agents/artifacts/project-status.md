@@ -109,7 +109,7 @@ related:
 | --- | --- | --- | --- |
 | codex | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
 | claude | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
-| gemini | <available / unavailable> | YYYY-MM-DD | Version check only; authentication and model access are unverified. |
+| agy | <available / unavailable> | YYYY-MM-DD | Antigravity version check only. Authentication and model access are unverified. |
 
 ## Recent Updates
 
@@ -146,7 +146,7 @@ When `cc-brief` produces a ready brief, it updates the relevant values rather th
 | --- | --- | --- | --- |
 | codex | available | 2026-08-31 | Version check only; authentication and model access are unverified. |
 | claude | available | 2026-08-31 | Version check only; authentication and model access are unverified. |
-| gemini | unavailable | 2026-08-31 | Version check only; authentication and model access are unverified. |
+| agy | unavailable | 2026-08-31 | Antigravity version check only. Authentication and model access are unverified. |
 
 ## Recent Updates
 

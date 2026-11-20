@@ -10,7 +10,7 @@ The stage owner launches the configured reviewer through its CLI, gives it only 
 | --- | --- | --- | --- |
 | Brief | Codex | Claude Code CLI | business risks, assumptions, contradictions, and difficult questions |
 | Product / Functional Specification | Codex | Claude Code CLI | requirements logic, flows, states, and scope |
-| Designer | Claude Code | Gemini CLI | design system, visual assets, and consistency with the brief |
+| Designer | Claude Code | Antigravity CLI with Gemini 4 Neon High | design system, visual assets, and consistency with the brief |
 | Architect | Codex | Codex subagent | unchanged in-process architecture review |
 | Implementation Plan | Codex | Claude Code CLI | milestone order, dependencies, and validation gates |
 | Project Verification | Codex | Codex subagent | unchanged in-process verification review |
@@ -31,8 +31,9 @@ artifact: stage-review
 version: 1
 status: awaiting-owner-review
 stage: <brief | product-functional-spec | design | implementation-plan>
-reviewer: <claude-code | gemini>
-reviewer_cli: <claude | gemini>
+reviewer: <claude-code | antigravity>
+reviewer_cli: <claude | agy>
+reviewer_model: <requested model identifier>
 review_depth: <light | standard | deep>
 created: YYYY-MM-DD
 sources:
@@ -49,6 +50,7 @@ related:
 - Reviewer instruction: <agent-definition path>
 - Scope and exclusions: <what the reviewer received>
 - CLI result: <completed | unavailable | failed>
+- Model evidence: <requested model, model reported by the CLI when available, and any discrepancy>
 - Limitation: <if the CLI could not establish an authenticated review>
 
 ## Findings
@@ -91,6 +93,8 @@ On this invocation, resume the existing stage. Read the report, project status, 
 By default, assess each material finding and apply verified, in-scope fixes that preserve agreed decisions. Record what was applied, rejected with a reason, deferred or routed, or left for the user's decision. Ask before changing a material decision or expanding scope. A confirmed, unresolved `Must Fix` blocks closure. If a finding is unsupported or already addressed, record the evidence for that disposition. After material revisions, run a fresh external review and return its new report for manual handoff.
 
 ## CLI And Handoff Rules
+
+For Designer, supply `.antigravity/agents/design-critic.md` as the reviewer instruction and select the model according to its Model Policy. Record the reviewer runtime and model separately. Existing reports with `reviewer: gemini` or `reviewer_cli: gemini` retain their original provenance when the owner resumes from them. In older reports without model metadata, record model access as unknown.
 
 1. Run `.agents/scripts/check-reviewer-clis.sh` during Init and before the first required external review when the prior result is stale or missing.
 2. A version check proves only that a CLI executable is available. It does not prove login, account entitlement, model access, or a successful real review.

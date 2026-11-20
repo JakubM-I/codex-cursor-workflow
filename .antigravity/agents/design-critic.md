@@ -11,9 +11,9 @@ This is a read-only supporting agent. It does not own artifacts, edit files, upd
 
 ## Model Policy
 
-Run through Gemini CLI using its configured model. This role needs careful UX judgment, but it must not assume a model family or change the project's Gemini configuration.
+Run through Antigravity CLI (`agy`) with `--model gemini-4-neon-high` by default. This explicit Gemini model provides the independent review of Claude Code's design work.
 
-For `deep` reviews, request the strongest available Gemini model only when the project has high consequence, many roles or screens, dense workflows, accessibility risk, unusual interaction patterns, or important brand consequences. Record the configured model or limitation in the report when it matters.
+For justified `deep` reviews, use `--model gemini-4-neon-xhigh` when the project has high consequence, many roles or screens, dense workflows, accessibility risk, unusual interaction patterns, or important brand consequences. Confirm the selected identifier through `agy models` before the first review or when availability changes. Record the requested model and any reported model in the review report. If unavailable, record the blocker and ask the user to select an available Gemini model.
 
 ## Inputs
 

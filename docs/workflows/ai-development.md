@@ -4,7 +4,7 @@ This document describes a reusable workflow for building a new software project 
 
 Current scope: greenfield project creation from initialization through planned delivery, project-wide verification, approved remediation, and final user acceptance. Existing-project onboarding remains future work.
 
-This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, `.claude/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
+This document is a design document for building the reusable workflow system. It is not currently part of the minimal runtime that must be copied into every target project. The portable runtime is expected to live primarily in `.agents/`, `.codex/`, `.claude/`, `.antigravity/`, and `.cursor/`, plus project artifacts generated under `docs/project/` inside each target project. If workflow documentation is copied into a target project later, it should be copied intentionally as reference material, not treated as a required input for every stage skill.
 
 The workflow is intended to be portable. The whole workflow system may be copied into another repository and adapted there. In every repository, the user's latest instruction and current project state remain the source of truth.
 
@@ -50,6 +50,7 @@ Recommended material layers:
 * `.agents/` - shared instructions, checklists, skills, scripts, and reusable conventions.
 * `.codex/` - Codex-specific stage skills, analysis prompts, subagent definitions, orchestration, review prompts, and supporting materials.
 * `.claude/` - Claude Code-specific stage skills, prompts, supporting agents, and design materials.
+* `.antigravity/` - review instructions supplied explicitly to Antigravity CLI.
 * `.cursor/` - Cursor-specific implementation rules, coding prompts, editor-native rules, and implementation support.
 * `docs/` - in this workflow-system repository, human-readable workflow design documentation and local source notes; in target projects, generated project artifacts, plans, task records, reviews, and knowledge records.
 
@@ -210,7 +211,7 @@ Exit condition:
 
 The user has approved the design direction after reviewing the selected-mode evidence. Full visual design requires reviewable mockups or a visual workspace, including core layouts and layout-changing states. The asset manifest must either provide required assets or defer each one to a named prerequisite before the relevant UI task.
 
-Before completion, Claude Code automatically runs a read-only Gemini CLI design review. The report is recorded in project status for the user to inspect. The user then manually invokes Claude Code with the report to assess findings and make any authorized change; a material change requires another Gemini review before stage closure.
+Before completion, Claude Code automatically runs a read-only design review through Antigravity CLI (`agy`) with Gemini 4 Neon High by default and XHigh for justified deep reviews. The report records the selected model and is linked in project status for the user to inspect. The user then manually invokes Claude Code with the report to assess findings and make any authorized change. A material change requires another review before stage closure.
 
 ### Stage 5: Architect
 

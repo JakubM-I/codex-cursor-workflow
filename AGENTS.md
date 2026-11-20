@@ -22,7 +22,7 @@ Codex-specific materials live in `.codex/`.
 
 Claude Code-specific materials live in `.claude/`.
 
-Gemini-specific review materials live in `.gemini/`.
+Antigravity-specific review materials live in `.antigravity/`.
 
 Cursor-specific materials live in `.cursor/`.
 

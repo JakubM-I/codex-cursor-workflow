@@ -6,7 +6,7 @@ It is intentionally provisional. Its purpose is to help design the system while 
 
 Current scope: greenfield project creation through planned delivery, project-wide verification, approved remediation, and final user acceptance.
 
-This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.claude/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
+This file is a design-time inventory for this workflow-system repository. It is not a production stage input and does not need to be copied into target projects. Target projects should rely on `.agents/`, `.codex/`, `.claude/`, `.antigravity/`, `.cursor/`, and generated `docs/project/` artifacts unless a future packaging step intentionally includes additional reference docs.
 
 ## Workflow At A Glance
 
@@ -43,6 +43,7 @@ Use this file to decide where a material belongs:
 * `.agents/` for shared materials used by more than one agent;
 * `.codex/` for Codex-specific stage skills, analysis prompts, subagents, review prompts, and orchestration;
 * `.claude/` for Claude Code-specific stage skills, prompts, supporting agents, and design materials;
+* `.antigravity/` for review instructions supplied explicitly to Antigravity CLI;
 * `.cursor/` for Cursor-specific implementation rules, coding prompts, and editor-native rules;
 * `docs/` for human-readable workflow design documents in this repository, and generated project artifacts or records inside target projects.
 
@@ -225,7 +226,7 @@ Supporting resources:
 * generated visual references or image tools, when useful for mood, art direction, bitmap mockups, or asset direction;
 * optional tools such as Figma, Adobe, or Canva only when the project and available plugins justify them;
 * `.claude/agents/design-researcher.md` - read-only UI/UX reference researcher for Mobbin, user-provided references, screenshots, and comparable patterns;
-* `.gemini/agents/design-critic.md` - read-only Gemini CLI reviewer for design-system, asset, and brief alignment;
+* `.antigravity/agents/design-critic.md` - read-only Antigravity CLI (`agy`) reviewer for design-system, asset, and brief alignment, using Gemini 4 Neon High by default and XHigh for justified deep reviews;
 * `.agents/skills/cc-stage-review/` and `.agents/artifacts/stage-review.md` - automatic external-review run and durable report contract; the user manually invokes the stage owner to assess findings.
 
 Input artifacts:

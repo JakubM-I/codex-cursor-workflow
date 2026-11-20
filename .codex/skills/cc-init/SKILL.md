@@ -22,7 +22,7 @@ Use the user's message as the project description. If the description is missing
 2. Create or update `AGENTS.md` in the project root.
 3. Create `CLAUDE.md` in the project root if it is missing.
 4. Ensure baseline shared workflow materials are available when the workflow bundle includes them.
-5. Create or preserve `docs/project/status.md`. Run `bash .agents/scripts/check-reviewer-clis.sh` when available and record Codex, Claude Code, and Gemini CLI availability there.
+5. Create or preserve `docs/project/status.md`. Run `bash .agents/scripts/check-reviewer-clis.sh` when available and record Codex, Claude Code, and Antigravity CLI availability there.
 6. Initialize git if the project is not already a git repository.
 7. Ensure the stable primary branch is named `main`.
 8. Close Init according to `.agents/artifacts/stage-closure.md`.
@@ -133,9 +133,9 @@ Account-backed plugins and user-authenticated tools are not baseline materials. 
 
 ## Reviewer CLI Readiness
 
-Run the shared CLI check after the workflow materials are available. Add a compact `## Reviewer Runtime` table to `docs/project/status.md` with `codex`, `claude`, and `gemini`, each CLI's availability, version output when available, check date, and a note that login and model access remain unverified until an authorized review runs.
+Run the shared CLI check after the workflow materials are available. Add a compact `## Reviewer Runtime` table to `docs/project/status.md` with `codex`, `claude`, and `agy` (Antigravity), each CLI's availability, version output when available, check date, and a note that login and model access remain unverified until an authorized review runs.
 
-Do not block Init solely because Claude Code or Gemini is unavailable. The Brief, Specification, Designer, or Implementation Plan review gate blocks when its configured reviewer is unavailable. Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, `.agents/scripts/check-reviewer-clis.sh`, `.claude/`, and `.gemini/` when they are part of the workflow bundle.
+Do not block Init solely because Claude Code or Antigravity is unavailable. The Brief, Specification, Designer, or Implementation Plan review gate blocks when its configured reviewer is unavailable. Copy `.agents/artifacts/stage-review.md`, `.agents/skills/cc-stage-review/`, `.agents/scripts/check-reviewer-clis.sh`, `.claude/`, and `.antigravity/` when they are part of the workflow bundle.
 
 ## Output
 
